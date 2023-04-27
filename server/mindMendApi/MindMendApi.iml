@@ -66,7 +66,6 @@
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.10.6" level="project" />
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.10.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:6.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:6.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:6.0.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:3.0.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.postgresql:postgresql:42.5.4" level="project" />
@@ -100,6 +99,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:6.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.0.8" level="project" />
+    <orderEntry type="library" name="Maven: cryptix:cryptix:3.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.12.0" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger2:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-models:1.5.20" level="project" />
@@ -115,6 +116,12 @@
     <orderEntry type="library" name="Maven: org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.mapstruct:mapstruct:1.2.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:3.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:6.0.8" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:6.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:6.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:6.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:6.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-validation:3.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:10.1.8" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:8.0.0.Final" level="project" />
