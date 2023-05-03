@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
         fontWeight:"400"
     },
     signin:{
-        height:350, 
-        backgroundColor:"gray", 
+        height:530, 
+        // backgroundColor:"gray", 
         marginHorizontal:22, 
         marginTop:20, 
         borderRadius:25
@@ -45,6 +45,55 @@ const styles = StyleSheet.create({
     text2:{
         fontSize:14,
         fontWeight:"300"
+    },
+    firstroute:{
+        height:240,  
+        backgroundColor: 'white', 
+        borderBottomStartRadius:25, 
+        borderBottomEndRadius:25,
+        padding:20
+    },
+    input:{
+        borderWidth:1, 
+        borderColor:"#BDBDBD", 
+        paddingLeft:20, 
+        paddingVertical:5, 
+        borderRadius:30
+    },
+    ipcontainer:{
+        display:"flex",
+        flexDirection:"column",
+        gap:20
+    },
+    arrowmain:{
+        width:100, 
+        height:100, 
+        backgroundColor:"white", 
+        position:"absolute", 
+        bottom:-40, 
+        right:120, 
+        borderRadius:50,
+        elevation:2,
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    arrowcontainer:{
+        backgroundColor:"#FACE51",
+        width:75,
+        height:75,
+        borderRadius:50,
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    secondroute:{
+        height:430,  
+        backgroundColor: 'white',
+        padding:20,
+        borderBottomStartRadius:25, 
+        borderBottomEndRadius:25,
+
     }
 })
 

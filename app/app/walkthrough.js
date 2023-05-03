@@ -9,14 +9,14 @@ const Walkthrough = () => {
         <TouchableOpacity
         {...props}
         >
-        <Text style={{fontSize:16, marginHorizontal:20, color:"white"}}>Skip</Text>
+        <Text style={{fontSize:16, marginHorizontal:20, fontWeight:'500', color:"#FFCB3A"}}>Skip</Text>
         </TouchableOpacity>
     );
     const Next = ({...props}) => (
         <TouchableOpacity
         {...props}
         >
-        <Text style={{fontSize:16, marginHorizontal:20, color:"white"}}>Next</Text>
+        <Text style={{fontSize:16, fontWeight:'500', marginHorizontal:20, color:"#FFCB3A"}}>Next</Text>
         </TouchableOpacity>
     )
 
@@ -25,6 +25,7 @@ const Walkthrough = () => {
     style={{flex:1}}
     >
       <Onboarding
+      bottomBarColor='white'
       NextButtonComponent={Next}
       SkipButtonComponent={Skip}
       // pushing to login page after skip or done button is clicked
@@ -33,24 +34,24 @@ const Walkthrough = () => {
     pages={[
         // array of multiple walkthrough screens
     {
-    backgroundColor: '#FCD66C',
-    image: <View style={{paddingTop:100}}>
-        <Image source={require('../assets/Images/walk1.png')} />
+    backgroundColor: 'white',
+    image: <View style={{ paddingTop:100 }}>
+        <Image source={require('../assets/Images/walk1.png')}/>
     </View>,
     title: '',
     subtitle: '',
     },
     {
-    backgroundColor: '#FCD66C',
-    image: <View style={{paddingTop:200,}}>
+    backgroundColor: 'white',
+    image: <View style={{paddingTop:100,}}>
         <Image source={require('../assets/Images/walk3.png')} />
     </View>,
     title: '',
     subtitle: '',
     },
     {
-    backgroundColor: '#FCD66C',
-    image: <View style={{paddingTop:200, }}>
+    backgroundColor: 'white',
+    image: <View style={{paddingTop:200 }}>
         <Image source={require('../assets/Images/walk2.png')} />
     </View>,
     title: '',

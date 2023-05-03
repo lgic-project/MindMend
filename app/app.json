@@ -4,6 +4,7 @@
     "web": {
       "bundler": "metro"
     },
+    "android":{"softwareKeyboardLayoutMode":"pan"},
     "name": "app",
     "slug": "app"
   }
