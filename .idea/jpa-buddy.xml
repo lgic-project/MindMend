@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" reUseTableSchema="true">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="3349e94e-ad22-4dfb-9219-2921cc754e88" />
+    <option name="reLastEntityCreationPackage" value="server/mindMendApi/src/main/java/org/example/model" />
+    <reUseDbSnapshotConnections>
+      <dbConnection id="3349e94e-ad22-4dfb-9219-2921cc754e88" />
+    </reUseDbSnapshotConnections>
+  </component>
+</project>
