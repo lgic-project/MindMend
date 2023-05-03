@@ -27,12 +27,12 @@ import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 const CustomInput = forwardRef((props, ref) => {
-  return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
+  return <TextField fullWidth {...props} inputRef={ref} label='Address' autoComplete='off' />
 })
 
 const FormLayoutsSeparator = () => {
   // ** States
-  const [language, setLanguage] = useState([])
+  const [zone, setZone] = useState([])
   const [date, setDate] = useState(null)
 
   const [values, setValues] = useState({
@@ -42,10 +42,10 @@ const FormLayoutsSeparator = () => {
     showPassword2: false
   })
 
-  // Handle Password
-  const handlePasswordChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  // // // Handle Password
+  // // const handlePasswordChange = prop => event => {
+  // //   setValues({ ...values, [prop]: event.target.value })
+  // }
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
@@ -55,10 +55,10 @@ const FormLayoutsSeparator = () => {
     event.preventDefault()
   }
 
-  // Handle Confirm Password
-  const handleConfirmChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  // // // Handle Confirm Password
+  // // const handleConfirmChange = prop => event => {
+  // //   setValues({ ...values, [prop]: event.target.value })
+  // }
 
   const handleClickShowConfirmPassword = () => {
     setValues({ ...values, showPassword2: !values.showPassword2 })
@@ -70,12 +70,12 @@ const FormLayoutsSeparator = () => {
 
   // Handle Select
   const handleSelectChange = event => {
-    setLanguage(event.target.value)
+    setZone(event.target.value)
   }
 
   return (
     <Card>
-      <CardHeader title='Multi Column with Form Separator' titleTypographyProps={{ variant: 'h6' }} />
+      
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={e => e.preventDefault()}>
         <CardContent>
@@ -91,7 +91,7 @@ const FormLayoutsSeparator = () => {
             <Grid item xs={12} sm={6}>
               <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-separator-password'>Password</InputLabel>
                 <OutlinedInput
@@ -113,9 +113,9 @@ const FormLayoutsSeparator = () => {
                     </InputAdornment>
                   }
                 />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </FormControl>
+            </Grid> */}
+             {/* <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-separator-password-2'>Confirm Password</InputLabel>
                 <OutlinedInput
@@ -138,8 +138,8 @@ const FormLayoutsSeparator = () => {
                   }
                 />
               </FormControl>
-            </Grid>
-            <Grid item xs={12}>
+            </Grid> */}
+            < Grid item xs={12}>
               <Divider sx={{ marginBottom: 0 }} />
             </Grid>
             <Grid item xs={12}>
@@ -171,35 +171,27 @@ const FormLayoutsSeparator = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id='form-layouts-separator-multiple-select-label'>Language</InputLabel>
+                <InputLabel id='form-layouts-separator-multiple-select-label'>Zone</InputLabel>
                 <Select
                   multiple
-                  value={language}
+                  value={zone}
                   onChange={handleSelectChange}
                   id='form-layouts-separator-multiple-select'
                   labelId='form-layouts-separator-multiple-select-label'
-                  input={<OutlinedInput label='Language' id='select-multiple-language' />}
+                  input={<OutlinedInput label='Zone' id='select-multiple-Zone' />}
                 >
-                  <MenuItem value='English'>English</MenuItem>
-                  <MenuItem value='French'>French</MenuItem>
-                  <MenuItem value='Spanish'>Spanish</MenuItem>
-                  <MenuItem value='Portuguese'>Portuguese</MenuItem>
-                  <MenuItem value='Italian'>Italian</MenuItem>
-                  <MenuItem value='German'>German</MenuItem>
-                  <MenuItem value='Arabic'>Arabic</MenuItem>
+                  <MenuItem value='Dhaulagiri'>Dhaulagiri</MenuItem>
+                  <MenuItem value='Gandaki'>Gandaki</MenuItem>
+                  <MenuItem value='Lumbini'>Lumbini</MenuItem>
+                  <MenuItem value='Karnali'>Karnali</MenuItem>
+                  <MenuItem value='Rapti'>Rapti</MenuItem>
+                  <MenuItem value='Bheri'>Bheri</MenuItem>
+                  <MenuItem value='Seti'>Seti</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <DatePicker
-                selected={date}
-                showYearDropdown
-                showMonthDropdown
-                placeholderText='MM-DD-YYYY'
-                customInput={<CustomInput />}
-                id='form-layouts-separator-date'
-                onChange={date => setDate(date)}
-              />
+              <TextField fullWidth label='Address' placeholder='Kaski, Pokhara' />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField fullWidth label='Phone No.' placeholder='+1-123-456-8790' />

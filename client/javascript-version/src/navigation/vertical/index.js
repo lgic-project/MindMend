@@ -18,7 +18,7 @@ const navigation = () => {
       path: '/'
     },
     {
-      title: 'Account Settings',
+      title: 'Profile',
       icon: AccountCogOutline,
       path: '/account-settings'
     },
@@ -37,12 +37,12 @@ const navigation = () => {
       path: '/pages/register',
       openInNewTab: true
     },
-    {
-      title: 'Error',
-      icon: AlertCircleOutline,
-      path: '/pages/error',
-      openInNewTab: true
-    },
+    // {
+    //   title: 'Error',
+    //   icon: AlertCircleOutline,
+    //   path: '/pages/error',
+    //   openInNewTab: true
+    // },
     {
       sectionTitle: 'User Interface'
     },
