@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query(nativeQuery = true,value = "select * from account where id = ?1")
-    Account getAccountDetailsById(Integer id);
+//    @Query(nativeQuery = true,value = "select * from account where id = ?1")
+//    Account getAccountDetailsById(Integer id);
 }

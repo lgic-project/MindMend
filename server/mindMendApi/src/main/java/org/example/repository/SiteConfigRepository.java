@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface SiteConfigRepository extends JpaRepository<Siteconfig,Integer> {
 
-    @Query(nativeQuery = true,value = "select * from siteconfig where id = ?1 AND status = '1'")
-    Siteconfig findSiteInfoById(Integer id);
-
-    @Query(nativeQuery = true,value = "select * from siteconfig where status = '1'")
-    List<Siteconfig> findAllSiteInfo();
+//    @Query(nativeQuery = true,value = "select * from siteconfig where id = ?1 AND status = '1'")
+//    Siteconfig findSiteInfoById(Integer id);
+//
+//    @Query(nativeQuery = true,value = "select * from siteconfig where status = '1'")
+//    List<Siteconfig> findAllSiteInfo();
 }
