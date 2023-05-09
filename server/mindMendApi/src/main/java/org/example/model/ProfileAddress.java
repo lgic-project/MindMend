@@ -19,14 +19,6 @@ public class ProfileAddress {
     private Integer id;
 
     @NotNull
-    @Column(name = "profile_id", nullable = false)
-    private Integer profileId;
-
-    @NotNull
-    @Column(name = "account_id", nullable = false)
-    private Integer accountId;
-
-    @NotNull
     @Column(name = "address_id", nullable = false)
     private Integer addressId;
 
@@ -56,5 +48,8 @@ public class ProfileAddress {
     @NotNull
     @Column(name = "deleted_at", nullable = false)
     private Instant deletedAt;
+
+    @Column(name = "account_profile_id")
+    private Integer accountProfileId;
 
 }
