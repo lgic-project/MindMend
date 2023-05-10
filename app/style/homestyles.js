@@ -4,7 +4,7 @@ import { moderateScale, verticalScale } from "react-native-size-matters";
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:"#FACE51",
+        backgroundColor:"white",
         paddingTop:35
     },
     heading:{
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
         display:"flex", 
         flexDirection:"row", 
         justifyContent:"space-between",
-        alignItems:"center"
+        alignItems:"center",
+        elevation:0.2
     }
 });
 export default styles
