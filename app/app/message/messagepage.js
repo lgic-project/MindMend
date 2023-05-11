@@ -1,12 +1,12 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import styles from '../../style/messagestyle'
 import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import MessageCard from '../../components/Message/MessageCard';
 const messagepage = () => {
   return (
     <View style={styles.container} >
-
       <View style={styles.smallcontainer}>
         {/* heading container */}
         <TouchableOpacity style={styles.buttoncontainer}>
@@ -20,10 +20,13 @@ const messagepage = () => {
       </View>
       <View style={styles.largecontainer}>
         {/* Message typing section */}
-        <View style={{width:"100%", height:"10%", position:"absolute", bottom:5, display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"row", }}>
-        <TextInput placeholder='Send a message' style={{borderWidth:1, paddingVertical:5, paddingLeft:10, width:"70%", borderRadius:25}} />
-
+        <View style={styles.messagesection}>
+        <TextInput placeholder='Send a message' style={styles.textinput} />
+        <View style={styles.msgbutton}>
+        <FontAwesome5 name="telegram-plane" size={26} color="white" />
         </View>
+        </View>
+        <MessageCard/>
       </View>
     </View>
   )
