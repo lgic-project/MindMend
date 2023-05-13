@@ -38,6 +38,40 @@ const styles = StyleSheet.create({
             borderTopEndRadius: moderateScale(50),
             position:"relative"
         },
+        messagesection:{
+            width:"100%", 
+            height:"10%", 
+            position:"absolute", 
+            bottom:5, 
+            display:"flex", 
+            justifyContent:"center", 
+            alignItems:"center", 
+            flexDirection:"row", 
+            backgroundColor:"#F5F0F0", 
+            gap:10 
+        },
+        textinput:{
+            backgroundColor:"white", 
+            paddingVertical:5, 
+            paddingLeft:10, 
+            width:"70%", 
+            borderRadius:25, 
+            elevation:1, 
+            borderWidth:1, 
+            borderColor:"#FACE51",
+            // marginBottom:5
+        },
+        msgbutton:{
+            width:"10%", 
+            height:"60%", 
+            backgroundColor:"#FACE51", 
+            borderRadius:50, 
+            display:"flex", 
+            justifyContent:"center", 
+            alignItems:"center", 
+            paddingRight:4,
+            elevation:1
+        }
 });
 
 export default styles
