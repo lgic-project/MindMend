@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Modal from '@/components/utils/modal'
 import HeroImage from '@/public/images/hero-image-01.jpg'
-
+import logo1 from '@/public/images/logo1.png'
 export default function Hero() {
 
   const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false)
@@ -17,6 +17,7 @@ export default function Hero() {
         <div className="absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none" aria-hidden="true" data-aos="fade-up" data-aos-delay="400">
           <svg className="max-w-full" width="564" height="552" viewBox="0 0 564 552" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
+              
               <linearGradient id="illustration-02" x1="-3.766" y1="300.204" x2="284.352" y2="577.921" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#5D5DFF" stopOpacity=".01" />
                 <stop offset="1" stopColor="#5D5DFF" stopOpacity=".32" />
