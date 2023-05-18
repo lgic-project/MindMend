@@ -9,9 +9,16 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
+import { Tooltip,Button } from '@nextui-org/react';
+
 
 // ** Types Imports
 import { ThemeColor } from 'src/@core/layouts/types'
+import PageTitleWrapper from 'src/layouts/components/PageTitleWrapper'
+import PageHeader from 'src/content/PageHeader'
+import { ChangeEvent, useState } from 'react'
+import TablePagination from '@mui/material/TablePagination'
+import { BorderAllRounded } from '@mui/icons-material'
 
 interface RowType {
   age: number
@@ -113,10 +120,28 @@ const statusObj: StatusObj = {
 }
 
 const DashboardTable = () => {
+
+  const [page, setPage] = useState<number>(0)
+
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
+
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
+
   return (
-    <Card>
-      <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+    <Card sx={{ width: '100%', overflow: 'hidden' }}>
+       <PageTitleWrapper>
+        <PageHeader />
+      </PageTitleWrapper>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader sx={{ minWidth: 800 }} aria-label='table in dashboard'>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -125,10 +150,11 @@ const DashboardTable = () => {
               <TableCell>Salary</TableCell>
               <TableCell>Age</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row: RowType) => (
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: RowType) => (
               <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                 <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -152,11 +178,27 @@ const DashboardTable = () => {
                     }}
                   />
                 </TableCell>
+                <TableCell>
+                <Tooltip content={"Developers love Next.js"}>
+      <Button auto flat>
+        Do hover here
+      </Button>
+    </Tooltip>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component='div'
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Card>
   )
 }

@@ -41,9 +41,9 @@ const navigation = (): VerticalNavItemsType => {
       openInNewTab: true
     },
     {
-      title: 'Error',
+      title: 'Management',
       icon: AlertCircleOutline,
-      path: '/pages/error',
+      path: '/management',
       openInNewTab: true
     },
     {
