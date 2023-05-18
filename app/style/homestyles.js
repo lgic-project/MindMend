@@ -104,11 +104,40 @@ const styles = StyleSheet.create({
         padding:1 
     },
     doc1text:{
+        paddingLeft:moderateScale(10), 
+        paddingTop:verticalScale(10), 
+        width:"75%", 
+        fontSize:17, 
+        color:"gray"
+    },
+    doc1img:{
+        width:"45%", 
+        height:"90%", 
+        position:"absolute", 
+        bottom:0, 
+        right:5
+    },
+    doc2view:{ 
+        width: "50%", 
+        height: "100%", 
+        backgroundColor: "white", 
+        borderRadius: 10, 
+        elevation: 3, 
+        padding:1 
+    },
+    doc2text:{
         paddingLeft:10, 
         paddingTop:10, 
         width:"75%", 
         fontSize:17, 
-        color:"gray"
+        color:"white"
+    },
+    doc2img:{
+        width:"70%", 
+        height:"85%", 
+        position:"absolute", 
+        bottom:0, 
+        right:-10
     }
 });
 export default styles
