@@ -8,7 +8,6 @@ const Home = () => {
   const handleprofile = () => {
     router.push(`profile`)
   }
-
   const images = [
     { id: 1, title: "Very Good", src: require('../../assets/Images/verygood.png') },
     { id: 2, title: "Good", src: require('../../assets/Images/good.png') },
@@ -92,15 +91,14 @@ const Home = () => {
           <View style={styles.doc1view}>
             <ImageBackground source={require('../../assets/Images/bubbley.jpg')} style={{flex:1}} imageStyle={{borderRadius:10}} resizeMode='cover' blurRadius={3} >
             <Text style={styles.doc1text}>Dr. Simran Baniya</Text>
-              <Image source={require('../../assets/Images/doc.png')} style={{width:"50%", height:"90%", position:"absolute", bottom:0, right:5}}/>
+              <Image source={require('../../assets/Images/doc.png')} style={styles.doc1img}/>
 
             </ImageBackground>
           </View>
-          <View style={{ width: "50%", height: "100%", backgroundColor: "white", borderRadius: 10, elevation: 3, padding:1 }}>
+          <View style={styles.doc2view}>
           <ImageBackground source={require('../../assets/Images/bubblay.jpg')} style={{flex:1}} imageStyle={{borderRadius:10}} resizeMode='cover' blurRadius={3} >
-          <Text style={{paddingLeft:10, paddingTop:10, width:"75%", fontSize:17, color:"white"}}>Dr. Random Person</Text>
-              <Image source={require('../../assets/Images/doc1.png')} style={{width:"75%", height:"85%", position:"absolute", bottom:0, right:-10}}/>
-
+          <Text style={styles.doc2text}>Dr. Random Person</Text>
+              <Image source={require('../../assets/Images/doc1.png')} style={styles.doc2img}/>
               </ImageBackground>
           </View>
         </View>
