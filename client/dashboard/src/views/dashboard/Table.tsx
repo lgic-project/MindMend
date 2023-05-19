@@ -21,6 +21,7 @@ import TablePagination from '@mui/material/TablePagination'
 import { BorderAllRounded } from '@mui/icons-material'
 
 interface RowType {
+  id:number
   age: number
   name: string
   date: string
@@ -38,6 +39,7 @@ interface StatusObj {
 
 const rows: RowType[] = [
   {
+    id:1,
     age: 27,
     status: 'current',
     date: '09/27/2018',
@@ -47,6 +49,7 @@ const rows: RowType[] = [
     designation: 'Human Resources Assistant'
   },
   {
+    id:2,
     age: 61,
     date: '09/23/2016',
     salary: '$23896.35',
@@ -56,6 +59,7 @@ const rows: RowType[] = [
     designation: 'Nuclear Power Engineer'
   },
   {
+    id:3,
     age: 59,
     date: '10/15/2017',
     name: 'Minnie Roy',
@@ -65,6 +69,7 @@ const rows: RowType[] = [
     designation: 'Environmental Specialist'
   },
   {
+    id:4,
     age: 30,
     date: '06/12/2018',
     status: 'resigned',
@@ -74,6 +79,7 @@ const rows: RowType[] = [
     designation: 'Sales Representative'
   },
   {
+    id:5,
     age: 66,
     status: 'applied',
     date: '03/24/2018',
@@ -83,6 +89,7 @@ const rows: RowType[] = [
     email: 'sganderton2@tuttocitta.it'
   },
   {
+    id:6,
     age: 33,
     date: '08/25/2017',
     salary: '$10909.52',
@@ -92,6 +99,7 @@ const rows: RowType[] = [
     designation: 'Senior Cost Accountant'
   },
   {
+    id:7,
     age: 61,
     status: 'current',
     date: '06/01/2017',
@@ -101,6 +109,7 @@ const rows: RowType[] = [
     email: 'ghoneywood5@narod.ru'
   },
   {
+    id:8,
     age: 22,
     date: '12/03/2017',
     salary: '$12336.17',
@@ -119,7 +128,7 @@ const statusObj: StatusObj = {
   professional: { color: 'success' }
 }
 
-const DashboardTable = () => {
+const DashboardTable = ({title}) => {
 
   const [page, setPage] = useState<number>(0)
 
@@ -138,17 +147,18 @@ const DashboardTable = () => {
   return (
     <Card sx={{ width: '100%', overflow: 'hidden' }}>
        <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader title= {title} />
       </PageTitleWrapper>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader sx={{ minWidth: 800 }} aria-label='table in dashboard'>
           <TableHead>
             <TableRow>
+              <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Age</TableCell>
+              <TableCell>SiteKey</TableCell>
+              <TableCell>SiteValue</TableCell>
+              <TableCell>UserId</TableCell>
+              <TableCell>CreatedDate</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
@@ -156,6 +166,8 @@ const DashboardTable = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: RowType) => (
               <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+                                <TableCell>{row.id}</TableCell>
+
                 <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>

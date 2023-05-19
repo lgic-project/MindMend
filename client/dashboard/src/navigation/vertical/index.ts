@@ -47,6 +47,15 @@ const navigation = (): VerticalNavItemsType => {
       openInNewTab: true
     },
     {
+      sectionTitle: 'Admin'
+    },
+    {
+      title: 'SiteConfig',
+      icon: AlertCircleOutline,
+      path: '/site-config',
+      openInNewTab: true
+    },
+    {
       sectionTitle: 'User Interface'
     },
     {
