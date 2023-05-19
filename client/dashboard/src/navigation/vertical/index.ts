@@ -47,6 +47,34 @@ const navigation = (): VerticalNavItemsType => {
       openInNewTab: true
     },
     {
+      sectionTitle: 'Admin'
+    },
+    {
+      title: 'Mood category',
+      icon: FormatLetterCase,
+      path: '/Mood Category'
+    },
+    {
+      title: 'User',
+      icon: FormatLetterCase,
+      path: '/user'
+    },
+    {
+      title: 'Doctor',
+      icon: FormatLetterCase,
+      path: '/Doctor'
+    },
+    {
+      title: 'Doctor Category',
+      icon: FormatLetterCase,
+      path: '/Doctor Category'
+    },
+    {
+      title: 'Contact',
+      icon: FormatLetterCase,
+      path: '/Contact'
+    },
+    {
       sectionTitle: 'User Interface'
     },
     {

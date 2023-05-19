@@ -15,7 +15,7 @@ function ApplicationsTransactions() {
 
       <Container maxWidth="lg">
 
-          <Table></Table>
+          <Table title= "management"></Table>
 
       </Container>
 

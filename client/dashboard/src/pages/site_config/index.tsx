@@ -119,7 +119,7 @@ const statusObj: StatusObj = {
   professional: { color: 'success' }
 }
 
-const DashboardTable = ({title}) => {
+const DashboardTable = ( {title}) => {
 
   const [page, setPage] = useState<number>(0)
 
@@ -138,7 +138,7 @@ const DashboardTable = ({title}) => {
   return (
     <Card sx={{ width: '100%', overflow: 'hidden' }}>
        <PageTitleWrapper>
-        <PageHeader title= {title} />
+        <PageHeader title= "site_config" />
       </PageTitleWrapper>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader sx={{ minWidth: 800 }} aria-label='table in dashboard'>
