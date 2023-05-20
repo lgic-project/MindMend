@@ -1,10 +1,8 @@
 import Head from 'next/head';
-import { Grid, Container, Card } from '@mui/material';
+import {  Container } from '@mui/material';
 
 import Table from '../../views/dashboard/Table'
-import PageTitleWrapper from 'src/layouts/components/PageTitleWrapper'
-import PageHeader from 'src/content/PageHeader'
-import { Box } from 'mdi-material-ui'
+
 
 function ApplicationsTransactions() {
   return (
@@ -15,7 +13,7 @@ function ApplicationsTransactions() {
 
       <Container maxWidth="lg">
 
-          <Table></Table>
+          <Table title= "management"></Table>
 
       </Container>
 
