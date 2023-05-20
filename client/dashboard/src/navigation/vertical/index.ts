@@ -50,6 +50,7 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Admin'
     },
     {
+<<<<<<< HEAD
       title: 'Mood category',
       icon: FormatLetterCase,
       path: '/Mood Category'
@@ -73,6 +74,12 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Contact',
       icon: FormatLetterCase,
       path: '/Contact'
+=======
+      title: 'SiteConfig',
+      icon: AlertCircleOutline,
+      path: '/site-config',
+      openInNewTab: true
+>>>>>>> main
     },
     {
       sectionTitle: 'User Interface'

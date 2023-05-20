@@ -88,6 +88,12 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
     []
   );
+
+  type Filters = {
+    status?: CryptoOrderStatus | null;
+
+  };
+
   const selectedBulkActions = selectedCryptoOrders.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
@@ -115,10 +121,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   ];
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    let value = null;
+    let value: CryptoOrderStatus | null = null;
 
     if (e.target.value !== 'all') {
-      value = e.target.value;
+      value = e.target.value as CryptoOrderStatus;
     }
 
     setFilters((prevFilters) => ({
