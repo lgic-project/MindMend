@@ -9,8 +9,10 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import { Tooltip,Button } from '@nextui-org/react';
+import { Tooltip,Button, Grid } from '@nextui-org/react';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // ** Types Imports
 import { ThemeColor } from 'src/@core/layouts/types'
@@ -18,7 +20,8 @@ import PageTitleWrapper from 'src/layouts/components/PageTitleWrapper'
 import PageHeader from 'src/content/PageHeader'
 import { ChangeEvent, useState } from 'react'
 import TablePagination from '@mui/material/TablePagination'
-import { BorderAllRounded } from '@mui/icons-material'
+import { BorderAllRounded, Padding } from '@mui/icons-material'
+import { SizeXs } from 'mdi-material-ui'
 
 interface RowType {
   id:number
@@ -190,12 +193,23 @@ const DashboardTable = ({title}) => {
                     }}
                   />
                 </TableCell>
-                <TableCell>
-                <Tooltip content={"Developers love Next.js"}>
-      <Button auto flat>
-        Do hover here
-      </Button>
-    </Tooltip>
+                <TableCell >
+                <Grid.Container gap={1} >
+      <Grid>
+                <Tooltip  content="Edit" color="primary">
+          <Button flat auto>
+            <ModeEditIcon fontSize='10' />
+          </Button>
+        </Tooltip>
+        </ Grid>
+        <Grid>
+        <Tooltip content="Delete"  color="error">
+          <Button flat auto color="error">
+            <DeleteIcon fontSize='10' />
+          </Button>
+        </Tooltip>
+        </Grid>
+        </Grid.Container>
                 </TableCell>
               </TableRow>
             ))}
