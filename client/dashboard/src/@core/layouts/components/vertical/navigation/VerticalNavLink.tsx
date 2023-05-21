@@ -1,5 +1,5 @@
 // ** React Imports
-import { ElementType, ReactNode } from 'react'
+import { ElementType, ReactNode, useEffect, useState } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -42,10 +42,14 @@ const MenuNavLink = styled(ListItemButton)<
   borderTopRightRadius: 100,
   borderBottomRightRadius: 100,
   color: theme.palette.text.primary,
+  textDecoration: 'none',
   padding: theme.spacing(2.25, 3.5),
   transition: 'opacity .25s ease-in-out',
   '&.active, &.active:hover': {
+    width: 210,
     boxShadow: theme.shadows[3],
+
+
     backgroundImage: `linear-gradient(98deg, ${theme.palette.customColors.primaryGradient}, ${theme.palette.primary.main} 94%)`
   },
   '&.active .MuiTypography-root, &.active .MuiSvgIcon-root': {
@@ -65,6 +69,11 @@ const MenuItemTextMetaWrapper = styled(Box)<BoxProps>({
 const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
   // ** Hooks
   const router = useRouter()
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const IconTag: ReactNode = item.icon
 
@@ -80,10 +89,10 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
     <ListItem
       disablePadding
       className='nav-link'
-      disabled={item.disabled || false}
       sx={{ mt: 1.5, px: '0 !important' }}
     >
-      <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
+      {mounted && (
+      <Link passHref style={{ textDecoration: 'none', width:210 }}  href={item.path === undefined ? '/' : `${item.path}`}>
         <MenuNavLink
           component={'a'}
           className={isNavLinkActive() ? 'active' : ''}
@@ -129,6 +138,7 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
           </MenuItemTextMetaWrapper>
         </MenuNavLink>
       </Link>
+      )}
     </ListItem>
   )
 }

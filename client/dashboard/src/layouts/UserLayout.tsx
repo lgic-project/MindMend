@@ -47,6 +47,8 @@ const UserLayout = ({ children }: Props) => {
       verticalAppBarContent={(
         props // AppBar Content
       ) => (
+
+
         <VerticalAppBarContent
           hidden={hidden}
           settings={settings}

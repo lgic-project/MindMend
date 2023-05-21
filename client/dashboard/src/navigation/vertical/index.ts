@@ -41,10 +41,45 @@ const navigation = (): VerticalNavItemsType => {
       openInNewTab: true
     },
     {
-      title: 'Error',
+      title: 'Management',
       icon: AlertCircleOutline,
-      path: '/pages/error',
+      path: '/management',
       openInNewTab: true
+    },
+    {
+      sectionTitle: 'Admin'
+    },
+    {
+<<<<<<< HEAD
+      title: 'Mood category',
+      icon: FormatLetterCase,
+      path: '/Mood Category'
+    },
+    {
+      title: 'User',
+      icon: FormatLetterCase,
+      path: '/user'
+    },
+    {
+      title: 'Doctor',
+      icon: FormatLetterCase,
+      path: '/Doctor'
+    },
+    {
+      title: 'Doctor Category',
+      icon: FormatLetterCase,
+      path: '/Doctor Category'
+    },
+    {
+      title: 'Contact',
+      icon: FormatLetterCase,
+      path: '/Contact'
+=======
+      title: 'SiteConfig',
+      icon: AlertCircleOutline,
+      path: '/site-config',
+      openInNewTab: true
+>>>>>>> main
     },
     {
       sectionTitle: 'User Interface'
