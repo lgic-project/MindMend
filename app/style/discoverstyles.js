@@ -88,6 +88,9 @@ const styles = StyleSheet.create({
     title1:{
         color: "#FACE51"
     },
+    title2:{
+        color: "#8D85F1"
+    },
     title3:{
         color:"#99EC98",
         fontSize: 16, 
@@ -110,9 +113,6 @@ const styles = StyleSheet.create({
         flexDirection:"row", 
         gap:15 
     },
-    button1:{
-        backgroundColor: "#FACE51", 
-    },
     buttoneven:{ 
         width: moderateScale(170), 
         paddingVertical:verticalScale(10),
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
         bottom: -30, 
         left: 10, 
     },
-    title2:{
-        color: "#8D85F1"
+    button1:{
+        backgroundColor: "#FACE51", 
     },
     button2:{
         backgroundColor: "#8D85F1", 
