@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
         alignItems:"center",
         width:"100%", 
         paddingHorizontal:5, 
-        marginTop:(20),
-        height:"12%"
+        marginTop:(10),
+        height:"12%",
+        // gap:5
     },
     fitnesscontainer:{
         width:"100%",
@@ -78,8 +79,8 @@ const styles = StyleSheet.create({
         gap:-2 
     },
     lookingtext:{
-        fontSize:13, 
-        color:"green", 
+        fontSize:12, 
+        fontWeight:"500", 
         textAlign:"center"
     },
     doccontainer:{ 
@@ -101,14 +102,16 @@ const styles = StyleSheet.create({
         backgroundColor: "white", 
         borderRadius: 10, 
         elevation: 3, 
-        padding:1 
+        // padding:1 
     },
     doc1text:{
         paddingLeft:moderateScale(10), 
         paddingTop:verticalScale(10), 
-        width:"75%", 
-        fontSize:17, 
-        color:"gray"
+        width:"60%", 
+        fontSize:15, 
+        color:"white",
+        fontWeight:"700",
+        elevation:3
     },
     doc1img:{
         width:"45%", 
@@ -123,14 +126,15 @@ const styles = StyleSheet.create({
         backgroundColor: "white", 
         borderRadius: 10, 
         elevation: 3, 
-        padding:1 
+        // padding:1 
     },
     doc2text:{
         paddingLeft:10, 
         paddingTop:10, 
-        width:"75%", 
-        fontSize:17, 
-        color:"white"
+        width:"60%", 
+        fontSize:15, 
+        color:"white",
+        fontWeight:"700"
     },
     doc2img:{
         width:"70%", 
@@ -138,6 +142,31 @@ const styles = StyleSheet.create({
         position:"absolute", 
         bottom:0, 
         right:-10
+    },
+    emojibutton:{ 
+        width: "20%", 
+        display:"flex", 
+        justifyContent:"center", 
+        alignItems:"center" 
+    },
+    emojiview:{
+        width:"65%", 
+        height:"55%", 
+        borderRadius:50, 
+        backgroundColor:"#FED9D9", 
+        display:"flex", 
+        justifyContent:"center", 
+        alignItems:"center"
+    },
+    selected:{
+        borderWidth:1,
+        borderColor:"red"
+    },
+    notselected:{
+        textAlign: "center"
+    },
+    selectedtext:{
+        color:"red"
     }
 });
 export default styles

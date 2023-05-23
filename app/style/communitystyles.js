@@ -4,12 +4,12 @@ import { moderateScale, verticalScale } from "react-native-size-matters";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "yellow"
+        backgroundColor: "#FAFAFA"
     },
     firstmain:{
         width:"100%",
         height:"20%",
-        backgroundColor:"green",
+        backgroundColor:"#FAFAFA",
 
     },
     firstview:{
@@ -22,31 +22,27 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center"
     },
-    cataddmain:{ 
-        width:"100%", 
-        height:70,
-        position:"absolute", 
-        bottom:0, 
-    },
-    catadd:{ 
-        flex:1, 
+    tabmain:{
+        display:"flex", 
+        alignItems:"center", 
         justifyContent:"center", 
-        alignItems:"center",
-        flexDirection:"row",
+        flexDirection:"row", 
         gap:10
     },
-    category:{ 
-        width:"60%", 
-        height:"80%", 
-        backgroundColor:"white",
-        borderRadius:50,
-        elevation:1
+    tabbar:{
+        backgroundColor: 'white', 
+        width:250, 
+        borderRadius:50
     },
     add:{
-        width:"15%",
-        height:"80%",
-        backgroundColor:"white",
-        borderRadius:50,
+        width:45, 
+        height:45, 
+        backgroundColor:"white", 
+        borderRadius:50, 
+        elevation:1, 
+        display:"flex", 
+        justifyContent:"center", 
+        alignItems:"center"
     }
 
 });

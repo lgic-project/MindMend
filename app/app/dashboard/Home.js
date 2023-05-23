@@ -1,13 +1,25 @@
 import { View, Text, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView } from 'react-native'
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import styles from '../../style/homestyles'
 import { useRouter } from 'expo-router';
 import CircularProgress from 'react-native-circular-progress-indicator';
 const Home = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  // const [showView, setShowView] = useState(true);
   const router = useRouter();
   const handleprofile = () => {
     router.push(`profile`)
   }
+  const handledoc = ()=>{
+    router.push(`doctor`)
+  }
+  // useEffect(() => {
+  //   if (selectedItem) {
+  //     setTimeout(() => {
+  //       setShowView(false);
+  //     }, 3000);
+  //   }
+  // }, [selectedItem]);
   const images = [
     { id: 1, title: "Very Good", src: require('../../assets/Images/verygood.png') },
     { id: 2, title: "Good", src: require('../../assets/Images/good.png') },
@@ -15,6 +27,9 @@ const Home = () => {
     { id: 4, title: "Sad", src: require('../../assets/Images/sad.png') },
     { id: 5, title: "Very Sad", src: require('../../assets/Images/verysad.png') },
   ]
+  const handlePress = (id) => {
+    setSelectedItem(id === selectedItem ? null : id);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,14 +43,19 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       {/* Emoji Mood Section */}
+      {/* {showView &&
+      ( */}
       <View style={styles.moodcontainer}>
         {images.map(image => (
-          <TouchableOpacity style={{ width: "20%" }} key={image.id}>
-            <Image source={image.src} resizeMode="contain" style={{ width: "100%", height: '50%' }} />
-            <Text style={{ textAlign: "center" }} >{image.title}</Text>
-          </TouchableOpacity>
+          <View style={styles.emojibutton} key={image.id} >
+            <TouchableOpacity style={[styles.emojiview, image.id === selectedItem && styles.selected]} onPress={() => handlePress(image.id)}>
+            <Image source={image.src} resizeMode="contain" style={{ width: "90%", height: '90%' }} />
+            </TouchableOpacity>
+            <Text style={[styles.notselected,image.id === selectedItem && styles.selectedtext]} >{image.title}</Text>
+          </View>
         ))}
       </View>
+       {/* )} */}
       {/* fitness */}
       <View style={styles.fitnesscontainer}>
         <View style={styles.fitnesscard}>
@@ -88,19 +108,19 @@ const Home = () => {
       <View style={styles.doccontainer}>
         <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
         <View style={styles.doccard}>
-          <View style={styles.doc1view}>
+          <TouchableOpacity style={styles.doc1view} onPress={handledoc} >
             <ImageBackground source={require('../../assets/Images/bubbley.jpg')} style={{flex:1}} imageStyle={{borderRadius:10}} resizeMode='cover' blurRadius={3} >
-            <Text style={styles.doc1text}>Dr. Simran Baniya</Text>
+            <Text style={styles.doc1text}>Dr. Lorem Ipsum</Text>
               <Image source={require('../../assets/Images/doc.png')} style={styles.doc1img}/>
 
             </ImageBackground>
-          </View>
-          <View style={styles.doc2view}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.doc2view} onPress={handledoc}>
           <ImageBackground source={require('../../assets/Images/bubblay.jpg')} style={{flex:1}} imageStyle={{borderRadius:10}} resizeMode='cover' blurRadius={3} >
-          <Text style={styles.doc2text}>Dr. Random Person</Text>
+          <Text style={styles.doc2text}>Dr. Lorem Ipsum</Text>
               <Image source={require('../../assets/Images/doc1.png')} style={styles.doc2img}/>
               </ImageBackground>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
