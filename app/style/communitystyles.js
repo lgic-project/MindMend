@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
         backgroundColor:"#FAFAFA",
 
     },
+    groups:{
+        fontSize:20,
+        fontWeight:"400",
+        color:"white"
+    },
     firstview:{
         width:"100%",
         height:"100%",

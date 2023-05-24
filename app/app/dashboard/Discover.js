@@ -5,11 +5,18 @@ import styles from '../../style/discoverstyles';
 
 const Discover = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.headsection} >
-        <Text style={styles.headingtext}>Discover</Text>
+    <View style={styles.container} >
+
+      <View style={styles.smallcontainer}>
+        {/* heading container */}
+        <View style={styles.titlecontainer}>
+          <Text style={styles.titletext}>
+            Discover
+            </Text>
+          </View>
       </View>
-      <ScrollView style={styles.scrollview}>
+      <View style={styles.largecontainer}>
+      <ScrollView>
         {/* card container */}
         <View style={styles.cardcontainer}>
           {/* card1 */}
@@ -91,7 +98,8 @@ const Discover = () => {
 
         </View>
       </ScrollView>
-    </View>
+      </View>
+      </View>
   )
 }
 

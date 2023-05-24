@@ -9,9 +9,6 @@ const Inbox = () => {
 
       <View style={styles.smallcontainer}>
         {/* heading container */}
-        <TouchableOpacity style={styles.buttoncontainer}>
-        <AntDesign name="left" size={18} color="black" />
-        </TouchableOpacity>
         <View style={styles.titlecontainer}>
           <Text style={styles.titletext}>
             Message

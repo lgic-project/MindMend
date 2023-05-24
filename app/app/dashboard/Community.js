@@ -36,7 +36,7 @@ const Community = () => {
     <View style={styles.container} >
       <View style={styles.firstmain}>
         <View style={styles.firstview}>
-        <Text>Groups</Text>
+        <Text style={styles.groups}>Groups</Text>
         </View>
       </View>
      <View style={{flex:1}}>

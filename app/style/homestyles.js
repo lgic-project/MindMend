@@ -5,19 +5,19 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:"white",
-        paddingTop:verticalScale(35)
+        paddingTop:verticalScale(35),
     },
     heading:{
         height:(70), 
         width:"100%", 
-        backgroundColor:"white", 
+        // backgroundColor:"#face51", 
         paddingHorizontal:moderateScale(20), 
         paddingVertical:5, 
         display:"flex", 
         flexDirection:"row", 
         justifyContent:"space-between",
         alignItems:"center",
-        elevation:0.2
+        
     },
     moodcontainer:{
         display:'flex',

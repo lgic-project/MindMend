@@ -16,7 +16,7 @@ const SeeMoreText = ({ initialNumberOfLines, content }) => {
             <Text numberOfLines={showFullText ? undefined : initialNumberOfLines}>
                 {content}
             </Text>
-            {!showFullText && <Text style={{fontWeight:"500", color:"blue"}}>See More</Text>}
+            {!showFullText && <Text style={{ fontWeight: "500", color: "blue" }}>See More</Text>}
         </TouchableOpacity>
     );
 };
@@ -36,8 +36,8 @@ const doctorpage = () => {
             </View>
             {/* large container */}
             <View style={styles.largecontainer}>
-                <View style={{ width: "100%", height: "20%", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "gray", paddingTop: 15, display: "flex", gap: 15 }}>
-                    <View style={{ width: "100%", display: "flex", justifyContent: "space-between", paddingHorizontal: 5, flexDirection: "row", paddingLeft: 20 }}>
+                <View style={styles.titlesection}>
+                    <View style={styles.titlefirst}>
                         <Text style={{ fontSize: 20, fontWeight: "700" }}>Dr. Lorem ipsum</Text>
                         <StarRating
                             rating={rating}
@@ -45,46 +45,51 @@ const doctorpage = () => {
                             starSize={20}
                         />
                     </View>
-                    <View style={{ width: "100%", display: "flex", justifyContent: "space-between", paddingHorizontal: 5, flexDirection: "row", paddingLeft: 20 }}>
-                        <Text style={{ color: "gray", fontSize: 15, fontWeight: "300" }}>Lorem ipsum specialist</Text>
-                        <Text style={{ color: "gray", fontSize: 15, fontWeight: "300" }}>See all reviews</Text>
+                    <View style={styles.titlesecond}>
+                        <Text style={styles.textspecial}>Lorem ipsum specialist</Text>
+                        <Text style={styles.textspecial}>See all reviews</Text>
                     </View>
                 </View>
                 {/* large section */}
-                <View style={{ width: "100%", height: "80%", paddingHorizontal:15, display:"flex", gap:20, paddingTop:15 }}>
-                    <View style={{display:"flex", gap:5}}>
-                    <Text style={{fontSize:15, fontWeight:"700"}}>About</Text>
-                    <ScrollView>
-                    <SeeMoreText
-                        initialNumberOfLines={3}
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ligula vel justo malesuada dapibus. Integer nec efficitur nulla. Suspendisse potenti. Donec at bibendum risus. Sed consectetur tristique tortor, in interdum ligula feugiat at."
-                    />
-                    </ScrollView>
+                <View style={styles.underlarge}>
+                    <View style={styles.aboutsection}>
+                        <Text style={{ fontSize: 15, fontWeight: "700" }}>About</Text>
+                        <ScrollView>
+                            <SeeMoreText
+                                initialNumberOfLines={3}
+                                content="Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit. Sed vitae
+                                ligula vel justo malesuada dapibus.
+                                Integer nec efficitur nulla. Suspendisse potenti.
+                                Donec at bibendum risus. Sed consectetur tristique
+                                tortor, in interdum ligula feugiat at."
+                            />
+                        </ScrollView>
                     </View>
-                    <View style={{display:"flex", gap:5}}>
-                        <Text style={{fontSize:15, fontWeight:"700"}}>Working Hours</Text>
+                    <View style={{ display: "flex", gap: 5 }}>
+                        <Text style={{ fontSize: 15, fontWeight: "700" }}>Working Hours</Text>
                         <Text>Monday-Friday: 09:00 AM - 05:00 PM</Text>
                     </View>
-                    <View style={{display:"flex", justifyContent:"space-between", flexDirection:"row", width:"100%", height:"15%"}}>
-                        <TouchableOpacity style={{width:"30%", height:"100%", borderWidth:0.5, borderRadius:5, display:"flex", justifyContent:"center", alignItems:"center"}}>
+                    <View style={styles.boxcontainer}>
+                        <TouchableOpacity style={styles.box}>
                             <Text>10K</Text>
                             <Text>Patients</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{width:"30%", height:"100%", borderWidth:0.5, borderRadius:5, display:"flex", justifyContent:"center", alignItems:"center"}}>
+                        <TouchableOpacity style={styles.box}>
                             <Text>5 Years</Text>
                             <Text>Experience</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{width:"30%", height:"100%", borderWidth:0.5, borderRadius:5, display:"flex", justifyContent:"center", alignItems:"center"}}>
+                        <TouchableOpacity style={styles.box}>
                             <Text>5.0</Text>
                             <Text>Avg Rating</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{width:360, height:"20%", position:"absolute", bottom:20, left:5, right:0}}>
-                    <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-                    <TouchableOpacity style={{width:"100%", height:"100%", backgroundColor:"#2BC5ED", display:"flex", justifyContent:"center", alignItems:"center", borderRadius:20}}>
-                        <Text style={{fontSize:20, fontWeight:"500", color:"white"}}>Make an Appointment</Text>
-                    </TouchableOpacity>
-                    </View>
+                    <View style={styles.absolutebutton}>
+                        <View style={styles.centerbtn}>
+                            <TouchableOpacity style={styles.btn}>
+                                <Text style={{ fontSize: 20, fontWeight: "500", color: "white" }}>Make an Appointment</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>

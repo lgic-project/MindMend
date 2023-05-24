@@ -15,20 +15,12 @@ container:{
         paddingTop:10,
         
     },
-    buttoncontainer:{
-        
-        width:"15%",
-        display:"flex",
-        justifyContent:"center",
-        paddingLeft:5,
-        height:"50%"
-    },
     titlecontainer:{
-        width:"85%",
+        width:"100%",
         height:"50%",
         display:"flex",
         justifyContent:"center",
-        paddingHorizontal:moderateScale(80)
+        alignItems:"center"
     },
     largecontainer:{
         height:"90%",
@@ -63,7 +55,8 @@ container:{
         },
     titletext:{
         fontWeight:"400", 
-        fontSize:20 
+        fontSize:20,
+        color:"white"
     },
     chatcontainer:{
         display:"flex",

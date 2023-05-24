@@ -2,46 +2,59 @@ import { StyleSheet } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 
 const styles = StyleSheet.create({
-
-    container:{ 
-        flex: 1, 
-        backgroundColor: "white", 
-        paddingTop: verticalScale(30), 
-        paddingHorizontal: 5 
+    container:{
+        flex:1,
+        paddingTop: verticalScale (35),
+        backgroundColor:"#FACE51" 
     },
-    headsection:{ 
-        display: "flex", 
-        paddingVertical: verticalScale(20), 
-        justifyContent: "center", 
-        alignItems: "center" 
-    },
-    headingtext:{
-        fontSize:20, 
-        fontWeight:"500"
-    },
-    scrollview:{ 
-        width: "100%", 
-        height: "80%", 
-        backgroundColor: "#fafafa" 
-    },
+        smallcontainer:{
+            height:"10%",
+            display:"flex",
+            flexDirection:"row",
+            paddingHorizontal:10,
+            paddingTop:10,
+            
+        },
+        titletext:{
+            fontWeight:"400", 
+            fontSize:20,
+            color:"white"
+        },
+        titlecontainer:{
+            width:"100%",
+            height:"50%",
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center"
+        },
+        largecontainer:{
+            height:"90%",
+            backgroundColor:"white",
+            borderTopStartRadius: moderateScale(50),
+            borderTopEndRadius: moderateScale(50),
+            paddingHorizontal:10,
+            paddingTop:20
+        },
     cardcontainer:{ 
         flex: 1, 
         display: "flex", 
         justifyContent: "center", 
         alignItems: "center", 
         paddingTop: 5, 
-        gap:10
+        gap:10,
+        paddingBottom:20
     },
     cardmain:{ 
         width: "100%", 
         height: verticalScale(160), 
-        backgroundColor: "#fafafa", 
         display:"flex", 
         justifyContent:"center",
         alignItems:"center",
+        paddingLeft:5,
+        paddingRight:5
     },
     card:{ 
-        width: "90%", 
+        width: "95%", 
         height: verticalScale(110), 
         backgroundColor: "white", 
         borderRadius: 15, 
