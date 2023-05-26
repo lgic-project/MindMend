@@ -25,12 +25,15 @@ const Walkthrough = () => {
     style={{flex:1}}
     >
       <Onboarding
+      
       bottomBarColor='white'
       NextButtonComponent={Next}
       SkipButtonComponent={Skip}
       // pushing to login page after skip or done button is clicked
       onSkip={() => router.push(`login`)}
       onDone={() => router.push(`login`)}
+      autoplay={true} // Enable autoplay
+      autoplayTimeout={3000} // Set autoplay timeout to 3 seconds
     pages={[
         // array of multiple walkthrough screens
     {
