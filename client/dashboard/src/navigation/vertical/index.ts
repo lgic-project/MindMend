@@ -52,7 +52,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Mood category',
       icon: FormatLetterCase,
-      path: '/Mood Category'
+      path: '/mood_category'
     },
     {
       title: 'User',
@@ -62,7 +62,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Doctor',
       icon: FormatLetterCase,
-      path: '/Doctor'
+      path: '/doctor'
     },
     {
       title: 'Doctor Category',
@@ -72,7 +72,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Contact',
       icon: FormatLetterCase,
-      path: '/Contact'
+      path: '/contact'
     },{
       title: 'SiteConfig',
       icon: AlertCircleOutline,

@@ -194,17 +194,17 @@ const DashboardTable = ({title}) => {
                   />
                 </TableCell>
                 <TableCell >
-                <Grid.Container gap={1} >
-      <Grid>
-                <Tooltip  content="Edit" color="primary">
-          <Button flat auto>
+                <Grid.Container gap={1}  >
+      <Grid  >
+                <Tooltip  content="Edit" color="primary" style={{width: 40}}>
+          <Button flat auto size={'xs'}>
             <ModeEditIcon fontSize='10' />
           </Button>
         </Tooltip>
         </ Grid>
         <Grid>
         <Tooltip content="Delete"  color="error">
-          <Button flat auto color="error">
+          <Button flat auto color="error" size={'xs'}>
             <DeleteIcon fontSize='10' />
           </Button>
         </Tooltip>
