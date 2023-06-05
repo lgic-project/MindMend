@@ -1,11 +1,37 @@
-import { View, Text, useWindowDimensions } from 'react-native'
+import { View, Text, useWindowDimensions,ScrollView, Image } from 'react-native'
 import * as React from 'react'
 import styles from '../../style/communitystyles';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const FirstRoute=()=>(
-  <View style={{flex:1, backgroundColor:"#FAFAFA"}}></View>
+  <ScrollView style={{flex:1, backgroundColor:"#FAFAFA", paddingTop:20}}>
+    <View style={{flex:1, alignItems:"center", gap:15}} >
+      <View style={{width:"90%", height:350, backgroundColor:"white", borderWidth:0.2, borderRadius:10, borderColor:"#ACA6A6", padding:10, display:"flex", gap:5}} >
+        <View style={{width:"100%", height:"20%", backgroundColor:"#FAFAFA", padding:5, gap:5}}>
+          <View style={{display:"flex", flexDirection:"row", gap:10}}>
+            <Image source={require('../../assets/Images/myprofile.png')} style={{ width:35, height:35, borderRadius:50 }} />
+          <Text style={{ alignSelf:"center", fontSize:17}}>Mahima Poudel</Text>
+          </View>
+          <Text style={{fontSize:13}}>Help Needed</Text>
+        </View>
+        <View style={{width:"100%", height:"60%"}} >
+          <Image source={require('../../assets/Images/gym.png')} resizeMode='contain' style={{width:"100%", height:"100%"}} />
+        </View>
+        <View style={{width:"100%", height:"20%", backgroundColor:"#FAFAFA", display:"flex", flexDirection:"row", gap:10}} >
+          <View style={{ width:"30%", height:"100%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <AntDesign name="like2" size={24} color="black" />
+          </View>
+          <View style={{ width:"30%", height:"100%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <FontAwesome name="comment-o" size={24} color="black" />
+          </View>
+          <View style={{ width:"30%", height:"100%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <FontAwesome name="share" size={24} color="black" />
+          </View>
+        </View>
+      </View>
+    </View>
+  </ScrollView>
 );
 
 const SecondRoute = ()=>(
@@ -36,7 +62,7 @@ const Community = () => {
     <View style={styles.container} >
       <View style={styles.firstmain}>
         <View style={styles.firstview}>
-        <Text style={styles.groups}>Groups</Text>
+        <Text style={styles.groups}>Community</Text>
         </View>
       </View>
      <View style={{flex:1}}>
