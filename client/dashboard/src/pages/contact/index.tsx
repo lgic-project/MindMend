@@ -3,18 +3,18 @@ import { Container } from '@mui/material';
 
 import Table from '../../views/dashboard/Table'
 
-function SiteConfig() {
-  const column = ['Name','Logo','Created At', 'Updated At'];
+function Contact() {
+  const column = ['Name','Email','Created At', 'Updated At','Updated By'];
 
   return (
     <>
       <Head>
-        <title>SiteConfig - Applications</title>
+        <title>Contact - Applications</title>
       </Head>
 
       <Container maxWidth="lg">
 
-          <Table title ="SiteConfig" columnList={column}></Table>
+          <Table title ="Contact" columnList={column}></Table>
 
       </Container>
 
@@ -23,4 +23,4 @@ function SiteConfig() {
 }
 
 
-export default SiteConfig;
+export default Contact;

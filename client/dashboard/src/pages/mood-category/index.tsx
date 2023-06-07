@@ -1,21 +1,20 @@
 import Head from 'next/head';
-import {  Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 import Table from '../../views/dashboard/Table'
 
-
-function ApplicationsTransactions() {
+function MoodCategory() {
   const column = ['Name','Logo','Created At', 'Updated At'];
 
   return (
     <>
       <Head>
-        <title>Transactions - Applications</title>
+        <title>Mood Category - Applications</title>
       </Head>
 
       <Container maxWidth="lg">
 
-          <Table title= "management" columnList={column}></Table>
+          <Table title ="Mood Category" columnList={column} ></Table>
 
       </Container>
 
@@ -24,4 +23,4 @@ function ApplicationsTransactions() {
 }
 
 
-export default ApplicationsTransactions;
+export default MoodCategory;
