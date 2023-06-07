@@ -5,6 +5,8 @@ import Table from '../../views/dashboard/Table'
 
 
 function ApplicationsTransactions() {
+  const column = ['Name','Logo','Created At', 'Updated At'];
+
   return (
     <>
       <Head>
@@ -13,7 +15,7 @@ function ApplicationsTransactions() {
 
       <Container maxWidth="lg">
 
-          <Table title= "management"></Table>
+          <Table title= "management" columnList={column}></Table>
 
       </Container>
 

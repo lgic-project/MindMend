@@ -4,6 +4,8 @@ import { Container } from '@mui/material';
 import Table from '../../views/dashboard/Table'
 
 function SiteConfig() {
+  const column = ['Name','Logo','Created At', 'Updated At'];
+
   return (
     <>
       <Head>
@@ -12,7 +14,7 @@ function SiteConfig() {
 
       <Container maxWidth="lg">
 
-          <Table title ="SiteConfig"></Table>
+          <Table title ="SiteConfig" columnList={column}></Table>
 
       </Container>
 

@@ -52,8 +52,8 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Mood category',
       icon: FormatLetterCase,
-      path: '/mood_category'
-    },
+      path: '/mood-category',
+      openInNewTab: true    },
     {
       title: 'User',
       icon: FormatLetterCase,
@@ -64,11 +64,11 @@ const navigation = (): VerticalNavItemsType => {
       icon: FormatLetterCase,
       path: '/doctor'
     },
-    {
-      title: 'Doctor Category',
-      icon: FormatLetterCase,
-      path: '/Doctor Category'
-    },
+    // {
+    //   title: 'Doctor Category',
+    //   icon: FormatLetterCase,
+    //   path: '/Doctor Category'
+    // },
     {
       title: 'Contact',
       icon: FormatLetterCase,

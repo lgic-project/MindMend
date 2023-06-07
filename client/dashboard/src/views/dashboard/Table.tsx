@@ -131,9 +131,13 @@ const statusObj: StatusObj = {
   professional: { color: 'success' }
 }
 
-const DashboardTable = ({title}) => {
+const DashboardTable = ({title, columnList }) => {
 
   const [page, setPage] = useState<number>(0)
+
+  if(columnList ==null){
+    columnList = ['name','site']
+  }
 
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -156,12 +160,13 @@ const DashboardTable = ({title}) => {
         <Table stickyHeader sx={{ minWidth: 800 }} aria-label='table in dashboard'>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>SiteKey</TableCell>
-              <TableCell>SiteValue</TableCell>
-              <TableCell>UserId</TableCell>
-              <TableCell>CreatedDate</TableCell>
+            <TableCell>Id</TableCell>
+              {columnList.map((item) => (
+
+        // <p key={item}>{item}</p>
+
+        <TableCell key={item}>{item}</TableCell>
+      ))}
               <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>

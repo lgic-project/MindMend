@@ -4,6 +4,8 @@ import { Container } from '@mui/material';
 import Table from '../../views/dashboard/Table'
 
 function Contact() {
+  const column = ['Name','Email','Created At', 'Updated At','Updated By'];
+
   return (
     <>
       <Head>
@@ -12,7 +14,7 @@ function Contact() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Contact"></Table>
+          <Table title ="Contact" columnList={column}></Table>
 
       </Container>
 

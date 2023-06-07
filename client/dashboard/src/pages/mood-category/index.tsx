@@ -3,16 +3,18 @@ import { Container } from '@mui/material';
 
 import Table from '../../views/dashboard/Table'
 
-function Moodcategory() {
+function MoodCategory() {
+  const column = ['Name','Logo','Created At', 'Updated At'];
+
   return (
     <>
       <Head>
-        <title>Moodcategory - Applications</title>
+        <title>Mood Category - Applications</title>
       </Head>
 
       <Container maxWidth="lg">
 
-          <Table title ="Mood Category"></Table>
+          <Table title ="Mood Category" columnList={column} ></Table>
 
       </Container>
 
@@ -21,4 +23,4 @@ function Moodcategory() {
 }
 
 
-export default Moodcategory;
+export default MoodCategory;
