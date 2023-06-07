@@ -32,24 +32,31 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.heading}>
+    <View style={styles.container} >
+
+      <View style={styles.smallcontainer}>
+        <View style={{backgroundColor:"#face51", flex:1,borderBottomStartRadius:40,
+            borderBottomEndRadius:40}}>
+              <View style={styles.heading}>
         <View>
-          <Text style={{ fontSize: 22, color: "gray" }}>Hi Mahima</Text>
-          <Text style={{fontSize:18, fontWeight:"400"}}>How are you this morning?</Text>
+          <Text style={{ fontSize: 22, color: "white" }}>Hi Mahima</Text>
+          <Text style={{fontSize:17, fontWeight:"400"}}>How are you this morning?</Text>
         </View>
         <TouchableOpacity onPress={handleprofile}>
           <Image source={require('../../assets/Images/myprofile.png')} resizeMode='contain' style={{ width: 45, height: 45, borderRadius: 50 }} />
         </TouchableOpacity>
       </View>
-      {/* Emoji Mood Section */}
+            </View>
+      </View>
+      <View style={styles.largecontainer}>
+        {/* Emoji Mood Section */}
       {/* {showView &&
       ( */}
       <View style={styles.moodcontainer}>
         {images.map(image => (
           <View style={styles.emojibutton} key={image.id} >
             <TouchableOpacity style={[styles.emojiview, image.id === selectedItem && styles.selected]} onPress={() => handlePress(image.id)}>
-            <Image source={image.src} resizeMode="contain" style={{ width: "90%", height: '90%' }} />
+            <Image source={image.src} resizeMode="contain" style={{ width: "85%", height: '85%' }} />
             </TouchableOpacity>
             <Text style={[styles.notselected,image.id === selectedItem && styles.selectedtext]} >{image.title}</Text>
           </View>
@@ -60,11 +67,11 @@ const Home = () => {
       <View style={styles.fitnesscontainer}>
         <View style={styles.fitnesscard}>
           <Text style={{paddingLeft:10, paddingTop:2, fontWeight:"500" ,fontSize:16}}>Walk</Text>
-          <View style={{width:"100%", display:"flex",  alignItems:"center"}}>
+          <View style={{flex:1,  alignItems:"center"}}>
             <CircularProgress
               value={7500}
               maxValue={20000}
-              radius={45}
+              radius={40}
               duration={2000}
               progressValueColor={'gray'}
               activeStrokeColor={'#F07B7B'}
@@ -123,7 +130,8 @@ const Home = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+      </View>
+      </View>
   )
 }
 
