@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Desktop\college project\MindMend\client\landing\app\(auth)\signup\page.tsx
+// File: /Users/sapana/MindMend/client/landing/app/(auth)/signup/page.tsx
 import * as entry from '../../../../../app/(auth)/signup/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

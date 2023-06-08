@@ -1,30 +1,25 @@
 {
   "cssImports": {
-    "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\(default)\\layout.tsx": [
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\aos\\dist\\aos.css"
+    "/Users/sapana/MindMend/client/landing/app/layout.tsx": [
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}",
+      "/Users/sapana/MindMend/client/landing/app/css/style.css"
     ],
-    "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\layout.tsx": [
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\css\\style.css"
+    "/Users/sapana/MindMend/client/landing/app/(default)/layout.tsx": [
+      "/Users/sapana/MindMend/client/landing/node_modules/aos/dist/aos.css"
     ]
   },
   "cssModules": {
-    "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\(default)\\page": [
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\css\\style.css",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\aos\\dist\\aos.css"
+    "/Users/sapana/MindMend/client/landing/app/(default)/page": [
+      "/Users/sapana/MindMend/client/landing/app/css/style.css",
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}",
+      "/Users/sapana/MindMend/client/landing/node_modules/aos/dist/aos.css"
     ],
-    "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\(auth)\\signup\\page": [
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\css\\style.css",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}"
-    ],
-    "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\(auth)\\signin\\page": [
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\app\\css\\style.css",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
-      "C:\\Users\\Lenovo\\Desktop\\college project\\MindMend\\client\\landing\\node_modules\\next\\font\\google\\target.css?{\"path\":\"app\\\\layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}"
+    "/Users/sapana/MindMend/client/landing/app/(auth)/signup/page": [
+      "/Users/sapana/MindMend/client/landing/app/css/style.css",
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-inter\",\"display\":\"swap\"}],\"variableName\":\"inter\"}",
+      "/Users/sapana/MindMend/client/landing/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Architects_Daughter\",\"arguments\":[{\"subsets\":[\"latin\"],\"variable\":\"--font-architects-daughter\",\"weight\":\"400\",\"display\":\"swap\"}],\"variableName\":\"architects_daughter\"}"
     ]
   }
 }

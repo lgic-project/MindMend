@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Desktop\college project\MindMend\client\landing\app\(default)\layout.tsx
+// File: /Users/sapana/MindMend/client/landing/app/(default)/layout.tsx
 import * as entry from '../../../../app/(default)/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
