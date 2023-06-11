@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, ElementType, ChangeEvent } from 'react'
+import { useState, ElementType, ChangeEvent, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -15,6 +15,8 @@ import Button, { ButtonProps } from '@mui/material/Button'
 // ** Icons Imports
 // import Close from 'mdi-material-ui/Close'
 import FormLayoutsSeparator from '../form-layouts/FormLayoutsSeparator'
+import axios from 'axios'
+import { PROFILE_ROUTE } from 'src/configs/appRoutes'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -45,15 +47,55 @@ const TabAccount = () => {
   // const [openAlert, setOpenAlert] = useState<boolean>(true)
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
 
-  const onChange = (file: ChangeEvent) => {
-    const reader = new FileReader()
+  const [base64, setBase64] = useState<string | null>(null);
+
+  const id =1;
+
+  useEffect(()=>{
+
+    const GetProfileDataList = async ()=>{
+       await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
+        // setLoading(true);
+        const base64String = res.data.encodedImage; // Base64 encoded string
+        const regularString = convertBase64ToString(base64String);
+        setImgSrc(regularString);
+      });
+
+    }
+    GetProfileDataList();
+
+
+
+
+  },[])
+
+
+  const onChange = async (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {
-      reader.onload = () => setImgSrc(reader.result as string)
+      const base64 = await toBase64(files[0] as File);
 
-      reader.readAsDataURL(files[0])
+  setBase64(base64 as string);
     }
   }
+
+  const toBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        setImgSrc(fileReader.result as string)
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
 
   return (
     <CardContent>
@@ -61,7 +103,9 @@ const TabAccount = () => {
         <Grid container spacing={7}>
           <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ImgStyled src={imgSrc} alt='Profile Pic' />
+              {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
+              <img width={100}
+              src={imgSrc} alt="Angular" />
               <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                   Upload New Photo
@@ -84,7 +128,7 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <FormLayoutsSeparator />
+            <FormLayoutsSeparator imageByte ={base64} />
           </Grid>
 
           {/* {openAlert ? (
@@ -121,3 +165,8 @@ const TabAccount = () => {
 }
 
 export default TabAccount
+
+function convertBase64ToString(base64) {
+  return atob(base64);
+}
+
