@@ -46,6 +46,7 @@ import countries from 'i18n-iso-countries'
 import enLocale from 'i18n-iso-countries/langs/en.json'
 import itLocale from 'i18n-iso-countries/langs/it.json'
 import { TruckFlatbed } from 'mdi-material-ui'
+import { DatePicker } from '@mui/lab'
 
 
 countries.registerLocale(enLocale);
@@ -73,6 +74,9 @@ const FormLayoutsSeparator = ({imageByte}) => {
     state:"",
     street:"",
     username:"",
+    description:"",
+    facebookLink:"",
+    birthDate: null,
     zipCode:"",
     accountId:null,
     addressId:null,
@@ -100,7 +104,6 @@ const FormLayoutsSeparator = ({imageByte}) => {
        await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
         // setLoading(true);
         setProfileData(res.data);
-        console.log(res.data);
 
       });
 
@@ -148,26 +151,7 @@ const FormLayoutsSeparator = ({imageByte}) => {
   }
 
   // Handle Password
-  const handlePasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
 
-  // Handle Confirm Password
-  const handleConfirmChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowConfirmPassword = () => {
-    setValues({ ...values, showPassword2: !values.showPassword2 })
-  }
-  const handleMouseDownConfirmPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
 
   const handleChange =(event)=>{
     setProfileData({...profileData, [event.target.name]: event.target.value})
