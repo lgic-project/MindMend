@@ -73,6 +73,17 @@ const DashboardTable = ({title, columnList, data, loading }) => {
 
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
+  const renderColumn = (item) => {
+    if (item ==='image') {
+      return <p></p>
+
+    }
+
+    return   <TableCell key={item}>{item}</TableCell>
+
+
+  }
+
   const renderCell = (column, value, index) => {
     if (column === 'status') {
       console.log(value);
@@ -99,9 +110,29 @@ const DashboardTable = ({title, columnList, data, loading }) => {
         </TableCell>
       );
     }
+    if(column ==='encodedImage' ) {
+      const base64String = value; // Base64 encoded string
+      const regularString = convertBase64ToString(base64String);
+      console.log(regularString)
+
+      return(
+        <TableCell key="image">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
+              <img width={100}
+              src={regularString} alt="image" />
+              </Box>
+        </TableCell>
+      )
+    }
     if (column === 'id') {
       return (
         <TableCell key={column}>{index+1}</TableCell>
+      );
+    }
+    if (column === 'image') {
+      return (
+        <p></p>
       );
     }
 
@@ -127,9 +158,9 @@ const DashboardTable = ({title, columnList, data, loading }) => {
           <TableHead>
             <TableRow>
               {columnList.map((item) => (
-
-
-        <TableCell key={item}>{item}</TableCell>
+                 <React.Fragment key={item}>
+                 {renderColumn(item)}
+               </React.Fragment>
       ))}
       {data.length === 0 ? (
         <p></p>
@@ -194,3 +225,7 @@ const DashboardTable = ({title, columnList, data, loading }) => {
 }
 
 export default DashboardTable
+function convertBase64ToString(base64) {
+  return atob(base64);
+}
+
