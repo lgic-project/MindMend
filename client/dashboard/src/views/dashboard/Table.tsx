@@ -75,11 +75,14 @@ const DashboardTable = ({title, columnList, data, loading }) => {
 
   const renderCell = (column, value, index) => {
     if (column === 'status') {
-      if (value ==1) {
+      console.log(value);
+      if (value =='1') {
         value ='Active'
 
       }
-      else(value ='InActive');
+       if(value =='0'){
+        value ='InActive'
+       };
 
       return (
         <TableCell>
@@ -128,14 +131,19 @@ const DashboardTable = ({title, columnList, data, loading }) => {
 
         <TableCell key={item}>{item}</TableCell>
       ))}
-              <TableCell>Action</TableCell>
+      {data.length === 0 ? (
+        <p></p>
+      ):(
+        <TableCell>Action</TableCell>
+
+      )}
             </TableRow>
           </TableHead>
           <TableBody>
           {data.length === 0 ? (
-          <tr>
-            <td colSpan={columnList.length}>No data available</td>
-          </tr>
+          <TableRow>
+            <TableCell colSpan={columnList.length} style={{ textAlign: 'center' }} >No data available</TableCell>
+          </TableRow>
         ) : (
             data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
               <TableRow hover key={index} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>

@@ -16,7 +16,7 @@ function Doctor() {
   useEffect(()=>{
 
     const GetDoctorList = async ()=>{
-       await axios.get("http://localhost:9091/api/doctor").then((res)=>{
+       await axios.get(DOCTOR_ROUTE).then((res)=>{
         // setLoading(true);
         setData(res.data);
         setLoading(false);
@@ -26,7 +26,12 @@ function Doctor() {
         setColumns(keys);
 
 
-      });
+      })
+      .catch((res)=>{
+        setLoading(false);
+
+        console.log(res.response.data)
+      })
 
 
 
