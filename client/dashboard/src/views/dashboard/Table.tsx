@@ -45,8 +45,8 @@ interface StatusObj {
 
 
 const statusObj: StatusObj = {
-  // applied: { color: 'info' },
-  // rejected: { color: 'error' },
+    Null: { color: 'info' },
+  Deleted: { color: 'error' },
   // current: { color: 'primary' },
   InActive: { color: 'warning' },
   Active: { color: 'success' }
@@ -57,9 +57,7 @@ const DashboardTable = ({title, columnList, data, loading }) => {
   const [page, setPage] = useState<number>(0)
 
 
-  if(columnList ==null){
-    columnList = ['name','site']
-  }
+
 
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -86,13 +84,18 @@ const DashboardTable = ({title, columnList, data, loading }) => {
 
   const renderCell = (column, value, index) => {
     if (column === 'status') {
-      console.log(value);
       if (value =='1') {
         value ='Active'
 
       }
        if(value =='0'){
         value ='InActive'
+       };
+       if(value =='2'){
+        value ='Deleted'
+       };
+       if(value ==null){
+        value ='Null'
        };
 
       return (
@@ -113,7 +116,6 @@ const DashboardTable = ({title, columnList, data, loading }) => {
     if(column ==='encodedImage' ) {
       const base64String = value; // Base64 encoded string
       const regularString = convertBase64ToString(base64String);
-      console.log(regularString)
 
       return(
         <TableCell key="image">

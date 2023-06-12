@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import { Container } from '@mui/material';
 
-import Table from '../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { MOODCATEGORY_ROUTE, MOOD_ROUTE, SITECONFIG_ROUTE } from 'src/configs/appRoutes'
+import Table from '../../../views/dashboard/Table'
+
+import {  SITECONFIG_ROUTE } from 'src/configs/appRoutes'
 
 function SiteConfig() {
 

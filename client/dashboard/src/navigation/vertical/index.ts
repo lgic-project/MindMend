@@ -63,13 +63,13 @@ const navigation = (): VerticalNavItemsType => {
     },{
       title: 'SiteConfig',
       icon: AlertCircleOutline,
-      path: '/site-config',
+      path: '/additional/site-config',
       openInNewTab: true
     },
     {
       title: 'Excerisce Level',
       icon: AlertCircleOutline,
-      path: '/exercise-level',
+      path: '/additional/exercise-level',
       openInNewTab: true
     },
     {
