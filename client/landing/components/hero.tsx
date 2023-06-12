@@ -1,17 +1,42 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Modal from '@/components/utils/modal'
 import HeroImage from '@/public/images/hero-image-01.jpg'
 import logo1 from '@/public/images/logo1.png'
+import { type } from 'os'
+import axios from 'axios'
+import { SITECONFIG_ROUTE } from '@/app/api/apiRoutes'
+import NextUILoadingComponent from './loading'
+
 export default function Hero() {
 
+  const [appName, setAppName] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(()=>{
+
+   
+
+    const GetAppData = async ()=>{
+      const response: any = await axios.get(SITECONFIG_ROUTE+"/App/active/name").then((res)=>{
+        setLoading(true);
+        setAppName(res.data);
+      });
+     
+    }
+    GetAppData();
+  },[])
+
   const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false)
+
 
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
+        
 
         {/* Illustration behind hero content */}
         <div className="absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none" aria-hidden="true" data-aos="fade-up" data-aos-delay="400">
@@ -31,18 +56,23 @@ export default function Hero() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
 
           {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h1 mb-4" data-aos="fade-up">MindMend</h1>
-            <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200"> "Transform your mind, Transform your life; MindMend,your Ultimate mental health partner ".</p>
+          {loading? appName.map((data) => (
+             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+
+            <h1 className="h1 mb-4" data-aos="fade-up">{data.siteKey}</h1>
+            <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">{data.siteValue}</p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
               <div data-aos="fade-up" data-aos-delay="400">
-                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">Start your journey </a>
+                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="http://localhost:3001/pages/login">Start your journey </a>
               </div>
               <div data-aos="fade-up" data-aos-delay="600">
                 <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">Learn more</a>
               </div>
+            </div> 
             </div>
-          </div>
+    
+             )): <NextUILoadingComponent />}
+            
 
           {/* Hero image */}
           <div>
@@ -84,4 +114,6 @@ export default function Hero() {
       </div>
     </section>
   )
+
+ 
 }

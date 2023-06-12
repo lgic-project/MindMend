@@ -28,18 +28,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       sectionTitle: 'Pages'
     },
-    {
-      title: 'Login',
-      icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
-    },
-    {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
-    },
+
     {
       title: 'Management',
       icon: AlertCircleOutline,
@@ -52,8 +41,8 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Mood category',
       icon: FormatLetterCase,
-      path: '/Mood Category'
-    },
+      path: '/mood-category',
+      openInNewTab: true    },
     {
       title: 'User',
       icon: FormatLetterCase,
@@ -62,17 +51,17 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Doctor',
       icon: FormatLetterCase,
-      path: '/Doctor'
+      path: '/doctor'
     },
-    {
-      title: 'Doctor Category',
-      icon: FormatLetterCase,
-      path: '/Doctor Category'
-    },
+    // {
+    //   title: 'Doctor Category',
+    //   icon: FormatLetterCase,
+    //   path: '/Doctor Category'
+    // },
     {
       title: 'Contact',
       icon: FormatLetterCase,
-      path: '/Contact'
+      path: '/contact'
     },{
       title: 'SiteConfig',
       icon: AlertCircleOutline,

@@ -1,8 +1,10 @@
 // ** React Imports
-import { ChangeEvent, forwardRef, MouseEvent, useState } from 'react'
+import { ChangeEvent, forwardRef, MouseEvent, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
+import NoSsr from '@mui/material/NoSsr';
+
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -23,6 +25,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import React from 'react'
 
 interface State {
   password: string
@@ -31,111 +34,155 @@ interface State {
   showPassword2: boolean
 }
 
-const CustomInput = forwardRef((props, ref) => {
+const CustomInput = React.forwardRef((props, ref) => {
   return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
 })
 
-const FormLayoutsSeparator = () => {
+// ** Icons Imports
+import { PROFILE_ROUTE } from 'src/configs/appRoutes'
+import axios from 'axios'
+import NextUILoadingComponent from 'src/layouts/components/loading'
+import countries from 'i18n-iso-countries'
+import enLocale from 'i18n-iso-countries/langs/en.json'
+import itLocale from 'i18n-iso-countries/langs/it.json'
+import { TruckFlatbed } from 'mdi-material-ui'
+import { DatePicker } from '@mui/lab'
+
+
+countries.registerLocale(enLocale);
+countries.registerLocale(itLocale);
+
+const countryObj = countries.getNames("en",{ select:"official"})
+const countryArr = Object.entries(countryObj).map(([key, value])=>{
+  return {
+    label : value,
+    value: key
+  };
+});
+
+const FormLayoutsSeparator = ({imageByte}) => {
   // ** States
-  const [language, setLanguage] = useState<string[]>([])
-  const [values, setValues] = useState<State>({
-    password: '',
-    password2: '',
-    showPassword: false,
-    showPassword2: false
-  })
+  const [profileData, setProfileData] = useState<any>({
+    city:"",
+    country: "",
+    email:"",
+    firstName:"",
+    lastName:"",
+    gender:"",
+    image:"",
+    phone:"",
+    state:"",
+    street:"",
+    username:"",
+    description:"",
+    facebookLink:"",
+    birthDate: null,
+    zipCode:"",
+    accountId:null,
+    addressId:null,
+    profileId:null,
+    userId:null
+
+  });
+  const [readMode, setReadMode] = useState<boolean>(TruckFlatbed);
+
+  const [state, setState] = useState("")
+  const [selectedCountry, setSelectedCountry] = useState<string[]>("")
+
+
+  const selectCountryHandler = (event: SelectChangeEvent<string[]>) => {
+    setSelectedCountry(event.target.value as string[])
+  }
+
+
+
+  const id =1;
+
+  useEffect(()=>{
+
+    const GetProfileDataList = async ()=>{
+       await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
+        // setLoading(true);
+        setProfileData(res.data);
+
+      });
+
+    }
+    GetProfileDataList();
+
+
+
+  },[])
+
+  const handleReadMode= (event) => {
+    event.preventDefault();
+
+    setReadMode(false);
+    }
+
+
+
+
+
+
+  if (!profileData) {
+    return <NextUILoadingComponent />
+  }
+
+  async function handleSubmit(event){
+    event.preventDefault();
+
+    profileData.image= imageByte;
+
+     const profileReq = JSON.stringify(profileData);
+   const customConfig = {
+      headers: {
+      'Content-Type': 'application/json'
+      }
+  };
+
+    const result = await axios.patch(PROFILE_ROUTE + '/' + id+"/profile", profileReq,customConfig)
+      .then((res) =>console.log(res))
+      .catch((error)=> console.log(error));
+
+      console.log(result);
+
+
+  }
 
   // Handle Password
-  const handlePasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+
+
+  const handleChange =(event)=>{
+    setProfileData({...profileData, [event.target.name]: event.target.value})
+
   }
 
-  // Handle Confirm Password
-  const handleConfirmChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowConfirmPassword = () => {
-    setValues({ ...values, showPassword2: !values.showPassword2 })
-  }
-  const handleMouseDownConfirmPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
 
-  // Handle Select
-  const handleSelectChange = (event: SelectChangeEvent<string[]>) => {
-    setLanguage(event.target.value as string[])
-  }
 
   return (
+    <NoSsr>
     <Card>
       <Divider sx={{ margin: 0 }} />
-      <form onSubmit={e => e.preventDefault()}>
+      <form >
         <CardContent>
-          <Grid container spacing={5}>
+        <Grid container spacing={5}>
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ fontWeight: 600 }}>
+            <CardActions sx={{ justifyContent: 'space-between' }}>
+            <Typography variant='body2' sx={{ fontWeight: 600 }}>
                 1. Account Details
               </Typography>
+          <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={handleReadMode}>
+            Edit
+          </Button>
+        </CardActions>
+
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+              <TextField fullWidth label='Username' onChange={handleChange} InputProps={{readOnly:readMode}} name='username' value={profileData.username} placeholder='carterLeonard' />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-separator-password'>Password</InputLabel>
-                <OutlinedInput
-                  label='Password'
-                  value={values.password}
-                  id='form-layouts-separator-password'
-                  onChange={handlePasswordChange('password')}
-                  type={values.showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-separator-password-2'>Confirm Password</InputLabel>
-                <OutlinedInput
-                  value={values.password2}
-                  label='Confirm Password'
-                  id='form-layouts-separator-password-2'
-                  onChange={handleConfirmChange('password2')}
-                  type={values.showPassword2 ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowConfirmPassword}
-                        onMouseDown={handleMouseDownConfirmPassword}
-                      >
-                        {values.showPassword2 ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <TextField fullWidth type='email' onChange={handleChange} InputProps={{readOnly:readMode}} name='email' label='Email' value={profileData.email} placeholder='carterleonard@gmail.com' />
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ marginBottom: 0 }} />
@@ -146,71 +193,62 @@ const FormLayoutsSeparator = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='First Name' placeholder='Leonard' />
+              <TextField fullWidth label='First Name' onChange={handleChange} InputProps={{readOnly:readMode}} name='firstName' value={profileData.firstName} placeholder='Leonard' />
             </Grid>
+
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Last Name' placeholder='Carter' />
+              <TextField fullWidth label='Last Name' onChange={handleChange} InputProps={{readOnly:readMode}} name='lastName' value={profileData.lastName} placeholder='carterLeonard' />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel id='form-layouts-separator-select-label'>Country</InputLabel>
                 <Select
                   label='Country'
-                  defaultValue=''
+                  defaultValue={profileData.country}
                   id='form-layouts-separator-select'
+                  readOnly={readMode}
                   labelId='form-layouts-separator-select-label'
+                  onChange={handleChange}
+
                 >
-                  <MenuItem value='UK'>UK</MenuItem>
-                  <MenuItem value='USA'>USA</MenuItem>
-                  <MenuItem value='Australia'>Australia</MenuItem>
-                  <MenuItem value='Germany'>Germany</MenuItem>
+                  <MenuItem key={profileData.country} value ={profileData.country} selected>{profileData.country}</MenuItem>
+
+                  {!!countryArr ?.length && countryArr.map(({label, value})=>(
+                    <MenuItem key={value} value={value}>{label}</MenuItem>
+                  )
+
+                  )}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel id='form-layouts-separator-multiple-select-label'>State</InputLabel>
-                <Select
-                  multiple
-                  value={language}
-                  onChange={handleSelectChange}
-                  id='form-layouts-separator-multiple-select'
-                  labelId='form-layouts-separator-multiple-select-label'
-                  input={<OutlinedInput label='Language' id='select-multiple-language' />}
-                >
-                  <MenuItem value='English'>English</MenuItem>
-                  <MenuItem value='French'>French</MenuItem>
-                  <MenuItem value='Spanish'>Spanish</MenuItem>
-                  <MenuItem value='Portuguese'>Portuguese</MenuItem>
-                  <MenuItem value='Italian'>Italian</MenuItem>
-                  <MenuItem value='German'>German</MenuItem>
-                  <MenuItem value='Arabic'>Arabic</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField fullWidth label='State' onChange={handleChange} InputProps={{readOnly:readMode}} name='state' value={profileData.state} placeholder='Gandaki' />
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='City' placeholder='Pokhara' />
+              <TextField fullWidth label='City' onChange={handleChange} InputProps={{readOnly:readMode}} name='city' value={profileData.city} placeholder='Pokhara' />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Street' placeholder='Tole' />
+              <TextField fullWidth label='Street' onChange={handleChange} InputProps={{readOnly:readMode}} name='street' value={profileData.street} placeholder='Tole' />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Phone no' placeholder='981111111' />
+              <TextField fullWidth label='Phone no' onChange={handleChange} InputProps={{readOnly:readMode}} name='phone' value={profileData.phone} placeholder='981111111' />
             </Grid>
           </Grid>
         </CardContent>
         <Divider sx={{ margin: 0 }} />
-        <CardActions>
-          <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
+        {!readMode && <CardActions>
+         <Button size='large' onClick={handleSubmit} type='submit' sx={{ mr: 2 }} variant='contained'>
             Submit
           </Button>
-          <Button size='large' color='secondary' variant='outlined'>
+          <Button size='large'  color='secondary' variant='outlined'>
             Cancel
           </Button>
-        </CardActions>
+        </CardActions>}
+
       </form>
     </Card>
+    </NoSsr>
   )
 }
 

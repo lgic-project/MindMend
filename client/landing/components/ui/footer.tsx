@@ -1,8 +1,35 @@
-import React from 'react'
+
+'use client'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import logo from '@/public/images/logo.png'
 import Image from 'next/image'
+import axios from 'axios'
 export default function Footer() {
+
+  const [goal, setGoal] = useState([]);
+
+  const [copyright, setCopyright] = useState([]);
+
+
+  useEffect(()=>{
+
+
+    const ApiGetByKey = async ()=>{
+      const response: any = await axios.get("http://localhost:9091/api/siteconfig/goal/active/key");
+     const name =response.data;
+     setGoal(name);
+    }
+    ApiGetByKey();
+
+    const ApiGetByKey1 = async ()=>{
+      const response: any = await axios.get("http://localhost:9091/api/siteconfig/copyright/active/key");
+     const name =response.data;
+     setCopyright(name);
+    }
+    ApiGetByKey1();
+  },[])
+
   return (
     <footer>
       <div className="py-12 md:py-16">
@@ -24,8 +51,11 @@ export default function Footer() {
               />
                 </Link>
               </div>
-              <div className="text-gray-400">Our MindMend app aims to promote mental wellness and reduce mental health challanges.</div>
-            </div>
+              {goal.map((data) => (
+
+              <div className="text-gray-400">{data.siteValue}</div>
+              ))}
+              </div>
 
             {/* 2nd, 3rd and 4th blocks */}
             <div className="md:col-span-8 lg:col-span-7 grid sm:grid-cols-3 gap-8">
@@ -142,7 +172,10 @@ export default function Footer() {
             </ul>
 
             {/* Copyrights note */}
-            <div className="text-gray-400 text-sm mr-4">&copy; MindMend.com. All rights reserved.</div>
+            {copyright.map((data) => (
+
+            <div className="text-gray-400 text-sm mr-4">&copy; {data.siteValue}</div>
+            ))}
 
           </div>
 
