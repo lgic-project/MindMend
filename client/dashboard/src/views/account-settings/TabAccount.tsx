@@ -69,7 +69,6 @@ const TabAccount = () => {
 
   },[])
 
-
   const onChange = async (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {

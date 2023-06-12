@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Container } from '@mui/material';
 
-import Table from '../../views/dashboard/Table'
+import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { MOODCATEGORY_ROUTE, PROFILE_ROUTE } from 'src/configs/appRoutes'

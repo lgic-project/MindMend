@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { Container } from '@mui/material';
 
-import Table from '../../views/dashboard/Table'
+import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { DOCTOR_ROUTE, MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
+import { DOCTORCATEGORY_ROUTE, DOCTOR_ROUTE } from 'src/configs/appRoutes'
 
-function Doctor() {
+function DoctorCategory() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
 
   const [data, setData] = useState([]);
@@ -15,12 +15,11 @@ function Doctor() {
 
   useEffect(()=>{
 
-    const GetDoctorList = async ()=>{
-       await axios.get(DOCTOR_ROUTE).then((res)=>{
+    const GetDoctorCategoryList = async ()=>{
+       await axios.get(DOCTORCATEGORY_ROUTE).then((res)=>{
         // setLoading(true);
         setData(res.data);
         setLoading(false);
-        console.log(res)
 
         const keys = Object.keys(res.data[0]);
         setColumns(keys);
@@ -36,7 +35,7 @@ function Doctor() {
 
 
     }
-    GetDoctorList();
+    GetDoctorCategoryList();
 
 
 
@@ -45,12 +44,12 @@ function Doctor() {
   return (
     <>
       <Head>
-        <title>Doctor - Applications</title>
+        <title>Doctor Category - Applications</title>
       </Head>
 
       <Container maxWidth="lg">
 
-          <Table title ="Doctor" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="Doctor Category" columnList={columns} data={data} loading={loading}></Table>
 
       </Container>
 
@@ -59,4 +58,4 @@ function Doctor() {
 }
 
 
-export default Doctor;
+export default DoctorCategory;
