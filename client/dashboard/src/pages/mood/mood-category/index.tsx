@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { MOODCATEGORY_ROUTE, PROFILE_ROUTE } from 'src/configs/appRoutes'
 import NextUILoadingComponent from 'src/layouts/components/loading'
+import { CREATE_MOOD_CATEGORY_ROUTE } from 'src/configs/createRoutes'
 
 function MoodCategory() {
   // const column = ['Name','Logo','Created At', 'Updated At'];
@@ -46,7 +47,7 @@ function MoodCategory() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Mood Category" columnList={columns} data={data} loading={loading} ></Table>
+          <Table title ="Mood Category" columnList={columns} data={data} loading={loading} create={CREATE_MOOD_CATEGORY_ROUTE}></Table>
 
       </Container>
 

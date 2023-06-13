@@ -5,6 +5,7 @@ import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { DOCTORCATEGORY_ROUTE, DOCTOR_ROUTE } from 'src/configs/appRoutes'
+import { CREATE_DOCTOR_CATEGORY_ROUTE } from 'src/configs/createRoutes'
 
 function DoctorCategory() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
@@ -49,7 +50,7 @@ function DoctorCategory() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Doctor Category" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="Doctor Category" columnList={columns} data={data} loading={loading} create={CREATE_DOCTOR_CATEGORY_ROUTE}></Table>
 
       </Container>
 
