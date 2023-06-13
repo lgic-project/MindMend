@@ -5,13 +5,15 @@ import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { DISCOVER_ROUTE, DOCTOR_ROUTE } from 'src/configs/appRoutes'
+import { CREATE_DISCOVER_ROUTE } from 'src/configs/createRoutes'
 
 function Discover() {
-  // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
 
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
 
   useEffect(()=>{
 
@@ -29,7 +31,7 @@ function Discover() {
       .catch((res)=>{
         setLoading(false);
 
-        console.log(res.response.data)
+        console.log(res.response)
       })
 
 
@@ -49,7 +51,7 @@ function Discover() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Discover" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="Discover" columnList={columns} data={data} loading={loading} create={CREATE_DISCOVER_ROUTE}></Table>
 
       </Container>
 
