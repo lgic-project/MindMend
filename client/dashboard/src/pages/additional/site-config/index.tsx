@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import Table from '../../../views/dashboard/Table'
 
 import {  SITECONFIG_ROUTE } from 'src/configs/appRoutes'
+import { CREATE_SITE_CONFIG_ROUTE } from 'src/configs/createRoutes'
 
 function SiteConfig() {
 
@@ -49,7 +50,7 @@ function SiteConfig() {
 
       <Container maxWidth="lg">
 
-          <Table title ="SiteConfig" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="SiteConfig" columnList={columns} data={data} loading={loading} create={CREATE_SITE_CONFIG_ROUTE}></Table>
 
       </Container>
 
