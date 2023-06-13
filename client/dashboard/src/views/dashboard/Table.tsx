@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import { Tooltip,Button, Grid } from '@nextui-org/react';
+import { Tooltip,Button, Grid, Popover } from '@nextui-org/react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -24,6 +24,7 @@ import { BorderAllRounded, Padding } from '@mui/icons-material'
 import { SizeXs } from 'mdi-material-ui'
 import React from 'react'
 import NextUILoadingComponent from 'src/layouts/components/loading'
+import { Delete } from 'src/content/Delete'
 
 interface RowType {
   id:number
@@ -52,7 +53,7 @@ const statusObj: StatusObj = {
   Active: { color: 'success' }
 }
 
-const DashboardTable = ({title, columnList, data, loading }) => {
+const DashboardTable = ({title, columnList, data, loading, create }) => {
 
   const [page, setPage] = useState<number>(0)
 
@@ -147,7 +148,7 @@ const DashboardTable = ({title, columnList, data, loading }) => {
   return (
     <Card sx={{ width: '100%', overflow: 'hidden' }}>
        <PageTitleWrapper>
-        <PageHeader title= {title} />
+        <PageHeader title= {title} link={create} />
 
 
 
@@ -199,9 +200,17 @@ const DashboardTable = ({title, columnList, data, loading }) => {
         </ Grid>
         <Grid>
         <Tooltip content="Delete"  color="error">
+        <Popover>
+          <Popover.Trigger>
           <Button flat auto color="error" size={'xs'}>
             <DeleteIcon fontSize='10' />
           </Button>
+          </Popover.Trigger>
+          <Popover.Content css={{ marginRight:"100px"}}>
+            <Delete />
+          </Popover.Content>
+        </Popover>
+
         </Tooltip>
         </Grid>
         </Grid.Container>

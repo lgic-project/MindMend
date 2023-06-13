@@ -5,6 +5,7 @@ import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { DOCTOR_ROUTE, EXERCISE_LEVEL_ROUTE, MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
+import { CREATE_EXERCISE_LEVEL_ROUTE } from 'src/configs/createRoutes'
 
 function ExerciseLevel() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
@@ -53,7 +54,7 @@ function ExerciseLevel() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Exercise level" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="Exercise level" columnList={columns} data={data} loading={loading} create={CREATE_EXERCISE_LEVEL_ROUTE}></Table>
 
       </Container>
 
