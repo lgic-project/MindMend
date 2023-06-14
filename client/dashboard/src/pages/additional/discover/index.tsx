@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import { Container } from '@mui/material';
+import Head from 'next/head'
+import { Container } from '@mui/material'
 
 import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
@@ -9,39 +9,40 @@ import { CREATE_DISCOVER_ROUTE } from 'src/configs/createRoutes'
 
 function Discover() {
 
-  const [data, setData] = useState([]);
-  const [columns, setColumns] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([])
+  const [columns, setColumns] = useState([])
+  const [loading, setLoading] = useState(true)
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const GetDiscoverList = async ()=>{
-       await axios.get(DISCOVER_ROUTE).then((res)=>{
+    const GetDiscoverList = async () => {
+      await axios.get(DISCOVER_ROUTE).then((res) => {
         // setLoading(true);
-        setData(res.data);
-        setLoading(false);
+        setData(res.data)
+        setLoading(false)
+        console.log(res.data)
 
-        const keys = Object.keys(res.data[0]);
-        setColumns(keys);
+        const keys = Object.keys(res.data[0])
+        setColumns(keys)
 
 
       })
-      .catch((res)=>{
-        setLoading(false);
+        .catch((res) => {
+          setLoading(false)
 
-        console.log(res.response)
-      })
+          console.log(res.response)
+        })
 
 
 
     }
-    GetDiscoverList();
+    GetDiscoverList()
 
 
 
-  },[])
+  }, [])
 
   return (
     <>
@@ -51,13 +52,13 @@ function Discover() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Discover" columnList={columns} data={data} loading={loading} create={CREATE_DISCOVER_ROUTE}></Table>
+        <Table title="Discover" columnList={columns} data={data} loading={loading} create={CREATE_DISCOVER_ROUTE}></Table>
 
       </Container>
 
     </>
-  );
+  )
 }
 
 
-export default Discover;
+export default Discover

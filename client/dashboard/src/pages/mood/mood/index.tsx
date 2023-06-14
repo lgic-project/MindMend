@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import { Container } from '@mui/material';
+import Head from 'next/head'
+import { Container } from '@mui/material'
 
 import Table from '../../../views/dashboard/Table'
 import axios from 'axios'
@@ -10,32 +10,32 @@ import NextUILoadingComponent from 'src/layouts/components/loading'
 function Mood() {
   // const column = ['Name','Logo','Created At', 'Updated At'];
 
-  const [data, setData] = useState([]);
-  const [columns, setColumns] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([])
+  const [columns, setColumns] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const GetMoodList = async ()=>{
-       await axios.get(MOOD_ROUTE+"/list").then((res)=>{
+    const GetMoodList = async () => {
+      await axios.get(MOOD_ROUTE + "/list").then((res) => {
         // setLoading(true);
-        setData(res.data);
-        setLoading(false);
+        setData(res.data)
+        setLoading(false)
 
-        const keys = Object.keys(res.data[0]);
-        setColumns(keys);
+        const keys = Object.keys(res.data[0])
+        setColumns(keys)
 
 
-      });
+      })
 
 
 
     }
-    GetMoodList();
+    GetMoodList()
 
 
 
-  },[])
+  }, [])
 
 
   return (
@@ -46,13 +46,13 @@ function Mood() {
 
       <Container maxWidth="lg">
 
-          <Table title ="Mood" columnList={columns} data={data} loading={loading} ></Table>
+        <Table title="Mood" columnList={columns} data={data} loading={loading} ></Table>
 
       </Container>
 
     </>
-  );
+  )
 }
 
 
-export default Mood;
+export default Mood
