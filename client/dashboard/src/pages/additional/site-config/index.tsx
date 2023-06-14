@@ -1,13 +1,14 @@
 import Head from 'next/head';
 import { Container } from '@mui/material';
 
-import Table from '../../views/dashboard/Table'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { DOCTOR_ROUTE, MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
+import Table from '../../../views/dashboard/Table'
 
-function Doctor() {
-  // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
+import {  SITECONFIG_ROUTE } from 'src/configs/appRoutes'
+import { CREATE_SITE_CONFIG_ROUTE } from 'src/configs/createRoutes'
+
+function SiteConfig() {
 
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -15,12 +16,11 @@ function Doctor() {
 
   useEffect(()=>{
 
-    const GetDoctorList = async ()=>{
-       await axios.get(DOCTOR_ROUTE).then((res)=>{
+    const GetSiteConfigList = async ()=>{
+       await axios.get(SITECONFIG_ROUTE).then((res)=>{
         // setLoading(true);
         setData(res.data);
         setLoading(false);
-        console.log(res)
 
         const keys = Object.keys(res.data[0]);
         setColumns(keys);
@@ -36,7 +36,7 @@ function Doctor() {
 
 
     }
-    GetDoctorList();
+    GetSiteConfigList();
 
 
 
@@ -45,12 +45,12 @@ function Doctor() {
   return (
     <>
       <Head>
-        <title>Doctor - Applications</title>
+        <title>SiteConfig - Applications</title>
       </Head>
 
       <Container maxWidth="lg">
 
-          <Table title ="Doctor" columnList={columns} data={data} loading={loading}></Table>
+          <Table title ="SiteConfig" columnList={columns} data={data} loading={loading} create={CREATE_SITE_CONFIG_ROUTE}></Table>
 
       </Container>
 
@@ -59,4 +59,4 @@ function Doctor() {
 }
 
 
-export default Doctor;
+export default SiteConfig;

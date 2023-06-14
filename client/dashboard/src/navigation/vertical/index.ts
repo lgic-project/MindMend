@@ -26,76 +26,91 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     {
-      sectionTitle: 'Pages'
-    },
-
-    {
-      title: 'Management',
-      icon: AlertCircleOutline,
-      path: '/management',
-      openInNewTab: true
-    },
-    {
-      sectionTitle: 'Admin'
+      sectionTitle: 'Mood'
     },
     {
       title: 'Mood category',
       icon: FormatLetterCase,
-      path: '/mood-category',
+      path: '/mood/mood-category',
       openInNewTab: true    },
+      {
+        title: 'Mood',
+        icon: FormatLetterCase,
+        path: '/mood/mood',
+        openInNewTab: true    },
+
+        {
+          sectionTitle: 'Doctor'
+        },
+        {
+          title: 'Doctor',
+          icon: FormatLetterCase,
+          path: '/doctor/doctor'
+        },
+        {
+          title: 'Doctor category',
+          icon: FormatLetterCase,
+          path: '/doctor/doctor-category'
+        },
+
     {
-      title: 'User',
-      icon: FormatLetterCase,
-      path: '/user'
+      sectionTitle: 'Additional'
     },
     {
-      title: 'Doctor',
+      title: 'Discover',
       icon: FormatLetterCase,
-      path: '/doctor'
-    },
-    // {
-    //   title: 'Doctor Category',
-    //   icon: FormatLetterCase,
-    //   path: '/Doctor Category'
-    // },
-    {
-      title: 'Contact',
-      icon: FormatLetterCase,
-      path: '/contact'
+      path: '/additional/discover'
     },{
       title: 'SiteConfig',
       icon: AlertCircleOutline,
-      path: '/site-config',
+      path: '/additional/site-config',
+      openInNewTab: true
+    },
+    {
+      title: 'Excerisce Level',
+      icon: AlertCircleOutline,
+      path: '/additional/exercise-level',
       openInNewTab: true
     },
     {
       sectionTitle: 'User Interface'
     },
     {
-      title: 'Typography',
+      title: 'User',
       icon: FormatLetterCase,
-      path: '/typography'
+      path: '/user'
     },
     {
-      title: 'Icons',
-      path: '/icons',
-      icon: GoogleCirclesExtended
+      title: 'Group',
+      icon: FormatLetterCase,
+      path: '/group'
     },
-    {
-      title: 'Cards',
-      icon: CreditCardOutline,
-      path: '/cards'
-    },
-    {
-      title: 'Tables',
-      icon: Table,
-      path: '/tables'
-    },
-    {
-      icon: CubeOutline,
-      title: 'Form Layouts',
-      path: '/form-layouts'
-    }
+
+    // {
+    //   title: 'Typography',
+    //   icon: FormatLetterCase,
+    //   path: '/typography'
+    // },
+    // {
+    //   title: 'Icons',
+    //   path: '/icons',
+    //   icon: GoogleCirclesExtended
+    // },
+    // {
+    //   title: 'Cards',
+    //   icon: CreditCardOutline,
+    //   path: '/cards'
+    // },
+    // {
+    //   title: 'Tables',
+    //   icon: Table,
+    //   path: '/tables'
+    // },
+    // {
+    //   icon: CubeOutline,
+    //   title: 'Form Layouts',
+    //   path: '/form-layouts'
+    // }
   ]
 }
 
