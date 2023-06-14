@@ -40,7 +40,7 @@ const Home = () => {
               <View style={styles.heading}>
         <View>
           <Text style={{ fontSize: 22, color: "white" }}>Hi Mahima</Text>
-          <Text style={{fontSize:17, fontWeight:"400"}}>How are you this morning?</Text>
+          <Text style={{fontSize:17, fontWeight:"400", color:"white"}}>How are you this morning?</Text>
         </View>
         <TouchableOpacity onPress={handleprofile}>
           <Image source={require('../../assets/Images/myprofile.png')} resizeMode='contain' style={{ width: 45, height: 45, borderRadius: 50 }} />
@@ -88,27 +88,27 @@ const Home = () => {
       <View style={styles.lookingfor}>
         <Text style={{ fontSize: 16 }}>What are you looking for?</Text>
         <View style={styles.lookingcontainer}>
-          <View style={styles.lookingcard}>
+          <TouchableOpacity style={styles.lookingcard}>
             <Image source={require('../../assets/Images/medical-report.png')} resizeMode='contain' style={styles.lookingimage}/>
             <View style={styles.lTcontainer}>
             <Text style={styles.lookingtext}>General</Text>
             <Text style={styles.lookingtext}>Check-Up</Text>
             </View>
-          </View>
-          <View style={styles.lookingcard}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.lookingcard}>
             <Image source={require('../../assets/Images/chat.png')} resizeMode='contain' style={styles.lookingimage} />
             <View style={styles.lTcontainer}>
             <Text style={styles.lookingtext}>Chat with</Text>
             <Text style={styles.lookingtext}>Doctor</Text>
             </View>
-          </View>
-          <View style={styles.lookingcard}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.lookingcard}>
           <Image source={require('../../assets/Images/newspaper.png')} resizeMode='contain' style={{width:40, height:40}} />
             <View style={styles.lTcontainer}>
             <Text style={styles.lookingtext}>Health</Text>
             <Text style={styles.lookingtext}>News</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
       {/* Doctor Section */}

@@ -1,12 +1,9 @@
-import { View, Text, TouchableOpacity, ImageBackground, Image, ScrollView, } from 'react-native'
+import { View, Text, TouchableOpacity, ImageBackground, Image, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import styles from '../../style/profilestyle'
-import { AntDesign } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { FlatList } from 'react-native-gesture-handler';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+
 const profilepage = () => {
     const data = [
         { title: "Personal", icon: <Ionicons name="person" size={20} color="#98E8B1" /> },
@@ -14,6 +11,11 @@ const profilepage = () => {
         { title: "Groups", icon: <MaterialIcons name="group" size={20} color="#8793E8" /> },
         { title: "Guided Programs", icon: <MaterialIcons name="group" size={20} color="yellow" /> },
     ]
+    
+    const router = useRouter();
+    const handleback =()=>{
+        router.push(`../dashboard/Home`)
+    }
     return (
         <View style={styles.container} >
 
@@ -25,7 +27,7 @@ const profilepage = () => {
                     blurRadius={3}
                 >
                     <View style={styles.bgcontainer}>
-                        <TouchableOpacity style={styles.buttoncontainer}>
+                        <TouchableOpacity style={styles.buttoncontainer} onPress={handleback} >
                             <AntDesign name="left" size={18} color="black" />
                         </TouchableOpacity>
                         <View style={styles.camcontainer}>

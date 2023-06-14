@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     emojiview: {
-        width: "70%",
+        width: "65%",
         height: "55%",
         borderRadius: 50,
         backgroundColor: "#FED9D9",

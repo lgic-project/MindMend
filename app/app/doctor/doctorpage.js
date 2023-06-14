@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import styles from '../../style/doctorstyles';
 import StarRating from 'react-native-star-rating-widget';
-
+import { useRouter } from 'expo-router';
 const SeeMoreText = ({ initialNumberOfLines, content }) => {
     const [showFullText, setShowFullText] = useState(false);
 
@@ -23,13 +23,17 @@ const SeeMoreText = ({ initialNumberOfLines, content }) => {
 
 const doctorpage = () => {
     const [rating, setRating] = useState(5);
+    const router = useRouter();
+    const handleback = () =>{
+        router.push(`../dashboard/Home`)
+    }
     return (
 
         <View style={styles.container} >
 
             <View style={styles.smallcontainer}>
                 {/* heading container */}
-                <TouchableOpacity style={{ position: "absolute", top: 15, left: 15 }}>
+                <TouchableOpacity style={{ position: "absolute", top: 15, left: 15 }} onPress={handleback} >
                     <AntDesign name="left" size={18} color="black" />
                 </TouchableOpacity>
                 <ImageBackground source={require('../../assets/Images/doc.png')} resizeMode='cover' style={{ width: "70%", height: "100%", marginLeft: 50 }} />
