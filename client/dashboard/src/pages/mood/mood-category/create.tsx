@@ -8,6 +8,9 @@ import { Label } from 'mdi-material-ui'
 import { PhotoCamera } from '@mui/icons-material'
 import axios from 'axios'
 import { MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
+import error from 'next/error'
+import ErrorAlert from 'src/content/ErrorAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 
 const ImgStyled = styled('img')(({ theme }) => ({
@@ -47,6 +50,8 @@ function CreateMoodCategory() {
   const router = useRouter()
   const { visible: queryVisible } = router.query
 
+  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Number | null>(null)
 
 
   const closeHandler = () => {
@@ -87,8 +92,8 @@ function CreateMoodCategory() {
     console.log(moodCategory)
 
     const result = await axios.post(MOODCATEGORY_ROUTE, moodCategory, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
 
     console.log(result)
   }
@@ -145,7 +150,8 @@ function CreateMoodCategory() {
 
   return (
     <div>
-
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Mood category data created successfully"} />}
       <Modal
         closeButton
         blur

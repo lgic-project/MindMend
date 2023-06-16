@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import { SITECONFIG_ROUTE } from 'src/configs/appRoutes'
 import axios from 'axios'
 import exerciseLevel from '../exercise-level'
+import error from 'next/error'
+import ErrorAlert from 'src/content/ErrorAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 
 function CreateSiteConfig() {
@@ -14,6 +17,8 @@ function CreateSiteConfig() {
 
   const router = useRouter()
   const { visible: queryVisible } = router.query
+  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Number | null>(null)
 
   const [siteConfig, setSiteConfig] = useState<any>({
     name: '',
@@ -51,8 +56,8 @@ function CreateSiteConfig() {
     }
 
     const result = await axios.post(SITECONFIG_ROUTE, siteconfig, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
 
     console.log(result)
   }
@@ -66,7 +71,8 @@ function CreateSiteConfig() {
 
   return (
     <div>
-
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Site config data created successfully"} />}
       <Modal
         closeButton
         blur

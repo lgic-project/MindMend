@@ -15,6 +15,8 @@ function CreateDoctorCategory() {
 
   const router = useRouter()
   const { visible: queryVisible } = router.query
+  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Number | null>(null)
 
   const [doctorCategoryData, setDoctorCategoryData] = useState<any>({
     categoryTitle: '',
@@ -49,8 +51,8 @@ function CreateDoctorCategory() {
     console.log(doctorCategory)
 
     const result = await axios.post(DOCTORCATEGORY_ROUTE, doctorCategory, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
 
     console.log(result)
   }
@@ -64,7 +66,8 @@ function CreateDoctorCategory() {
 
   return (
     <div>
-
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Doctor category data created successfully"} />}
       <Modal
         closeButton
         blur

@@ -5,13 +5,16 @@ import CubeOutline from 'mdi-material-ui/CubeOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
-import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
-import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
-import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
-
+import MedicationIcon from '@mui/icons-material/Medication';import MoodIcon from '@mui/icons-material/Mood';import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
+import AddReactionIcon from '@mui/icons-material/AddReaction';
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import SettingsIcon from '@mui/icons-material/Settings';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import PersonIcon from '@mui/icons-material/Person';
+import GroupWorkIcon from '@mui/icons-material/GroupWork';
 
 const navigation = (): VerticalNavItemsType => {
   return [
@@ -30,12 +33,12 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Mood category',
-      icon: FormatLetterCase,
+      icon: AddReactionIcon,
       path: '/mood/mood-category',
       openInNewTab: true    },
       {
         title: 'Mood',
-        icon: FormatLetterCase,
+        icon: MoodIcon,
         path: '/mood/mood',
         openInNewTab: true    },
 
@@ -44,12 +47,12 @@ const navigation = (): VerticalNavItemsType => {
         },
         {
           title: 'Doctor',
-          icon: FormatLetterCase,
+          icon: MedicationIcon,
           path: '/doctor/doctor'
         },
         {
           title: 'Doctor category',
-          icon: FormatLetterCase,
+          icon: MedicalServicesIcon,
           path: '/doctor/doctor-category'
         },
 
@@ -58,17 +61,17 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Discover',
-      icon: FormatLetterCase,
+      icon: NewspaperIcon,
       path: '/additional/discover'
     },{
       title: 'SiteConfig',
-      icon: AlertCircleOutline,
+      icon: SettingsIcon,
       path: '/additional/site-config',
       openInNewTab: true
     },
     {
       title: 'Excerisce Level',
-      icon: AlertCircleOutline,
+      icon: FitnessCenterIcon,
       path: '/additional/exercise-level',
       openInNewTab: true
     },
@@ -77,12 +80,12 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'User',
-      icon: FormatLetterCase,
+      icon: PersonIcon,
       path: '/user'
     },
     {
       title: 'Group',
-      icon: FormatLetterCase,
+      icon: GroupWorkIcon,
       path: '/group'
     },
 
