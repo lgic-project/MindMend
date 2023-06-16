@@ -3,7 +3,9 @@ import React from 'react'
 import { Link, useRouter } from 'expo-router'
 import Onboarding from 'react-native-onboarding-swiper';
 // npm i react-native-onboarding-swiper for implementing walkthrough screen
+
 const Walkthrough = () => {
+    
     const router = useRouter();
     const Skip = ({...props}) => (
         <TouchableOpacity
@@ -48,6 +50,7 @@ const Walkthrough = () => {
     backgroundColor: 'white',
     image: <View style={{paddingTop:100,}}>
         <Image source={require('../assets/Images/walk3.png')} />
+        
     </View>,
     title: '',
     subtitle: '',

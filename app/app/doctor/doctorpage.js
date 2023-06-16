@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from '../../style/doctorstyles';
 import StarRating from 'react-native-star-rating-widget';
 import { useRouter } from 'expo-router';
+import { DOCTOR_CATEGORY } from '../../utils/appRoutes';
 const SeeMoreText = ({ initialNumberOfLines, content }) => {
     const [showFullText, setShowFullText] = useState(false);
 
