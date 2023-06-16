@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         btn:{ 
             width: "100%", 
             height: "100%", 
-            backgroundColor: "#2BC5ED", 
+            backgroundColor: "#FACE51", 
             display: "flex", 
             justifyContent: "center", 
             alignItems: "center", 

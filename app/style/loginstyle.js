@@ -4,12 +4,16 @@ import { moderateScale, verticalScale } from "react-native-size-matters";
 const styles = StyleSheet.create({
     container:{
         flex:1, 
-        paddingTop: verticalScale(40),
+        // paddingTop: verticalScale(40),
+        backgroundColor:"#FAFAFA",
+        gap:10
     },
     background:{
-        height:"40%", 
+        height:"35%", 
         backgroundColor:"#FACE51", 
-        borderRadius:25
+        borderBottomStartRadius:25,
+        borderBottomEndRadius:25,
+        paddingTop:40
     },
     welcometext:{
         paddingTop: verticalScale(20), 
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
         fontWeight:"400"
     },
     signin:{
-        height:530, 
+        height:600, 
         // backgroundColor:"gray", 
         marginHorizontal:22, 
         marginTop:20, 
@@ -47,17 +51,18 @@ const styles = StyleSheet.create({
         fontWeight:"300"
     },
     firstroute:{
-        height:240,  
+        height:250,  
         backgroundColor: 'white', 
         borderBottomStartRadius:25, 
         borderBottomEndRadius:25,
-        padding:20
+        padding:20,
+        elevation:2
     },
     input:{
         borderWidth:1, 
         borderColor:"#BDBDBD", 
         paddingLeft:20, 
-        paddingVertical:5, 
+        paddingVertical:7, 
         borderRadius:30
     },
     ipcontainer:{
@@ -88,8 +93,8 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     secondroute:{
-        height:430,  
-        backgroundColor: 'white',
+        height: verticalScale(390),
+        backgroundColor:"#FFFFFF",
         padding:20,
         borderBottomStartRadius:25, 
         borderBottomEndRadius:25,

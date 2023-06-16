@@ -20,15 +20,15 @@ const FirstRoute = () => (
           <Image source={require('../../assets/Images/gym.png')} resizeMode='contain' style={{ width: "100%", height: "100%" }} />
         </View>
         <View style={styles.iconcontainer} >
-          <View style={styles.icon}>
+          <TouchableOpacity style={styles.icon}>
             <AntDesign name="like2" size={24} color="#FACE51" />
-          </View>
-          <View style={styles.icon}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
             <FontAwesome name="comment-o" size={24} color="#FACE51" />
-          </View>
-          <View style={styles.icon}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
             <FontAwesome name="share" size={24} color="#FACE51" />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -120,9 +120,9 @@ const Community = () => {
               indicatorStyle={{ height: 0 }}
               activeColor='#FACE51'
             />
-            <View style={styles.add}>
+            <TouchableOpacity style={styles.add}>
               <Ionicons name="person-add" size={25} color="#FACE51" />
-            </View>
+            </TouchableOpacity>
           </View>}
         />
 
