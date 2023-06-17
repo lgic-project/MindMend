@@ -1,4 +1,4 @@
-import { Button as Button1, Grid, FormControl, InputLabel, TextField, CardActions, CardContent, Divider, ButtonProps, Typography, styled, IconButton } from '@mui/material'
+import { Button as Button1, Grid, FormControl, InputLabel, TextField, CardActions, CardContent, Divider, ButtonProps, Typography, styled, IconButton, SelectChangeEvent } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { ChangeEvent, ElementType, useRef, useState } from 'react'
 import { Modal, Button, Text, Radio, Textarea, Input, Dropdown } from "@nextui-org/react"
@@ -11,6 +11,9 @@ import axios from 'axios'
 import countries from 'i18n-iso-countries'
 import enLocale from 'i18n-iso-countries/langs/en.json'
 import itLocale from 'i18n-iso-countries/langs/it.json'
+import error from 'next/error'
+import ErrorAlert from 'src/content/ErrorAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 
 
@@ -38,6 +41,8 @@ function CreateDoctor() {
 
   const router = useRouter()
   const { visible: queryVisible } = router.query
+  const [error, setError] = useState<Error | null>(null)
+  // const [data, setData] = useState<Number | null>(null)
 
   const [selectedCountry, setSelectedCountry] = useState<string[]>("")
 
@@ -160,8 +165,8 @@ function CreateDoctor() {
     console.log(doctorData)
 
     const result = await axios.post(DOCTOR_ROUTE, doctor, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
 
     console.log(result)
   }
@@ -198,7 +203,8 @@ function CreateDoctor() {
 
   return (
     <div>
-
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Doctor data created successfully"} />}
       <Modal
         closeButton
         blur

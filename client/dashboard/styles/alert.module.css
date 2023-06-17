@@ -1,0 +1,36 @@
+.errorAlert {
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slideIn {
+  opacity: 1;
+  animation: slideInAnimation 0.9s forwards;
+}
+
+.slideOut {
+  opacity: 0;
+  animation: styles.slideOutAnimation 0.9s forwards;
+}
+
+@keyframes slideInAnimation {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutAnimation {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}

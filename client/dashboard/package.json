@@ -60,6 +60,7 @@
     "apexcharts-clevision": "3.28.5",
     "axiom": "^0.1.6",
     "axios": "^1.4.0",
+    "cloudinary": "^1.37.1",
     "clsx": "^1.1.1",
     "i18n-iso-countries": "^7.6.0",
     "mdi-material-ui": "^7.1.0",

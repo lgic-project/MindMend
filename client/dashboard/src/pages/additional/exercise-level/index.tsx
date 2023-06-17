@@ -6,6 +6,8 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { DOCTOR_ROUTE, EXERCISE_LEVEL_ROUTE, MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
 import { CREATE_EXERCISE_LEVEL_ROUTE } from 'src/configs/createRoutes'
+import ErrorAlert from 'src/content/ErrorAlert'
+import InfoAlert from 'src/content/InfoAlert'
 
 function ExerciseLevel() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
@@ -13,6 +15,8 @@ function ExerciseLevel() {
   const [data, setData] = useState([])
   const [columns, setColumns] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
 
   useEffect(() => {
 
@@ -23,6 +27,7 @@ function ExerciseLevel() {
         if (data == null) {
           setLoading(true)
         }
+        console.log(res)
         setLoading(false)
 
         const keys = Object.keys(res.data[0])
@@ -34,7 +39,7 @@ function ExerciseLevel() {
         .catch((res) => {
           setLoading(false)
 
-          console.log(res.response)
+          setError(res.response)
         })
 
 
@@ -48,6 +53,8 @@ function ExerciseLevel() {
 
   return (
     <>
+      {error && <ErrorAlert message={error} />}
+      {data !== null && <InfoAlert message={"Exercise level displayed successfully"} />}
       <Head>
         <title>Exercise level - Applications</title>
       </Head>

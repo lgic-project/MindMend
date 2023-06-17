@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import { PhotoCamera } from '@mui/icons-material'
 import axios from 'axios'
 import { DISCOVER_ROUTE } from 'src/configs/appRoutes'
+import ErrorAlert from 'src/content/ErrorAlert'
+import InfoAlert from 'src/content/InfoAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 function CreateDiscover() {
   const [visible, setVisible] = React.useState(false)
@@ -13,6 +16,10 @@ function CreateDiscover() {
   const [base64, setBase64] = useState<string | null>(null)
   const router = useRouter()
   const { visible: queryVisible } = router.query
+  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Number | null>(null)
+
+
 
   const [discoverData, setDiscoverData] = useState<any>({
     title: '',
@@ -84,10 +91,8 @@ function CreateDiscover() {
     }
 
     const result = await axios.post(DISCOVER_ROUTE, discoverReq, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
-
-    console.log(result)
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
   }
 
   const handleStatus = (value: string) => {
@@ -96,6 +101,8 @@ function CreateDiscover() {
 
   return (
     <div>
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Discover data created successfully"} />}
       <Modal
         closeButton
         blur

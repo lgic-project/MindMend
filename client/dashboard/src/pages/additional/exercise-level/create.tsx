@@ -4,6 +4,9 @@ import { Modal, Button, Text, Radio, Input } from "@nextui-org/react"
 import { useRouter } from 'next/router'
 import { EXERCISE_LEVEL_ROUTE } from 'src/configs/appRoutes'
 import axios from 'axios'
+import error from 'next/error'
+import ErrorAlert from 'src/content/ErrorAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 
 
@@ -15,6 +18,8 @@ function CreateExerciseLevel() {
 
   const router = useRouter()
   const { visible: queryVisible } = router.query
+  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Number | null>(null)
 
   const [exerciseLevel, setExerciseLevel] = useState<any>({
     title: '',
@@ -49,8 +54,8 @@ function CreateExerciseLevel() {
     }
 
     const result = await axios.post(EXERCISE_LEVEL_ROUTE, difficultyLevel, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .then((res) => setData(res.status))
+      .catch((error) => setError(error.response))
 
     console.log(result)
   }
@@ -65,7 +70,8 @@ function CreateExerciseLevel() {
 
   return (
     <div>
-
+      {error || data !== 200 && <ErrorAlert message={error} />}
+      {data === 200 && <SuccessAlert message={"Exercise level data created successfully"} />}
       <Modal
         closeButton
         blur
