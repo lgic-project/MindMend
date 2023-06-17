@@ -22,6 +22,7 @@ const Home = () => {
     router.push(`doctor`)
   }
 
+
   // useEffect(() => {
   //   if (selectedItem) {
   //     setTimeout(() => {

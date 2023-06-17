@@ -5,11 +5,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from 'expo-router';
 const Userprofile = () => {
-  const router = useRouter();
+  const navigation = useNavigation();
   const handleback=()=>{
-    router.push(`message`)
+    navigation.goBack();
   }
   
   
