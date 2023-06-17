@@ -21,6 +21,7 @@ const Home = () => {
   const handledoc = () => {
     router.push(`doctor`)
   }
+
   // useEffect(() => {
   //   if (selectedItem) {
   //     setTimeout(() => {

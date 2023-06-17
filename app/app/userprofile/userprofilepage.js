@@ -5,14 +5,19 @@ import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 const Userprofile = () => {
+  const router = useRouter();
+  const handleback=()=>{
+    router.push(`message`)
+  }
   
   
   return (
     <View style={styles.container}>
       {/* Heading */}
       <View style={styles.heading}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleback} >
           <AntDesign name="left" size={20} color="black" />
         </TouchableOpacity>
         <Text>Simran Baniya</Text>
@@ -26,8 +31,8 @@ const Userprofile = () => {
           <Image source={require('../../assets/Images/person.png')} resizeMode='contain' style={styles.image} />
         </View>
         <View style={styles.textcontainer}>
-          <Text style={styles.username}>@simran_moti</Text>
-          <Text style={styles.headingtext}>Hi hello there I am Simran Baniya. I like to read books and books only. I am a girl. I am a very bad girl. Lol. Can you please do this and this. I say this only all the time
+          <Text style={styles.username}>@simran_baniya</Text>
+          <Text style={styles.headingtext}>Hi hello there I am Simran Baniya. I study in La Grandee International College. I'm currently living in Pokhara. Nice to meet you.
           </Text>
         </View>
       </View>
