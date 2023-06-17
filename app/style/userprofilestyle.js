@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     textcontainer:{
         width:"70%", 
         paddingTop:verticalScale(10), 
-        paddingHorizontal:moderateScale(5), 
+        paddingHorizontal:moderateScale(10), 
         display:"flex", 
         gap:moderateScale(10)
     },

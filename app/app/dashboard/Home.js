@@ -25,6 +25,7 @@ const Home = () => {
     router.push(`doctor`)
   }
 
+
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const url = "http://localhost:9091/api/doctor"

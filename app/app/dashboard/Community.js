@@ -3,16 +3,26 @@ import * as React from 'react'
 import styles from '../../style/communitystyles';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-const FirstRoute = () => (
+const FirstRoute = () => {
+  const router = useRouter();
+    const handleprofile=()=>{
+        router.push(`userprofile`)
+    }
+  return(
   <ScrollView style={styles.pagescrollcontainer}>
     <View style={styles.pagecontainer} >
       {/* news feed */}
       <View style={styles.newsfeed} >
         <View style={styles.feedheading}>
           <View style={styles.imgtxt}>
-            <Image source={require('../../assets/Images/myprofile.png')} style={{ width: 35, height: 35, borderRadius: 50 }} />
-            <Text style={{ alignSelf: "center", fontSize: 17 }}>Mahima Poudel</Text>
+            <TouchableOpacity onPress={handleprofile} >
+            <Image source={require('../../assets/Images/person.png')} style={{ width: 30, height: 30, borderRadius: 50 }} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleprofile} >
+            <Text style={{ alignSelf: "center", fontSize: 16 }}>Simran Baniya</Text>
+            </TouchableOpacity>
           </View>
           <Text style={{ fontSize: 13 }}>Help Needed</Text>
         </View>
@@ -33,21 +43,28 @@ const FirstRoute = () => (
       </View>
     </View>
   </ScrollView>
-);
+)};
 
-const SecondRoute = () => (
+const SecondRoute = () => {
+  const router = useRouter();
+    const handleprofile=()=>{
+        router.push(`userprofile`)
+    }
+  return(
   <ScrollView style={styles.scrollfriend} >
     <View>
-      <TouchableOpacity style={styles.friend}>
+      <TouchableOpacity style={styles.friend} onPress={handleprofile} >
         <View style={styles.imgtext}>
-          <Image source={require('../../assets/Images/myprofile.png')} style={styles.frndimg} />
-          <Text style={{ alignSelf: "center" }}>Mahima Poudel</Text>
+          <TouchableOpacity >
+          <Image source={require('../../assets/Images/person.png')} style={styles.frndimg} />
+          </TouchableOpacity>
+          <Text style={{ alignSelf: "center" }}>Simran Baniya</Text>
         </View>
         <AntDesign name="right" size={20} color="#FACE51" />
       </TouchableOpacity>
     </View>
   </ScrollView>
-);
+)};
 
 const ThirdRoute = () => (
   <ScrollView style={styles.Scrollgroup}>

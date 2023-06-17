@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     imgtxt: {
         display: "flex",
         flexDirection: "row",
-        gap: 10
+        gap: 10,
+        alignItems:"center"
     },
     iconcontainer: {
         width: "100%",

@@ -5,9 +5,6 @@ import styles from '../../style/inboxstyle'
 import { useRouter } from 'expo-router'
 const InboxCard = () => {
     const router = useRouter();
-    const handleprofile=()=>{
-        router.push(`userprofile`)
-    }
     const handlemessage=()=>{
         router.push(`message`)
     }
@@ -15,7 +12,7 @@ const InboxCard = () => {
   return (
     <View style={styles.chatcontainer}>
             
-            <TouchableOpacity style={styles.iconatiner} onPress={handleprofile} >
+            <TouchableOpacity style={styles.iconatiner} >
                 <Image source={require('../../assets/Images/person.png')} style={{ width: moderateScale(50), height: verticalScale(45), borderRadius: 50 }} />
                 <View style={styles.online}>
                     <View style={styles.onlinegreen}></View>

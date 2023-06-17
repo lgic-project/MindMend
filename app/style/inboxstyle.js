@@ -51,7 +51,11 @@ container:{
     imagecontainer:{
             width:"11%", 
             height:40, 
-            borderRadius:50
+            borderRadius:50,
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center",
+            backgroundColor:"#FACE51"
         },
     titletext:{
         fontWeight:"400", 
