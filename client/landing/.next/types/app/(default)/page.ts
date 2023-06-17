@@ -1,4 +1,4 @@
-// File: /Users/sapana/MindMend/client/landing/app/(default)/page.tsx
+// File: /Users/sapana/mind/MindMend/client/landing/app/(default)/page.tsx
 import * as entry from '../../../../app/(default)/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
