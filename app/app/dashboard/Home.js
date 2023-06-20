@@ -11,10 +11,15 @@ import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
 import CircularProgress from "react-native-circular-progress-indicator"
-import { MOOD_CATEGORY } from "../../utils/appRoutes"
+import { DOCTOR, MOOD_CATEGORY } from "../../utils/appRoutes"
 import axios from "axios"
+import { Buffer } from "buffer"
+import Carousel, { CarouselProps } from "react-native-snap-carousel"
 
 const Home = () => {
+  const [moodData, setMoodData] = useState([])
+  const [doctorData, setDoctorData] = useState([])
+
   const [selectedItem, setSelectedItem] = useState(null)
   // const [showView, setShowView] = useState(true);
   const router = useRouter()
@@ -25,29 +30,75 @@ const Home = () => {
     router.push(`doctor`)
   }
 
-  const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-  const url = "http://localhost:9091/api/doctor"
 
-  const image = [
-    {
-      id: 1,
-      title: "Very Good",
-      src: require("../../assets/Images/verygood.png"),
-    },
-    { id: 2, title: "Good", src: require("../../assets/Images/good.png") },
-    {
-      id: 3,
-      title: "Neutral",
-      src: require("../../assets/Images/neutral.png"),
-    },
-    { id: 4, title: "Sad", src: require("../../assets/Images/sad.png") },
-    {
-      id: 5,
-      title: "Very Sad",
-      src: require("../../assets/Images/verysad.png"),
-    },
-  ]
+  useEffect(() => {
+    try {
+      axios.get(MOOD_CATEGORY).then((res) => {
+        setMoodData(res.data)
+
+        // setData = res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+    try {
+      axios.get(DOCTOR).then((res) => {
+        setDoctorData(res.data)
+
+        // setData = res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  const renderData = (value) => {
+    // Call the convertBase64ToString function
+    const decodedString = convertBase64ToString(value)
+    // Use the decoded string in your JSX code
+    return (
+      <Image
+        source={{ uri: decodedString }}
+        resizeMode="contain"
+        style={{ width: "85%", height: "85%" }}
+      />
+    )
+  }
+
+  const renderDoctorCard = ({ item }) => {
+    return (
+      <TouchableOpacity style={styles.doc1view} onPress={handledoc}>
+        {item.encodedImage == "" ? (
+          <ImageBackground
+            source={require("../../assets/Images/person.jpeg")}
+            style={{ flex: 1 }}
+            imageStyle={{ borderRadius: 10 }}
+            resizeMode="cover"
+            blurRadius={1}
+          >
+            <Text style={styles.doc1text}>{item.doctorName}</Text>
+            {/* {renderData(column.encodedImage)} */}
+          </ImageBackground>
+        ) : (
+          <ImageBackground
+            source={{
+              uri: convertBase64ToString(item.encodedImage),
+            }}
+            style={{ flex: 1 }}
+            imageStyle={{ borderRadius: 10 }}
+            resizeMode="cover"
+            blurRadius={1}
+          >
+            <Text style={styles.doc1text}>{item.doctorName}</Text>
+            {/* {renderData(column.encodedImage)} */}
+          </ImageBackground>
+        )}
+      </TouchableOpacity>
+    )
+  }
+
   const handlePress = (id) => {
     setSelectedItem(id === selectedItem ? null : id)
   }
@@ -85,31 +136,27 @@ const Home = () => {
         {/* {showView &&
       ( */}
         <View style={styles.moodcontainer}>
-          {image.map((post) => {
-            ;<View style={styles.emojibutton} key={post.id}>
+          {moodData.map((column, index) => (
+            <View style={styles.emojibutton} key={column.id}>
               <TouchableOpacity
                 style={[
                   styles.emojiview,
-                  post.id === selectedItem && styles.selected,
+                  column.id === selectedItem && styles.selected,
                 ]}
-                onPress={() => handlePress(post.id)}
+                onPress={() => handlePress(column.id)}
               >
-                <Image
-                  source={require("../../assets/Images/verysad.png")}
-                  resizeMode="contain"
-                  style={{ width: "85%", height: "85%" }}
-                />
+                {renderData(column.encodedImage)}
               </TouchableOpacity>
               <Text
                 style={[
                   styles.notselected,
-                  post.id === selectedItem && styles.selectedtext,
+                  column.id === selectedItem && styles.selectedtext,
                 ]}
               >
-                {post.title}
+                {column.name}
               </Text>
             </View>
-          })}
+          ))}
         </View>
         {/* )} */}
         {/* fitness */}
@@ -185,36 +232,15 @@ const Home = () => {
         <View style={styles.doccontainer}>
           <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
           <View style={styles.doccard}>
-            <TouchableOpacity style={styles.doc1view} onPress={handledoc}>
-              <ImageBackground
-                source={require("../../assets/Images/bubbley.jpg")}
-                style={{ flex: 1 }}
-                imageStyle={{ borderRadius: 10 }}
-                resizeMode="cover"
-                blurRadius={3}
-              >
-                <Text style={styles.doc1text}>Dr. Lorem Ipsum</Text>
-                <Image
-                  source={require("../../assets/Images/doc.png")}
-                  style={styles.doc1img}
-                />
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.doc2view} onPress={handledoc}>
-              <ImageBackground
-                source={require("../../assets/Images/bubblay.jpg")}
-                style={{ flex: 1 }}
-                imageStyle={{ borderRadius: 10 }}
-                resizeMode="cover"
-                blurRadius={3}
-              >
-                <Text style={styles.doc2text}>Dr. Lorem Ipsum</Text>
-                <Image
-                  source={require("../../assets/Images/doc1.png")}
-                  style={styles.doc2img}
-                />
-              </ImageBackground>
-            </TouchableOpacity>
+            <Carousel
+              data={doctorData}
+              renderItem={renderDoctorCard}
+              sliderWidth={400} // Adjust the width of the carousel
+              itemWidth={300} // Adjust the width of each card
+              containerCustomStyle={styles.carousel}
+              contentContainerCustomStyle={styles.carouselContentContainer}
+              slideStyle={styles.slide}
+            />
           </View>
         </View>
       </View>
@@ -223,3 +249,9 @@ const Home = () => {
 }
 
 export default Home
+
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
+}

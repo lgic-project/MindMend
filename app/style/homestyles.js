@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     height: "85%",
     backgroundColor: "white",
     paddingHorizontal: 5,
+    paddingBottom: 30,
   },
   heading: {
     height: 120,
@@ -76,6 +77,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
+  doccardContent: {
+    paddingRight: 10,
+  },
   lookingcontainer: {
     flex: 1,
     flexDirection: "row",
@@ -94,6 +98,17 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "center",
   },
+  carousel: {
+    marginTop: 10,
+  },
+  carouselContentContainer: {
+    paddingLeft: 100,
+    paddingHorizontal: 10,
+    // Adjust the horizontal padding
+  },
+  slide: {
+    marginHorizontal: -80, // Adjust the margin to remove the gap between cards
+  },
   doccontainer: {
     width: "100%",
     height: "35%",
@@ -106,7 +121,6 @@ const styles = StyleSheet.create({
   doccard: {
     flex: 1,
     flexDirection: "row",
-    gap: 10,
   },
   doc1view: {
     width: "48%",
@@ -114,6 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     elevation: 3,
+    marginRight: 10,
     // padding:1
   },
   doc1text: {
@@ -133,11 +148,12 @@ const styles = StyleSheet.create({
     right: 5,
   },
   doc2view: {
-    width: "50%",
+    width: "45%",
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#000000",
     borderRadius: 10,
     elevation: 3,
+
     // padding:1
   },
   doc2text: {
@@ -145,7 +161,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     width: "60%",
     fontSize: 15,
-    color: "white",
+    color: "black",
     fontWeight: "700",
   },
   doc2img: {
