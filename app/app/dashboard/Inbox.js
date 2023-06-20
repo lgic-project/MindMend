@@ -19,9 +19,9 @@ const Inbox = () => {
           {/* Search Container */}
         <View style={styles.searchcontainer}>
         <TextInput placeholder='Search' style={styles.search} />
-        <View style={styles.imagecontainer}>
-          <Image source={require('../../assets/Images/bot.png')} resizeMode='contain' style={styles.image} />
-        </View>
+        <TouchableOpacity style={styles.imagecontainer}>
+        <AntDesign name="search1" size={24} color="white" />
+        </TouchableOpacity>
         </View>
         {/* Chat Card */}
         <View>
