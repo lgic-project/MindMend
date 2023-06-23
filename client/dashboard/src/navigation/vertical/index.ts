@@ -88,6 +88,14 @@ const navigation = (): VerticalNavItemsType => {
       icon: GroupWorkIcon,
       path: '/group'
     },
+    {
+      sectionTitle: 'Messenger'
+    },
+    {
+      title: 'Chat',
+      icon: NewspaperIcon,
+      path: '/chat'
+    },
 
     // {
     //   title: 'Typography',
