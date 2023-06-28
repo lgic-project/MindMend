@@ -8,11 +8,11 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 const Userprofile = () => {
   const navigation = useNavigation();
-  const handleback=()=>{
+  const handleback = () => {
     navigation.goBack();
   }
-  
-  
+
+
   return (
     <View style={styles.container}>
       {/* Heading */}
@@ -43,7 +43,8 @@ const Userprofile = () => {
           <Text style={styles.addtext}>Add Friend</Text>
         </View>
         <View style={styles.messenger}>
-          <FontAwesome5 name="facebook-messenger" size={30} color="#B9B7B5" />
+          {/* <FontAwesome5 name="facebook-messenger" size={30} color="#B9B7B5" /> */}
+          <AntDesign name="message1" size={30} color="#B9B7B5" />
         </View>
         <View style={styles.downbutton}>
           <AntDesign name="caretdown" size={24} color="#B9B7B5" />
