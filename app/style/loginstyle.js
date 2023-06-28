@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   arrowmain: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     backgroundColor: "white",
     position: "absolute",
     bottom: -40,
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   },
   arrowcontainer: {
     backgroundColor: "#FACE51",
-    width: 55,
-    height: 55,
+    width: 80,
+    height: 80,
     borderRadius: 50,
     display: "flex",
     justifyContent: "center",

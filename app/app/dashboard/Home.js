@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  ImageBackground,
-  ScrollView,
-} from "react-native"
+import { View, Text, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView, } from "react-native"
 import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
@@ -14,7 +6,7 @@ import CircularProgress from "react-native-circular-progress-indicator"
 import { DOCTOR, MOOD_CATEGORY } from "../../utils/appRoutes"
 import axios from "axios"
 import { Buffer } from "buffer"
-import Carousel, { CarouselProps } from "react-native-snap-carousel"
+// import Carousel, { CarouselProps } from "react-native-snap-carousel"
 
 const Home = () => {
   const [moodData, setMoodData] = useState([])
@@ -231,8 +223,8 @@ const Home = () => {
         {/* Doctor Section */}
         <View style={styles.doccontainer}>
           <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
-          <View style={styles.doccard}>
-            <Carousel
+          {/* <View style={styles.doccard}> */}
+          {/* <Carousel
               data={doctorData}
               renderItem={renderDoctorCard}
               sliderWidth={400} // Adjust the width of the carousel
@@ -240,7 +232,21 @@ const Home = () => {
               containerCustomStyle={styles.carousel}
               contentContainerCustomStyle={styles.carouselContentContainer}
               slideStyle={styles.slide}
-            />
+            /> */}
+          {/* </View> */}
+          <View style={styles.doccard}>
+            <View style={styles.doc1view} >
+              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubbley.jpg')} resizeMode="cover" >
+                <Text style={styles.doc1text} >Dr. Rachita Shrestha</Text>
+                <Image source={require('../../assets/Images/doc.png')} style={styles.doc1img} />
+              </ImageBackground>
+            </View>
+            <View style={styles.doc2view}>
+              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubblay.jpg')} resizeMode="cover" >
+                <Text style={styles.doc2text}>Dr. Rachit Shrestha</Text>
+                <Image source={require('../../assets/Images/doc1.png')} style={styles.doc2img} />
+              </ImageBackground>
+            </View>
           </View>
         </View>
       </View>

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FACE51",
   },
   smallcontainer: {
-    height: "20%",
+    height: "17%",
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   lookingfor: {
     width: "100%",
-    height: "20%",
+    height: "22%",
     paddingHorizontal: moderateScale(20),
     display: "flex",
     gap: 10,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   lookingcard: {
     width: "25%",
-    height: "95%",
+    height: "100%",
     backgroundColor: "white",
     elevation: 3,
     borderRadius: 20,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   doc2view: {
     width: "45%",
     height: "100%",
-    backgroundColor: "#000000",
+    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     elevation: 3,
 
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     width: "60%",
     fontSize: 15,
-    color: "black",
+    color: "white",
     fontWeight: "700",
   },
   doc2img: {
