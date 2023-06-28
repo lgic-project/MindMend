@@ -26,19 +26,20 @@ const Dashboard = () => {
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={8}>
           <Trophy />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={4}>
           <StatisticsCard />
+        </Grid>
+
+        <Grid item xs={12} md={8} lg={8} marginTop={-18}>
+          <TotalEarning />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <TotalEarning />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        {/* <Grid item xs={12} md={6} lg={4}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
               <CardStatisticsVerticalComponent
@@ -89,7 +90,7 @@ const Dashboard = () => {
         </Grid>
         <Grid item xs={12} md={12} lg={8}>
           <DepositWithdraw />
-        </Grid>
+        </Grid> */}
 
       </Grid>
     </ApexChartWrapper>

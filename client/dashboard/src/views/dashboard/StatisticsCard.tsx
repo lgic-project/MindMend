@@ -22,36 +22,54 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 import { ThemeColor } from 'src/@core/layouts/types'
 
 interface DataType {
-  stats: string
+  logo: string
   title: string
-  color: ThemeColor
-  icon: ReactElement
+  amount: string
+  subtitle: string
+  logoWidth: number
+  logoHeight: number
 }
 
-const salesData: DataType[] = [
+const depositData = [
   {
-    stats: '245k',
-    title: 'Sales',
-    color: 'primary',
-    icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
+    logoWidth: 28,
+    logoHeight: 29,
+    amount: '10 Minutes',
+    subtitle: '5 Exercises',
+    title: 'Brisk walking',
+    logo: '/images/logos/gumroad.png'
   },
   {
-    stats: '12.5k',
-    title: 'Customers',
-    color: 'success',
-    icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
+    logoWidth: 38,
+    logoHeight: 38,
+    amount: '30 minutes',
+    title: 'Jogging',
+    subtitle: '6 Exercises',
+    logo: '/images/logos/mastercard-label.png'
   },
   {
-    stats: '1.54k',
-    color: 'warning',
-    title: 'Products',
-    icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
+    logoWidth: 20,
+    logoHeight: 28,
+    amount: '20 minutes',
+    title: 'Swimming',
+    subtitle: '3 Exercises',
+    logo: '/images/logos/stripe.png'
   },
   {
-    stats: '$88k',
-    color: 'info',
-    title: 'Revenue',
-    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
+    logoWidth: 34,
+    logoHeight: 32,
+    amount: '20 minutes',
+    title: 'Boxing',
+    subtitle: '4 Exercises',
+    logo: '/images/logos/american-bank.png'
+  },
+  {
+    logoWidth: 33,
+    logoHeight: 22,
+    amount: '8 minutes',
+    title: 'Simple Breathing Exercises ',
+    subtitle: '10 Exercises',
+    logo: '/images/logos/citi-bank.png'
   }
 ]
 
@@ -83,36 +101,55 @@ const renderStats = () => {
 
 const StatisticsCard = () => {
   return (
-    <Card>
-      <CardHeader
-        title='Statistics Card'
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        }
-        subheader={
-          <Typography variant='body2'>
-            <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-              Total 48.5% growth
-            </Box>{' '}
-            😎 this month
-          </Typography>
-        }
-        titleTypographyProps={{
-          sx: {
-            mb: 2.5,
-            lineHeight: '2rem !important',
-            letterSpacing: '0.15px !important'
-          }
-        }}
-      />
-      <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
-        <Grid container spacing={[5, 0]}>
-          {renderStats()}
-        </Grid>
-      </CardContent>
-    </Card>
+    <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }}>
+      <Box sx={{ width: '100%' }}>
+        <CardHeader
+          title='Workout'
+          sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
+          action={<Typography variant='caption'>View All</Typography>}
+          titleTypographyProps={{
+            variant: 'h6',
+            sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
+          }}
+        />
+        <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
+          {depositData.map((item: DataType, index: number) => {
+            return (
+              <Box
+                key={item.title}
+                sx={{
+                  display: 'flex', alignItems: 'center', padding: '10px', paddingX: '15px', borderRadius: '15px', '&:hover': {
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  }, mb: index !== depositData.length - 1 ? 6 : 0
+                }}
+              >
+                <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
+                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
+                </Box>
+                <Box
+                  sx={{
+                    ml: 4,
+                    width: '100%',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
+                    <Typography sx={{ fontWeight: 600, fontSize: '0.800rem' }}>{item.title}</Typography>
+                    <Typography variant='caption'>{item.subtitle}</Typography>
+                  </Box>
+                  <Typography fontSize={10} sx={{ fontWeight: 600, color: 'success.main' }}>
+                    {item.amount}
+                  </Typography>
+                </Box>
+              </Box>
+            )
+          })}
+        </CardContent>
+      </Box >
+    </Card >
   )
 }
 
