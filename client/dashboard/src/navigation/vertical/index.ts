@@ -21,7 +21,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Dashboard',
       icon: HomeOutline,
-      path: '/'
+      path: '/test'
     },
     {
       title: 'Profile',
@@ -92,6 +92,11 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Workout',
       icon: GroupWorkIcon,
       path: '/workout'
+    },
+    {
+      title: 'Doctor',
+      icon: GroupWorkIcon,
+      path: '/doctor'
     },
     {
       sectionTitle: 'Messenger'
