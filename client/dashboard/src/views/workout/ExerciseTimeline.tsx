@@ -1,5 +1,7 @@
 // ** React Imports
 import { ReactNode } from 'react'
+import * as React from 'react'
+
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -9,6 +11,15 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Timeline from '@mui/lab/Timeline'
+import TimelineItem from '@mui/lab/TimelineItem'
+import TimelineSeparator from '@mui/lab/TimelineSeparator'
+import TimelineConnector from '@mui/lab/TimelineConnector'
+import TimelineContent from '@mui/lab/TimelineContent'
+import TimelineDot from '@mui/lab/TimelineDot'
+import TimelineOppositeContent, {
+  timelineOppositeContentClasses,
+} from '@mui/lab/TimelineOppositeContent'
 
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
@@ -90,62 +101,44 @@ const ExerciseList = () => {
     <Card sx={{ borderRadius: '40px' }}>
       <CardHeader
         title='Description'
-        titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
+        titleTypographyProps={{ sx: { lineHeight: '1.2 !important', marginLeft: 10, letterSpacing: '0.31px !important' } }}
 
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-        {data.map((item: DataType, index: number) => {
-          return (
-            <Box
-              key={item.title}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                ...(index !== data.length - 1 ? { mb: 5.875 } : {})
-              }}
-            >
-              <Avatar
-                squared
-                size="xl"
-                src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
 
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Box sx={{ display: 'flex' }}>
-                    <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}>Abdominal muscles</Typography>
+        <Timeline
+          sx={{
+            [`& .${timelineOppositeContentClasses.root}`]: {
+              flex: 0.2,
+            },
+          }}
+        >
+          <TimelineItem>
+            <TimelineOppositeContent color="textSecondary">
+              09:30 am
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent sx={{ py: '12px', px: 2 }}>
+              <Typography variant="h6" component="span">
+                Eat
+              </Typography>
+              <Typography>Because you need strength</Typography>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineOppositeContent color="textSecondary">
+              10:00 am
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+            </TimelineSeparator>
+            <TimelineContent>Code</TimelineContent>
+          </TimelineItem>
+        </Timeline>
 
-                  </Box>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    {/* <Avatar
-                      squared
-                      size="xs"
-                      icon={<TimerIcon />} /> */}
-
-                    <TimerIcon sx={{ width: 18 }} />
-                    <Typography variant='caption' sx={{ lineHeight: 2 }}>
-                      10 min
-                    </Typography>
-                    <BoltIcon />
-                    <Typography variant='caption' sx={{ lineHeight: 2 }}>
-                      {item.subtitle}
-                    </Typography>
-                  </Box>
-
-                </Box>
-
-              </Box>
-            </Box>
-          )
-        })}
       </CardContent>
     </Card>
   )
