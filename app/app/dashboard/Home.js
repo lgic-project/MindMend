@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  ImageBackground,
-  ScrollView,
-} from "react-native"
+import { View, Text, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView, } from "react-native"
 import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
@@ -14,14 +6,8 @@ import CircularProgress from "react-native-circular-progress-indicator"
 import { DOCTOR, MOOD_CATEGORY } from "../../utils/appRoutes"
 import axios from "axios"
 import { Buffer } from "buffer"
-import Carousel, { CarouselProps } from "react-native-snap-carousel"
-
 const Home = () => {
-  const [moodData, setMoodData] = useState([])
-  const [doctorData, setDoctorData] = useState([])
 
-  const [selectedItem, setSelectedItem] = useState(null)
-  // const [showView, setShowView] = useState(true);
   const router = useRouter()
   const handleprofile = () => {
     router.push(`profile`)
@@ -30,29 +16,6 @@ const Home = () => {
     router.push(`doctor`)
   }
 
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    try {
-      axios.get(MOOD_CATEGORY).then((res) => {
-        setMoodData(res.data)
-
-        // setData = res.data
-      })
-    } catch (error) {
-      console.log(error)
-    }
-
-    try {
-      axios.get(DOCTOR).then((res) => {
-        setDoctorData(res.data)
-
-        // setData = res.data
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
 
   const renderData = (value) => {
     // Call the convertBase64ToString function
@@ -67,41 +30,27 @@ const Home = () => {
     )
   }
 
-  const renderDoctorCard = ({ item }) => {
-    return (
-      <TouchableOpacity style={styles.doc1view} onPress={handledoc}>
-        {item.encodedImage == "" ? (
-          <ImageBackground
-            source={require("../../assets/Images/person.jpeg")}
-            style={{ flex: 1 }}
-            imageStyle={{ borderRadius: 10 }}
-            resizeMode="cover"
-            blurRadius={1}
-          >
-            <Text style={styles.doc1text}>{item.doctorName}</Text>
-            {/* {renderData(column.encodedImage)} */}
-          </ImageBackground>
-        ) : (
-          <ImageBackground
-            source={{
-              uri: convertBase64ToString(item.encodedImage),
-            }}
-            style={{ flex: 1 }}
-            imageStyle={{ borderRadius: 10 }}
-            resizeMode="cover"
-            blurRadius={1}
-          >
-            <Text style={styles.doc1text}>{item.doctorName}</Text>
-            {/* {renderData(column.encodedImage)} */}
-          </ImageBackground>
-        )}
-      </TouchableOpacity>
-    )
-  }
-
   const handlePress = (id) => {
-    setSelectedItem(id === selectedItem ? null : id)
-  }
+    setSelectedItem(id === selectedItem ? null : id);
+  };
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState < Error | null > (null)
+
+  useEffect(() => {
+    const GetMoodData = async () => {
+      await axios.get(MOOD_CATEGORY).then((res) => {
+        setData = (res.data)
+        setLoading(false)
+      })
+        .catch((res) => {
+          setLoading(false)
+
+          setError(res.response)
+        })
+    }
+    GetMoodData()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -136,29 +85,15 @@ const Home = () => {
         {/* {showView &&
       ( */}
         <View style={styles.moodcontainer}>
-          {moodData.map((column, index) => (
-            <View style={styles.emojibutton} key={column.id}>
-              <TouchableOpacity
-                style={[
-                  styles.emojiview,
-                  column.id === selectedItem && styles.selected,
-                ]}
-                onPress={() => handlePress(column.id)}
-              >
-                {renderData(column.encodedImage)}
+          {images.map(image => (
+            <View style={styles.emojibutton} key={image.id} >
+              <TouchableOpacity style={[styles.emojiview, image.id === selectedItem && styles.selected]} onPress={() => handlePress(image.id)}>
+                <Image source={image.src} resizeMode="contain" style={{ width: "85%", height: '85%' }} />
+                <Text style={[styles.notselected, image.id === selectedItem && styles.selectedtext]}>{image.title}</Text>
               </TouchableOpacity>
-              <Text
-                style={[
-                  styles.notselected,
-                  column.id === selectedItem && styles.selectedtext,
-                ]}
-              >
-                {column.name}
-              </Text>
             </View>
           ))}
         </View>
-        {/* )} */}
         {/* fitness */}
         <View style={styles.fitnesscontainer}>
           <View style={styles.fitnesscard}>
@@ -231,8 +166,8 @@ const Home = () => {
         {/* Doctor Section */}
         <View style={styles.doccontainer}>
           <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
-          <View style={styles.doccard}>
-            <Carousel
+          {/* <View style={styles.doccard}> */}
+          {/* <Carousel
               data={doctorData}
               renderItem={renderDoctorCard}
               sliderWidth={400} // Adjust the width of the carousel
@@ -240,7 +175,21 @@ const Home = () => {
               containerCustomStyle={styles.carousel}
               contentContainerCustomStyle={styles.carouselContentContainer}
               slideStyle={styles.slide}
-            />
+            /> */}
+          {/* </View> */}
+          <View style={styles.doccard}>
+            <View style={styles.doc1view} >
+              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubbley.jpg')} resizeMode="cover" >
+                <Text style={styles.doc1text} >Dr. Rachita Shrestha</Text>
+                <Image source={require('../../assets/Images/doc.png')} style={styles.doc1img} />
+              </ImageBackground>
+            </View>
+            <View style={styles.doc2view}>
+              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubblay.jpg')} resizeMode="cover" >
+                <Text style={styles.doc2text}>Dr. Rachit Shrestha</Text>
+                <Image source={require('../../assets/Images/doc1.png')} style={styles.doc2img} />
+              </ImageBackground>
+            </View>
           </View>
         </View>
       </View>

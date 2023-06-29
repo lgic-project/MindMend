@@ -51,9 +51,9 @@ const Walkthrough = () => {
           {
             backgroundColor: "white",
             image: (
-              <View style={{ paddingTop: 100 }}>
+              <View style={{ paddingTop: 100, backgroundColor: "white" }}>
                 <Image
-                  style={{ width: 200, height: 200 }}
+                  style={{ width: 350, height: 450 }}
                   source={require("../assets/Images/walk1.png")}
                 />
               </View>
@@ -66,8 +66,8 @@ const Walkthrough = () => {
             image: (
               <View style={{ paddingTop: 100 }}>
                 <Image
-                  style={{ width: 250, height: 250 }}
-                  source={require("../assets/Images/walk3.png")}
+                  style={{ width: 350, height: 450 }}
+                  source={require("../assets/Images/walk33.png")}
                 />
               </View>
             ),
@@ -77,10 +77,10 @@ const Walkthrough = () => {
           {
             backgroundColor: "white",
             image: (
-              <View style={{ paddingTop: 200 }}>
+              <View style={{ paddingTop: 100 }}>
                 <Image
-                  style={{ width: 250, height: 350 }}
-                  source={require("../assets/Images/walk2.png")}
+                  style={{ width: 300, height: 500 }}
+                  source={require("../assets/Images/walk22.png")}
                 />
               </View>
             ),
