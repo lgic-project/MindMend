@@ -5,6 +5,7 @@ import { Card, Grid, Text, Link, Avatar, Button } from "@nextui-org/react"
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import StarIcon from '@mui/icons-material/Star'
 import React from "react"
+import { useRouter } from "next/router"
 
 const VISIBLE_FIELDS: string[] = ['name', 'rating', 'category', 'dateCreated', 'isAdmin']
 
@@ -38,6 +39,15 @@ const data: RowData[] = [
 ]
 const DoctorList = () => {
   const [filterText, setFilterText] = React.useState('')
+  const router = useRouter()
+
+  const handleGridClick = () => {
+    // Perform any necessary logic or data manipulation before navigating
+    // For example, you can pass additional data to the next page using query parameters or state
+
+    // Navigate to the desired link
+    router.push('/doctor/doctor-detail')
+  }
 
   const filteredData = React.useMemo(() => {
     if (!filterText) {
@@ -54,7 +64,8 @@ const DoctorList = () => {
   return (
     <ApexChartWrapper>
       <Grid.Container spacing={12} marginTop={4}>
-        <Grid item xs={12} md={12}>
+
+        <Grid item xs={12} md={12} onClick={handleGridClick}>
           <Box paddingX={10} sx={{
             width: '100%',
             display: 'flex',
@@ -80,7 +91,8 @@ const DoctorList = () => {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={12} style={{ marginTop: 26 }}>
+
+        <Grid item xs={12} md={12} style={{ marginTop: 26 }} onClick={handleGridClick}>
           <Grid.Container spacing={6} gap={1} marginTop={4}>
             {filteredData.map((row: RowData) => (
               // eslint-disable-next-line react/jsx-key
