@@ -46,18 +46,29 @@ function CreateExerciseLevel() {
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()
 
-    const difficultyLevel = JSON.stringify(exerciseLevel)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const props = {}
+
+
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
     }
 
-    const result = await axios.post(EXERCISE_LEVEL_ROUTE, difficultyLevel, customConfig)
-      .then((res) => setData(res.status))
+
+    const result = await axios.post(EXERCISE_LEVEL_ROUTE, exerciseLevel, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+
+      })
       .catch((error) => setError(error.response))
 
-    console.log(result)
+    router.push(
+      {
+        pathname: '/additional/exercise-level',
+        query: props
+      })
   }
 
   const handleStatus = (value: string) => {
@@ -71,7 +82,6 @@ function CreateExerciseLevel() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Exercise level data created successfully"} />}
       <Modal
         closeButton
         blur

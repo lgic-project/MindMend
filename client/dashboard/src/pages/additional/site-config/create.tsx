@@ -47,19 +47,27 @@ function CreateSiteConfig() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()
+    const props = {}
 
-    const siteconfig = JSON.stringify(siteConfig)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
     }
 
-    const result = await axios.post(SITECONFIG_ROUTE, siteconfig, customConfig)
-      .then((res) => setData(res.status))
+
+    const result = await axios.post(SITECONFIG_ROUTE, siteConfig, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+      })
       .catch((error) => setError(error.response))
 
-    console.log(result)
+    router.push(
+      {
+        pathname: '/additional/site-config',
+        query: props
+      })
   }
 
   const handleStatus = (value: string) => {
@@ -72,7 +80,6 @@ function CreateSiteConfig() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Site config data created successfully"} />}
       <Modal
         closeButton
         blur

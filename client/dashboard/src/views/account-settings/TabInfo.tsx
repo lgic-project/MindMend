@@ -33,88 +33,105 @@ const CustomInput = forwardRef((props, ref) => {
 const TabInfo = () => {
   // ** State
   const [date, setDate] = useState<Date | null | undefined>(null)
-  const [readMode, setReadMode] = useState<boolean>(true);
+  const [readMode, setReadMode] = useState<boolean>(true)
   const [infoData, setInfoData] = useState<any>({
-    city:"",
+    city: "",
     country: "",
-    email:"",
-    firstName:"",
-    lastName:"",
-    gender:"",
-    image:"",
-    phone:"",
-    state:"",
-    street:"",
-    username:"",
-    description:"",
-    facebookLink:"",
+    email: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    image: "",
+    phone: "",
+    state: "",
+    street: "",
+    username: "",
+    description: "",
+    facebookLink: "",
     birthDate: null,
-    zipCode:"",
-    accountId:null,
-    addressId:null,
-    profileId:null,
-    userId:null
+    zipCode: "",
+    accountId: null,
+    addressId: null,
+    profileId: null,
+    userId: null
 
-  });
+  })
 
-  const id =1;
+  const id = 1
 
-  useEffect(()=>{
 
-    const GetProfileDataList = async ()=>{
-       await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
+
+  useEffect(() => {
+
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+
+    const GetProfileDataList = async () => {
+      console.log(PROFILE_ROUTE)
+      try {
+        const res = await axios.get(PROFILE_ROUTE + "/" + id, { headers })
+
         // setLoading(true);
-        setInfoData(res.data);
-
-      });
-
-    }
-    GetProfileDataList();
+        console.log(res)
+        setInfoData(res)
 
 
 
-  },[])
-
-  async function handleSubmit(event){
-    event.preventDefault();
-    console.log(infoData)
-     const profileReq = JSON.stringify(infoData);
-   const customConfig = {
-      headers: {
-      'Content-Type': 'application/json'
       }
-  };
-
-    const result = await axios.patch(PROFILE_ROUTE + '/' + id+"/profile", profileReq,customConfig)
-      .then((res) =>console.log(res))
-      .catch((error)=> console.log(error));
-
-
-
-  }
-
-
-  const handleChange =(event)=>{
-    setInfoData({...infoData, [event.target.name]: event.target.value})
-
-  }
-
-  const handleReadMode= (event) => {
-    event.preventDefault();
-
-    setReadMode(false);
+      catch (error) {
+        console.log(error)
+      }
     }
+    GetProfileDataList()
+
+
+
+
+  }, [])
+
+  async function handleSubmit(event) {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+
+    event.preventDefault()
+
+
+    const result = await axios.patch(PROFILE_ROUTE + '/' + id + "/profile", infoData, { headers })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error))
+
+
+
+  }
+
+
+  const handleChange = (event) => {
+    setInfoData({ ...infoData, [event.target.name]: event.target.value })
+
+  }
+
+  const handleReadMode = (event) => {
+    event.preventDefault()
+
+    setReadMode(false)
+  }
 
   return (
     <CardContent>
       <form>
         <Grid container spacing={7}>
-        <CardActions >
+          <CardActions >
 
-          <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={handleReadMode}>
-            Edit
-          </Button>
-        </CardActions>
+            <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={handleReadMode}>
+              Edit
+            </Button>
+          </CardActions>
           <Grid item xs={12} sx={{ marginTop: 4.8 }}>
             <TextField
               fullWidth
@@ -122,7 +139,7 @@ const TabInfo = () => {
               label='Bio'
               minRows={2}
               name='description'
-              InputProps={{readOnly:readMode}}
+              InputProps={{ readOnly: readMode }}
               placeholder='Bio'
               onChange={handleChange}
               defaultValue={infoData.description}
@@ -148,7 +165,7 @@ const TabInfo = () => {
             <TextField
               fullWidth
               label='Facebook'
-              InputProps={{readOnly:readMode}}
+              InputProps={{ readOnly: readMode }}
               name='facebookLink'
               onChange={handleChange}
               placeholder='https://example.com/'
@@ -159,14 +176,14 @@ const TabInfo = () => {
           <Grid item xs={12} sm={6}>
             <FormControl>
               <FormLabel sx={{ fontSize: '0.875rem' }}>Gender</FormLabel>
-              <RadioGroup row defaultValue={infoData.gender} name='gender'  aria-label='gender' onChange={handleChange}  disabled={readMode} name='account-settings-info-radio'>
+              <RadioGroup row defaultValue={infoData.gender} name='gender' aria-label='gender' onChange={handleChange} disabled={readMode} name='account-settings-info-radio'>
                 <FormControlLabel value='male' label='Male' control={<Radio />} />
                 <FormControlLabel value='female' label='Female' control={<Radio />} />
                 <FormControlLabel value='other' label='Other' control={<Radio />} />
               </RadioGroup>
             </FormControl>
           </Grid>
-          {!readMode &&<Grid item xs={12}>
+          {!readMode && <Grid item xs={12}>
             <Button variant='contained' onClick={handleSubmit} sx={{ marginRight: 3.5 }}>
               Save Changes
             </Button>

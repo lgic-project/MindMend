@@ -21,6 +21,7 @@ import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import MessageOutline from 'mdi-material-ui/MessageOutline'
 
+
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
   width: 8,
@@ -36,6 +37,15 @@ const UserDropdown = () => {
 
   // ** Hooks
   const router = useRouter()
+
+  const handleLogout = async (event: React.FormEvent) => {
+
+    localStorage.clear()
+
+    router.push("/pages/login")
+    // window.location.reload()
+
+  }
 
   const handleDropdownOpen = (event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget)
@@ -131,12 +141,12 @@ const UserDropdown = () => {
         </MenuItem>
 
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={handleLogout} >
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>
       </Menu>
-    </Fragment>
+    </Fragment >
   )
 }
 

@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -20,6 +20,12 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 // ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
+import { Button } from '@mui/material'
+import router, { useRouter } from 'next/router'
+import { WORKOUT_ROUTE } from 'src/configs/appRoutes'
+import axios from 'axios'
+import NextUILoadingComponent from 'src/layouts/components/loading'
+import React from 'react'
 
 interface DataType {
   logo: string
@@ -72,85 +78,123 @@ const depositData = [
     logo: '/images/logos/citi-bank.png'
   }
 ]
-
-const renderStats = () => {
-  return salesData.map((item: DataType, index: number) => (
-    <Grid item xs={12} sm={3} key={index}>
-      <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar
-          variant='rounded'
-          sx={{
-            mr: 3,
-            width: 44,
-            height: 44,
-            boxShadow: 3,
-            color: 'common.white',
-            backgroundColor: `${item.color}.main`
-          }}
-        >
-          {item.icon}
-        </Avatar>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant='caption'>{item.title}</Typography>
-          <Typography variant='h6'>{item.stats}</Typography>
-        </Box>
-      </Box>
-    </Grid>
-  ))
-}
-
 const StatisticsCard = () => {
+
+  const router = useRouter()
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+  const slicedData = data.slice(0, 5) // Extract the first 5 data items
+
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const res = await axios.get(WORKOUT_ROUTE + "/active", { headers })
+        // setLoading(true);
+        setData(res.data)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
+
+  const renderCell = (value) => {
+    const base64String = value // Base64 encoded string
+    const regularString = convertBase64ToString(base64String)
+
+    return (
+
+      <img src={regularString} alt='workout' width='33' height='22' />
+
+
+    )
+  }
+
   return (
+
     <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }}>
-      <Box sx={{ width: '100%' }}>
-        <CardHeader
-          title='Workout'
-          sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
-          action={<Typography variant='caption'>View All</Typography>}
-          titleTypographyProps={{
-            variant: 'h6',
-            sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
-          }}
-        />
-        <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-          {depositData.map((item: DataType, index: number) => {
-            return (
-              <Box
-                key={item.title}
-                sx={{
-                  display: 'flex', alignItems: 'center', padding: '10px', paddingX: '15px', borderRadius: '15px', '&:hover': {
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                  }, mb: index !== depositData.length - 1 ? 6 : 0
-                }}
-              >
-                <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
-                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
-                </Box>
-                <Box
-                  sx={{
-                    ml: 4,
-                    width: '100%',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.800rem' }}>{item.title}</Typography>
-                    <Typography variant='caption'>{item.subtitle}</Typography>
+      {
+        loading ? (
+          <NextUILoadingComponent />
+        ) : (
+          <Box sx={{ width: '100%' }}>
+            <CardHeader
+              title='Workout'
+              sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
+              action={<Button size='small' onClick={() => router.push("/workout")}>View All</Button>}
+
+              titleTypographyProps={{
+                variant: 'h6',
+                sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
+              }}
+            />
+            <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
+              {slicedData.map((item: DataType, index: number) => {
+                return (
+                  <Box
+                    key={item.id}
+                    sx={{
+                      display: 'flex', alignItems: 'center', padding: '10px', paddingX: '15px', borderRadius: '15px', '&:hover': {
+                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                      }, mb: index !== slicedData.length - 1 ? 6 : 0
+                    }}
+                    onClick={() => router.push("/workout/workout-detail")}
+                  >
+                    <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
+                      <React.Fragment key={index}>
+                        {renderCell(item.encodedImage)}
+                      </React.Fragment>                    </Box>
+                    <Box
+                      sx={{
+                        ml: 4,
+                        width: '100%',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
+                        <Typography sx={{ fontWeight: 600, fontSize: '0.800rem' }}>{item.title}</Typography>
+                        <Typography variant='caption'>{item.subtitle} Exercises</Typography>
+                      </Box>
+                      <Typography fontSize={10} sx={{ fontWeight: 600, color: 'success.main' }}>
+                        {item.timer}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Typography fontSize={10} sx={{ fontWeight: 600, color: 'success.main' }}>
-                    {item.amount}
-                  </Typography>
-                </Box>
-              </Box>
-            )
-          })}
-        </CardContent>
-      </Box >
+                )
+              })}
+            </CardContent>
+          </Box >
+        )
+      }
     </Card >
+
   )
 }
-
 export default StatisticsCard
+
+
+function convertBase64ToString(base64) {
+  return atob(base64)
+}
