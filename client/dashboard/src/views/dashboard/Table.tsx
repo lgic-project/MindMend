@@ -72,9 +72,20 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
 
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
+
   const renderColumn = (item) => {
     if (item === 'image' || item === 'logo') {
       return <p></p>
+
+    }
+    if (item === 'api') {
+      return (
+        <React.Fragment>
+          <TableCell key="apiPath">Api Path</TableCell>
+          <TableCell key="method">Method</TableCell>
+        </React.Fragment>
+
+      )
 
     }
 
@@ -84,6 +95,8 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
   }
 
   const renderCell = (column, value, index) => {
+
+
     if (column === 'status') {
       if (value == '1') {
         value = 'Active'
@@ -131,6 +144,28 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
     if (column === 'id') {
       return (
         <TableCell key={column}>{index + 1}</TableCell>
+      )
+    }
+    if (column === 'api') {
+
+      return (
+        <React.Fragment>
+
+          <TableCell key="apiPath">{value.apiPath}</TableCell>
+          <TableCell key="method">{value.method}</TableCell>
+
+        </React.Fragment>
+
+
+      )
+    }
+
+    if (column === 'method') {
+      return (
+
+        <TableCell key="method">{apiMethod}</TableCell>
+
+
       )
     }
     if (column === 'image' || column === 'logo') {

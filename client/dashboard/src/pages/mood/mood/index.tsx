@@ -8,6 +8,8 @@ import { MOODCATEGORY_ROUTE, MOOD_ROUTE, PROFILE_ROUTE } from 'src/configs/appRo
 import NextUILoadingComponent from 'src/layouts/components/loading'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
+import authHeader from '../../../configs/authHeader'
+
 
 function Mood() {
   // const column = ['Name','Logo','Created At', 'Updated At'];
@@ -18,25 +20,35 @@ function Mood() {
   const [error, setError] = useState<Error | null>(null)
 
 
+
   useEffect(() => {
 
     const GetMoodList = async () => {
-      await axios.get(MOOD_ROUTE + "/list").then((res) => {
-        // setLoading(true);
-        setData(res.data)
-        setLoading(false)
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
 
-        const keys = Object.keys(res.data[0])
-        setColumns(keys)
-
-
-      })
-        .catch((res) => {
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        await axios.get(MOOD_ROUTE + "/list", { headers }).then((res) => {
+          // setLoading(true);
+          setData(res.data)
           setLoading(false)
 
-          setError(res.response)
+          const keys = Object.keys(res.data[0])
+          setColumns(keys)
+
 
         })
+          .catch((res) => {
+            setLoading(false)
+
+            setError(res.response)
+
+          })
+      } catch (error) {
+        console.log(error)
+      }
 
 
 

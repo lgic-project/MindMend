@@ -81,18 +81,32 @@ function CreateDiscover() {
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
+
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+    const props = {}
+
+
     // event.preventDefault()
     discoverData.image = base64
-    const discoverReq = JSON.stringify(discoverData)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
 
-    const result = await axios.post(DISCOVER_ROUTE, discoverReq, customConfig)
-      .then((res) => setData(res.status))
+
+    const result = await axios.post(DISCOVER_ROUTE, discoverData, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+
+      })
       .catch((error) => setError(error.response))
+
+    router.push(
+      {
+        pathname: '/additional/discover',
+        query: props
+      })
   }
 
   const handleStatus = (value: string) => {
@@ -102,7 +116,6 @@ function CreateDiscover() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Discover data created successfully"} />}
       <Modal
         closeButton
         blur

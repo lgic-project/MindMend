@@ -8,6 +8,8 @@ import { DOCTOR_ROUTE } from 'src/configs/appRoutes'
 import { CREATE_DOCTOR_ROUTE } from 'src/configs/createRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
+import { useRouter } from 'next/router'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 function Doctor() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
@@ -16,12 +18,18 @@ function Doctor() {
   const [columns, setColumns] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const router = useRouter()
 
 
   useEffect(() => {
 
     const GetDoctorList = async () => {
-      await axios.get(DOCTOR_ROUTE).then((res) => {
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      await axios.get(DOCTOR_ROUTE, { headers }).then((res) => {
         // setLoading(true);
         setData(res.data)
         setLoading(false)
@@ -49,7 +57,11 @@ function Doctor() {
   return (
     <>
       {error && <ErrorAlert message={error} />}
-      {data !== null && <InfoAlert message={"Doctor list displayed successfully"} />}
+      {router.query.success === "true" ? (
+        <SuccessAlert message={"Doctor list created successfully"} />
+      ) : (
+        data !== null && <InfoAlert message={"Doctor list displayed successfully"} />
+      )}
       <Head>
         <title>Doctor - Applications</title>
       </Head>

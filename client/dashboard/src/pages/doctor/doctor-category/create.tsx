@@ -41,18 +41,28 @@ function CreateDoctorCategory() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()
+    const props = {}
 
-    const doctorCategory = JSON.stringify(doctorCategoryData)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
     }
-    console.log(doctorCategory)
 
-    const result = await axios.post(DOCTORCATEGORY_ROUTE, doctorCategory, customConfig)
-      .then((res) => setData(res.status))
+    const result = await axios.post(DOCTORCATEGORY_ROUTE, doctorCategoryData, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+
+      })
       .catch((error) => setError(error.response))
+
+    router.push(
+      {
+        pathname: '/doctor/doctor-category',
+        query: props
+      })
 
     console.log(result)
   }
@@ -67,7 +77,6 @@ function CreateDoctorCategory() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Doctor category data created successfully"} />}
       <Modal
         closeButton
         blur

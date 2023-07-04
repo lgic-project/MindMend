@@ -10,32 +10,6 @@ import axios from 'axios'
 import { MOODCATEGORY_ROUTE } from 'src/configs/appRoutes'
 import error from 'next/error'
 import ErrorAlert from 'src/content/ErrorAlert'
-import SuccessAlert from 'src/content/SuccessAlert'
-
-
-const ImgStyled = styled('img')(({ theme }) => ({
-  width: 120,
-  height: 120,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius
-}))
-
-const ButtonStyled = styled(Button)<ButtonProps & { component?: ElementType; htmlFor?: string }>(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    width: '50%',
-    textAlign: 'center'
-  }
-}))
-
-const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
-  marginLeft: theme.spacing(4.5),
-  [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    marginLeft: 0,
-    textAlign: 'center',
-    marginTop: theme.spacing(4)
-  }
-}))
 
 function CreateMoodCategory() {
 
@@ -58,6 +32,7 @@ function CreateMoodCategory() {
     router.push(
       {
         pathname: '/mood/mood-category',
+
         // Example props
       })
     setVisible(false)
@@ -81,21 +56,29 @@ function CreateMoodCategory() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()
+    const props = {}
+
     moodCategoryData.logo = base64
 
-    const moodCategory = JSON.stringify(moodCategoryData)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-    console.log(moodCategory)
+    const userData = JSON.parse(localStorage.getItem('userData'))
 
-    const result = await axios.post(MOODCATEGORY_ROUTE, moodCategory, customConfig)
-      .then((res) => setData(res.status))
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+
+    const result = await axios.post(MOODCATEGORY_ROUTE, moodCategoryData, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+      })
       .catch((error) => setError(error.response))
 
-    console.log(result)
+    router.push(
+      {
+        pathname: '/mood/mood-category',
+        query: props
+      })
+    setVisible(false)
   }
 
   const handleStatus = (value: string) => {
@@ -151,7 +134,6 @@ function CreateMoodCategory() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Mood category data created successfully"} />}
       <Modal
         closeButton
         blur

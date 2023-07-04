@@ -29,6 +29,10 @@ import Twitter from 'mdi-material-ui/Twitter'
 import Facebook from 'mdi-material-ui/Facebook'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import * as Yup from "yup"
+import { Formik, Field, Form, ErrorMessage } from "formik"
+
+
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -38,9 +42,16 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import AuthService from 'src/configs/AuthService'
+
+interface LoginValues {
+  username: string
+  password: string
+}
 
 interface State {
   password: string
+  username: string
   showPassword: boolean
 }
 
@@ -63,15 +74,51 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const LoginPage = () => {
+
+  const authService = new AuthService()
+
+  const initialValues: LoginValues = {
+    username: "",
+    password: "",
+  }
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required!"),
+    password: Yup.string().required("Password is required!"),
+  })
+
+
+
+  const handleLogin = async (event: React.FormEvent) => {
+
+    initialValues.username = values.username
+    initialValues.password = values.password
+
+    const loginReq = initialValues
+
+
+    await authService.login(loginReq).then(res => {
+      console.log(res)
+
+      localStorage.setItem('userData', JSON.stringify(res))
+    })
+    router.push("/")
+    // window.location.reload()
+
+  }
+
   // ** State
   const [values, setValues] = useState<State>({
     password: '',
+    username: '',
     showPassword: false
   })
 
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
+
+  const onFormSubmit = () => { }
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -168,59 +215,76 @@ const LoginPage = () => {
             </Typography>
             <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
-            <FormControl fullWidth>
-              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
-              <OutlinedInput
-                label='Password'
-                value={values.password}
-                id='auth-login-password'
-                onChange={handleChange('password')}
-                type={values.showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton
-                      edge='end'
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      aria-label='toggle password visibility'
-                    >
-                      {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <Box
-              sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
-            >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
-              <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
-            </Box>
-            <Button
-              fullWidth
-              size='large'
-              variant='contained'
-              sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
-            >
-              Login
-            </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
-                New on our platform?
-              </Typography>
-              <Typography variant='body2'>
-                <Link passHref href='/pages/register' legacyBehavior>
-                  <LinkStyled>Create an account</LinkStyled>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onFormSubmit}
+          >
+            <Form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+              <TextField autoFocus fullWidth id='username' label='username' value={values.username} onChange={handleChange('username')} sx={{ marginBottom: 4 }} />
+              <FormControl fullWidth>
+                <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="alert alert-danger"
+                />
+                <OutlinedInput
+                  label='Password'
+                  value={values.password}
+                  id='auth-login-password'
+                  onChange={handleChange('password')}
+                  type={values.showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position='end'>
+                      <IconButton
+                        edge='end'
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        aria-label='toggle password visibility'
+                      >
+                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="alert alert-danger"
+                />
+              </FormControl>
+              <Box
+                sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
+              >
+                <FormControlLabel control={<Checkbox />} label='Remember Me' />
+                <Link passHref href='/'>
+                  <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
                 </Link>
-              </Typography>
-            </Box>
+              </Box>
+              <Button
+                fullWidth
+                type='submit'
+                size='large'
+                variant='contained'
+                sx={{ marginBottom: 7 }}
+                onClick={handleLogin}
+              >
+                Login
+              </Button>
+              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Typography variant='body2' sx={{ marginRight: 2 }}>
+                  New on our platform?
+                </Typography>
+                <Typography variant='body2'>
+                  <Link passHref href='/pages/register' legacyBehavior>
+                    <LinkStyled>Create an account</LinkStyled>
+                  </Link>
+                </Typography>
+              </Box>
 
-          </form>
+            </Form>
+          </Formik>
         </CardContent>
       </Card>
       <FooterIllustrationsV1 />

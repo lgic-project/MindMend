@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import { Theme } from '@mui/material/styles'
@@ -35,15 +35,22 @@ const UserLayout = ({ children }: Props) => {
    *  ! Do not change this value unless you know what you are doing. It can break the template.
    */
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
+  const [userInfo, setUserInfo] = useState('')
+  useEffect(() => {
+    setUserInfo(JSON.parse(localStorage.getItem('userData')))
+
+  }, [])
 
   //
+  // const userData = JSON.parse(localStorage.getItem('userData'))
+  // const parsedUserData = userData ? userData : null
 
   return (
     <VerticalLayout
       hidden={hidden}
       settings={settings}
       saveSettings={saveSettings}
-      verticalNavItems={VerticalNavItems()} // Navigation Items
+      verticalNavItems={VerticalNavItems(userInfo)} // Navigation Items
       verticalAppBarContent={(
         props // AppBar Content
       ) => (
