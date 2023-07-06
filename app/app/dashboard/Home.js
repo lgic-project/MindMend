@@ -1,13 +1,24 @@
-import { View, Text, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView, } from "react-native"
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ImageBackground,
+  ScrollView,
+} from "react-native"
 import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
 import CircularProgress from "react-native-circular-progress-indicator"
-import { DOCTOR, MOOD_CATEGORY } from "../../utils/appRoutes"
+import { DOCTOR, DOCTOR_RATING, MOOD_CATEGORY } from "../../utils/appRoutes"
 import axios from "axios"
 import { Buffer } from "buffer"
-const Home = () => {
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Wrap, Button, Spacer } from "@react-native-material/core"
 
+const Home = () => {
+  const [selectedItem, setSelectedItem] = useState(null)
   const router = useRouter()
   const handleprofile = () => {
     router.push(`profile`)
@@ -15,7 +26,6 @@ const Home = () => {
   const handledoc = () => {
     router.push(`doctor`)
   }
-
 
   const renderData = (value) => {
     // Call the convertBase64ToString function
@@ -31,26 +41,69 @@ const Home = () => {
   }
 
   const handlePress = (id) => {
-    setSelectedItem(id === selectedItem ? null : id);
-  };
+    setSelectedItem(id === selectedItem ? null : id)
+  }
   const [data, setData] = useState([])
+  const [moodData, setMoodData] = useState([])
+  const [doctorData, setDoctorData] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState < Error | null > (null)
+  const [error, setError] = useState([])
+  const slicedData = doctorData.slice(0, 2) // Extract the first 5 data items
 
   useEffect(() => {
     const GetMoodData = async () => {
-      await axios.get(MOOD_CATEGORY).then((res) => {
-        setData = (res.data)
-        setLoading(false)
-      })
-        .catch((res) => {
-          setLoading(false)
+      const userData = JSON.parse(await AsyncStorage.getItem("userData"))
 
-          setError(res.response)
-        })
+      const headers = {
+        Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+      }
+      try {
+        const res = await axios.get(MOOD_CATEGORY, { headers })
+        setMoodData(res.data)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
     }
     GetMoodData()
+
+    const GetDoctorData = async () => {
+      const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+
+      const headers = {
+        Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+      }
+      try {
+        const res = await axios.get(DOCTOR_RATING, { headers })
+        setDoctorData(res.data)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+    }
+    GetDoctorData()
   }, [])
+
+  const handleDoctorDetail = () => {
+    router.push(`doctor/doctorpage`)
+  }
+
+  const renderDoctorCard = (value) => {
+    const decodedString = convertBase64ToString(value.encodedImage)
+    // Use the decoded string in your JSX code
+    return (
+      <ImageBackground
+        style={{ flex: 1 }}
+        imageStyle={{ borderRadius: 10 }}
+        source={{ uri: decodedString }}
+        resizeMode="cover"
+      >
+        <Text style={styles.doc1text}>{value.doctorName}</Text>
+      </ImageBackground>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -85,12 +138,25 @@ const Home = () => {
         {/* {showView &&
       ( */}
         <View style={styles.moodcontainer}>
-          {images.map(image => (
-            <View style={styles.emojibutton} key={image.id} >
-              <TouchableOpacity style={[styles.emojiview, image.id === selectedItem && styles.selected]} onPress={() => handlePress(image.id)}>
-                <Image source={image.src} resizeMode="contain" style={{ width: "85%", height: '85%' }} />
-                <Text style={[styles.notselected, image.id === selectedItem && styles.selectedtext]}>{image.title}</Text>
+          {moodData.map((column, index) => (
+            <View style={styles.emojibutton} key={column.id}>
+              <TouchableOpacity
+                style={[
+                  styles.emojiview,
+                  column.id === selectedItem && styles.selected,
+                ]}
+                onPress={() => handlePress(column.id)}
+              >
+                {renderData(column.encodedImage)}
               </TouchableOpacity>
+              <Text
+                style={[
+                  styles.notselected,
+                  column.id === selectedItem && styles.selectedtext,
+                ]}
+              >
+                {column.name}
+              </Text>
             </View>
           ))}
         </View>
@@ -135,8 +201,8 @@ const Home = () => {
                 style={styles.lookingimage}
               />
               <View style={styles.lTcontainer}>
-                <Text style={styles.lookingtext}>General</Text>
-                <Text style={styles.lookingtext}>Check-Up</Text>
+                <Text style={styles.lookingtext}>Share</Text>
+                <Text style={styles.lookingtext}>Your Problem</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.lookingcard}>
@@ -146,7 +212,7 @@ const Home = () => {
                 style={styles.lookingimage}
               />
               <View style={styles.lTcontainer}>
-                <Text style={styles.lookingtext}>Chat with</Text>
+                <Text style={styles.lookingtext}>View All</Text>
                 <Text style={styles.lookingtext}>Doctor</Text>
               </View>
             </TouchableOpacity>
@@ -166,30 +232,18 @@ const Home = () => {
         {/* Doctor Section */}
         <View style={styles.doccontainer}>
           <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
+
           {/* <View style={styles.doccard}> */}
-          {/* <Carousel
-              data={doctorData}
-              renderItem={renderDoctorCard}
-              sliderWidth={400} // Adjust the width of the carousel
-              itemWidth={300} // Adjust the width of each card
-              containerCustomStyle={styles.carousel}
-              contentContainerCustomStyle={styles.carouselContentContainer}
-              slideStyle={styles.slide}
-            /> */}
-          {/* </View> */}
           <View style={styles.doccard}>
-            <View style={styles.doc1view} >
-              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubbley.jpg')} resizeMode="cover" >
-                <Text style={styles.doc1text} >Dr. Rachita Shrestha</Text>
-                <Image source={require('../../assets/Images/doc.png')} style={styles.doc1img} />
-              </ImageBackground>
-            </View>
-            <View style={styles.doc2view}>
-              <ImageBackground style={{ flex: 1 }} imageStyle={{ borderRadius: 10 }} source={require('../../assets/Images/bubblay.jpg')} resizeMode="cover" >
-                <Text style={styles.doc2text}>Dr. Rachit Shrestha</Text>
-                <Image source={require('../../assets/Images/doc1.png')} style={styles.doc2img} />
-              </ImageBackground>
-            </View>
+            {slicedData.map((column, index) => (
+              <TouchableOpacity
+                key={column.id}
+                style={styles.doc1view}
+                onPress={handleDoctorDetail}
+              >
+                {renderDoctorCard(column)}
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </View>
