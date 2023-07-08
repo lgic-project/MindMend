@@ -86,8 +86,13 @@ const Home = () => {
     GetDoctorData()
   }, [])
 
-  const handleDoctorDetail = () => {
-    router.push(`doctor/doctorpage`)
+  const handleDoctorDetail = async (id) => {
+    await AsyncStorage.setItem("doctorId", JSON.stringify(id))
+    router.push("/doctor/doctorpage")
+  }
+
+  const handleDoctor = () => {
+    router.push(`doctor/doctorList`)
   }
 
   const renderDoctorCard = (value) => {
@@ -205,7 +210,7 @@ const Home = () => {
                 <Text style={styles.lookingtext}>Your Problem</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.lookingcard}>
+            <TouchableOpacity style={styles.lookingcard} onPress={handleDoctor}>
               <Image
                 source={require("../../assets/Images/chat.png")}
                 resizeMode="contain"
@@ -239,7 +244,7 @@ const Home = () => {
               <TouchableOpacity
                 key={column.id}
                 style={styles.doc1view}
-                onPress={handleDoctorDetail}
+                onPress={() => handleDoctorDetail(column.id)}
               >
                 {renderDoctorCard(column)}
               </TouchableOpacity>

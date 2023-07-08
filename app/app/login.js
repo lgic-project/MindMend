@@ -28,15 +28,15 @@ const FirstRoute = () => {
     username: "",
     password: "",
   }
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("sapnaBaniya")
+  const [password, setPassword] = useState("Admin@123")
 
   const handleLogin = async (event) => {
     initialValues.username = username
     initialValues.password = password
 
     try {
-      const res = await axios.post("http://192.168.1.71:9091/api/auth/login", {
+      const res = await axios.post(LOGIN, {
         ...initialValues,
       })
       await AsyncStorage.setItem("userData", JSON.stringify(res.data))
