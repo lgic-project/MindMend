@@ -35,6 +35,7 @@ const Trophy = ({ sendDataToMain }) => {
           Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
         }
         const res = await axios.get(MOODCATEGORY_ROUTE + "/active", { headers })
+
         // setLoading(true);
         setData(res.data)
         setLoading(false)

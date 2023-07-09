@@ -103,6 +103,7 @@ const LoginPage = () => {
       localStorage.setItem('userData', JSON.stringify(res))
     })
     router.push("/")
+
     // window.location.reload()
 
   }

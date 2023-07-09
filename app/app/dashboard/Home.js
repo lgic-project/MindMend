@@ -95,6 +95,10 @@ const Home = () => {
     router.push(`doctor/doctorList`)
   }
 
+  const handleChatBot = () => {
+    router.push(`chatbots/chatbot`)
+  }
+
   const renderDoctorCard = (value) => {
     const decodedString = convertBase64ToString(value.encodedImage)
     // Use the decoded string in your JSX code
@@ -199,7 +203,10 @@ const Home = () => {
         <View style={styles.lookingfor}>
           <Text style={{ fontSize: 16 }}>What are you looking for?</Text>
           <View style={styles.lookingcontainer}>
-            <TouchableOpacity style={styles.lookingcard}>
+            <TouchableOpacity
+              style={styles.lookingcard}
+              onPress={handleChatBot}
+            >
               <Image
                 source={require("../../assets/Images/medical-report.png")}
                 resizeMode="contain"
