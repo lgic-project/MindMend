@@ -16,6 +16,10 @@ import axios from "axios"
 import { Buffer } from "buffer"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Wrap, Button, Spacer } from "@react-native-material/core"
+import Doctor from "../../components/Home/Doctor"
+import Workout from "../../components/Home/Workout"
+import LookingFor from "../../components/Home/LookingFor"
+import FitnessChart from "../../components/Home/FitnessChart"
 
 const Home = () => {
   const [selectedItem, setSelectedItem] = useState(null)
@@ -86,11 +90,6 @@ const Home = () => {
     GetDoctorData()
   }, [])
 
-  const handleDoctorDetail = async (id) => {
-    await AsyncStorage.setItem("doctorId", JSON.stringify(id))
-    router.push("/doctor/doctorpage")
-  }
-
   const handleDoctor = () => {
     router.push(`doctor/doctorList`)
   }
@@ -99,24 +98,9 @@ const Home = () => {
     router.push(`chatbots/chatbot`)
   }
 
-  const renderDoctorCard = (value) => {
-    const decodedString = convertBase64ToString(value.encodedImage)
-    // Use the decoded string in your JSX code
-    return (
-      <ImageBackground
-        style={{ flex: 1 }}
-        imageStyle={{ borderRadius: 10 }}
-        source={{ uri: decodedString }}
-        resizeMode="cover"
-      >
-        <Text style={styles.doc1text}>{value.doctorName}</Text>
-      </ImageBackground>
-    )
-  }
-
   return (
     <View style={styles.container}>
-      <View style={styles.smallcontainer}>
+      <View style={[styles.smallcontainer, { position: "relative" }]}>
         <View
           style={{
             backgroundColor: "#face51",
@@ -169,95 +153,12 @@ const Home = () => {
             </View>
           ))}
         </View>
-        {/* fitness */}
-        <View style={styles.fitnesscontainer}>
-          <View style={styles.fitnesscard}>
-            <Text
-              style={{
-                paddingLeft: 10,
-                paddingTop: 2,
-                fontWeight: "500",
-                fontSize: 16,
-              }}
-            >
-              Walk
-            </Text>
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <CircularProgress
-                value={7500}
-                maxValue={20000}
-                radius={40}
-                duration={2000}
-                progressValueColor={"gray"}
-                activeStrokeColor={"#F07B7B"}
-                inActiveStrokeColor={"#F0D7D7"}
-                title={"Steps"}
-                titleColor={"black"}
-                titleStyle={{ fontWeight: "bold" }}
-              />
-            </View>
-          </View>
-          <View style={styles.fitnesscard}></View>
-        </View>
-        {/* Looking for section */}
-        <View style={styles.lookingfor}>
-          <Text style={{ fontSize: 16 }}>What are you looking for?</Text>
-          <View style={styles.lookingcontainer}>
-            <TouchableOpacity
-              style={styles.lookingcard}
-              onPress={handleChatBot}
-            >
-              <Image
-                source={require("../../assets/Images/medical-report.png")}
-                resizeMode="contain"
-                style={styles.lookingimage}
-              />
-              <View style={styles.lTcontainer}>
-                <Text style={styles.lookingtext}>Share</Text>
-                <Text style={styles.lookingtext}>Your Problem</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.lookingcard} onPress={handleDoctor}>
-              <Image
-                source={require("../../assets/Images/chat.png")}
-                resizeMode="contain"
-                style={styles.lookingimage}
-              />
-              <View style={styles.lTcontainer}>
-                <Text style={styles.lookingtext}>View All</Text>
-                <Text style={styles.lookingtext}>Doctor</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.lookingcard}>
-              <Image
-                source={require("../../assets/Images/newspaper.png")}
-                resizeMode="contain"
-                style={{ width: 40, height: 40 }}
-              />
-              <View style={styles.lTcontainer}>
-                <Text style={styles.lookingtext}>Health</Text>
-                <Text style={styles.lookingtext}>News</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* Doctor Section */}
-        <View style={styles.doccontainer}>
-          <Text style={{ fontSize: 16 }}>Top Rated Doctors</Text>
-
-          {/* <View style={styles.doccard}> */}
-          <View style={styles.doccard}>
-            {slicedData.map((column, index) => (
-              <TouchableOpacity
-                key={column.id}
-                style={styles.doc1view}
-                onPress={() => handleDoctorDetail(column.id)}
-              >
-                {renderDoctorCard(column)}
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+        <ScrollView style={{ height: "80%" }}>
+          <FitnessChart />
+          <LookingFor />
+          <Doctor />
+          <Workout />
+        </ScrollView>
       </View>
     </View>
   )
