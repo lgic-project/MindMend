@@ -42,7 +42,9 @@ const WorkoutDetail = () => {
                 100 Calcs
               </Text>
             </Card.Actions> */}
-            <View></View>
+            {/* <View>
+
+            </View> */}
           </Card>
         </View>
       </View>
