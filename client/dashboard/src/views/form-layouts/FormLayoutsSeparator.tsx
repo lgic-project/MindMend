@@ -3,7 +3,7 @@ import { ChangeEvent, forwardRef, MouseEvent, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
-import NoSsr from '@mui/material/NoSsr';
+import NoSsr from '@mui/material/NoSsr'
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -49,42 +49,42 @@ import { TruckFlatbed } from 'mdi-material-ui'
 import { DatePicker } from '@mui/lab'
 
 
-countries.registerLocale(enLocale);
-countries.registerLocale(itLocale);
+countries.registerLocale(enLocale)
+countries.registerLocale(itLocale)
 
-const countryObj = countries.getNames("en",{ select:"official"})
-const countryArr = Object.entries(countryObj).map(([key, value])=>{
+const countryObj = countries.getNames("en", { select: "official" })
+const countryArr = Object.entries(countryObj).map(([key, value]) => {
   return {
-    label : value,
+    label: value,
     value: key
-  };
-});
+  }
+})
 
-const FormLayoutsSeparator = ({imageByte}) => {
+const FormLayoutsSeparator = ({ imageByte }) => {
   // ** States
   const [profileData, setProfileData] = useState<any>({
-    city:"",
+    city: "",
     country: "",
-    email:"",
-    firstName:"",
-    lastName:"",
-    gender:"",
-    image:"",
-    phone:"",
-    state:"",
-    street:"",
-    username:"",
-    description:"",
-    facebookLink:"",
+    email: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    image: "",
+    phone: "",
+    state: "",
+    street: "",
+    username: "",
+    description: "",
+    facebookLink: "",
     birthDate: null,
-    zipCode:"",
-    accountId:null,
-    addressId:null,
-    profileId:null,
-    userId:null
+    zipCode: "",
+    accountId: null,
+    addressId: null,
+    profileId: null,
+    userId: null
 
-  });
-  const [readMode, setReadMode] = useState<boolean>(TruckFlatbed);
+  })
+  const [readMode, setReadMode] = useState<boolean>(TruckFlatbed)
 
   const [state, setState] = useState("")
   const [selectedCountry, setSelectedCountry] = useState<string[]>("")
@@ -96,29 +96,34 @@ const FormLayoutsSeparator = ({imageByte}) => {
 
 
 
-  const id =1;
+  const id = 1
 
-  useEffect(()=>{
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'))
 
-    const GetProfileDataList = async ()=>{
-       await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+
+    const GetProfileDataList = async () => {
+      await axios.get(PROFILE_ROUTE + "/" + id, { headers }).then((res) => {
         // setLoading(true);
-        setProfileData(res.data);
+        setProfileData(res.data)
 
-      });
+      })
 
     }
-    GetProfileDataList();
+    GetProfileDataList()
 
 
 
-  },[])
+  }, [])
 
-  const handleReadMode= (event) => {
-    event.preventDefault();
+  const handleReadMode = (event) => {
+    event.preventDefault()
 
-    setReadMode(false);
-    }
+    setReadMode(false)
+  }
 
 
 
@@ -129,23 +134,23 @@ const FormLayoutsSeparator = ({imageByte}) => {
     return <NextUILoadingComponent />
   }
 
-  async function handleSubmit(event){
-    event.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault()
 
-    profileData.image= imageByte;
+    profileData.image = imageByte
 
-     const profileReq = JSON.stringify(profileData);
-   const customConfig = {
+    const profileReq = JSON.stringify(profileData)
+    const customConfig = {
       headers: {
-      'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
-  };
+    }
 
-    const result = await axios.patch(PROFILE_ROUTE + '/' + id+"/profile", profileReq,customConfig)
-      .then((res) =>console.log(res))
-      .catch((error)=> console.log(error));
+    const result = await axios.patch(PROFILE_ROUTE + '/' + id + "/profile", profileReq, customConfig)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error))
 
-      console.log(result);
+    console.log(result)
 
 
   }
@@ -153,8 +158,8 @@ const FormLayoutsSeparator = ({imageByte}) => {
   // Handle Password
 
 
-  const handleChange =(event)=>{
-    setProfileData({...profileData, [event.target.name]: event.target.value})
+  const handleChange = (event) => {
+    setProfileData({ ...profileData, [event.target.name]: event.target.value })
 
   }
 
@@ -162,92 +167,92 @@ const FormLayoutsSeparator = ({imageByte}) => {
 
   return (
     <NoSsr>
-    <Card>
-      <Divider sx={{ margin: 0 }} />
-      <form >
-        <CardContent>
-        <Grid container spacing={5}>
-            <Grid item xs={12}>
-            <CardActions sx={{ justifyContent: 'space-between' }}>
-            <Typography variant='body2' sx={{ fontWeight: 600 }}>
-                1. Account Details
-              </Typography>
-          <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={handleReadMode}>
-            Edit
-          </Button>
-        </CardActions>
-
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Username' onChange={handleChange} InputProps={{readOnly:readMode}} name='username' value={profileData.username} placeholder='carterLeonard' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' onChange={handleChange} InputProps={{readOnly:readMode}} name='email' label='Email' value={profileData.email} placeholder='carterleonard@gmail.com' />
-            </Grid>
-            <Grid item xs={12}>
-              <Divider sx={{ marginBottom: 0 }} />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant='body2' sx={{ fontWeight: 600 }}>
-                2. Personal Info
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='First Name' onChange={handleChange} InputProps={{readOnly:readMode}} name='firstName' value={profileData.firstName} placeholder='Leonard' />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Last Name' onChange={handleChange} InputProps={{readOnly:readMode}} name='lastName' value={profileData.lastName} placeholder='carterLeonard' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel id='form-layouts-separator-select-label'>Country</InputLabel>
-                <Select
-                  label='Country'
-                  defaultValue={profileData.country}
-                  id='form-layouts-separator-select'
-                  readOnly={readMode}
-                  labelId='form-layouts-separator-select-label'
-                  onChange={handleChange}
-
-                >
-                  <MenuItem key={profileData.country} value ={profileData.country} selected>{profileData.country}</MenuItem>
-
-                  {!!countryArr ?.length && countryArr.map(({label, value})=>(
-                    <MenuItem key={value} value={value}>{label}</MenuItem>
-                  )
-
-                  )}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='State' onChange={handleChange} InputProps={{readOnly:readMode}} name='state' value={profileData.state} placeholder='Gandaki' />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='City' onChange={handleChange} InputProps={{readOnly:readMode}} name='city' value={profileData.city} placeholder='Pokhara' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Street' onChange={handleChange} InputProps={{readOnly:readMode}} name='street' value={profileData.street} placeholder='Tole' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Phone no' onChange={handleChange} InputProps={{readOnly:readMode}} name='phone' value={profileData.phone} placeholder='981111111' />
-            </Grid>
-          </Grid>
-        </CardContent>
+      <Card>
         <Divider sx={{ margin: 0 }} />
-        {!readMode && <CardActions>
-         <Button size='large' onClick={handleSubmit} type='submit' sx={{ mr: 2 }} variant='contained'>
-            Submit
-          </Button>
-          <Button size='large'  color='secondary' variant='outlined'>
-            Cancel
-          </Button>
-        </CardActions>}
+        <form >
+          <CardContent>
+            <Grid container spacing={5}>
+              <Grid item xs={12}>
+                <CardActions sx={{ justifyContent: 'space-between' }}>
+                  <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                    1. Account Details
+                  </Typography>
+                  <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={handleReadMode}>
+                    Edit
+                  </Button>
+                </CardActions>
 
-      </form>
-    </Card>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='Username' onChange={handleChange} InputProps={{ readOnly: readMode }} name='username' value={profileData.username} placeholder='carterLeonard' />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth type='email' onChange={handleChange} InputProps={{ readOnly: readMode }} name='email' label='Email' value={profileData.email} placeholder='carterleonard@gmail.com' />
+              </Grid>
+              <Grid item xs={12}>
+                <Divider sx={{ marginBottom: 0 }} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                  2. Personal Info
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='First Name' onChange={handleChange} InputProps={{ readOnly: readMode }} name='firstName' value={profileData.firstName} placeholder='Leonard' />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='Last Name' onChange={handleChange} InputProps={{ readOnly: readMode }} name='lastName' value={profileData.lastName} placeholder='carterLeonard' />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id='form-layouts-separator-select-label'>Country</InputLabel>
+                  <Select
+                    label='Country'
+                    defaultValue={profileData.country}
+                    id='form-layouts-separator-select'
+                    readOnly={readMode}
+                    labelId='form-layouts-separator-select-label'
+                    onChange={handleChange}
+
+                  >
+                    <MenuItem key={profileData.country} value={profileData.country} selected>{profileData.country}</MenuItem>
+
+                    {!!countryArr?.length && countryArr.map(({ label, value }) => (
+                      <MenuItem key={value} value={value}>{label}</MenuItem>
+                    )
+
+                    )}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='State' onChange={handleChange} InputProps={{ readOnly: readMode }} name='state' value={profileData.state} placeholder='Gandaki' />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='City' onChange={handleChange} InputProps={{ readOnly: readMode }} name='city' value={profileData.city} placeholder='Pokhara' />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='Street' onChange={handleChange} InputProps={{ readOnly: readMode }} name='street' value={profileData.street} placeholder='Tole' />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='Phone no' onChange={handleChange} InputProps={{ readOnly: readMode }} name='phone' value={profileData.phone} placeholder='981111111' />
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider sx={{ margin: 0 }} />
+          {!readMode && <CardActions>
+            <Button size='large' onClick={handleSubmit} type='submit' sx={{ mr: 2 }} variant='contained'>
+              Submit
+            </Button>
+            <Button size='large' color='secondary' variant='outlined'>
+              Cancel
+            </Button>
+          </CardActions>}
+
+        </form>
+      </Card>
     </NoSsr>
   )
 }

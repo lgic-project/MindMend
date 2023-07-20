@@ -18,6 +18,13 @@ import { ThemeColor } from 'src/@core/layouts/types'
 import { Card, Col, Grid, Text } from '@nextui-org/react'
 import { light } from '@mui/material/styles/createPalette'
 import { useTheme } from '@mui/material/styles'
+import NextUILoadingComponent from 'src/layouts/components/loading'
+import { DOCTOR_ROUTE } from 'src/configs/appRoutes'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { Button } from '@mui/material'
 
 interface DataType {
   title: string
@@ -81,97 +88,106 @@ const responsive = {
 const TotalEarning = () => {
   const theme = useTheme()
 
+
+  const router = useRouter()
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+  const slicedData = data.slice(0, 3)
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const res = await axios.get(DOCTOR_ROUTE + "/active/rating", { headers })
+        // setLoading(true);
+        setData(res.data)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
+
+
+  const renderCell = (value) => {
+    const base64String = value // Base64 encoded string
+    const regularString = convertBase64ToString(base64String)
+
+    return (
+
+      <Card.Image
+        src={regularString}
+        objectFit="cover"
+        width="100%"
+        height={280}
+        alt="Card image background"
+      />
+
+    )
+  }
+
   return (
 
     <Card style={{ backgroundColor: theme.palette.background.paper }}>
       <CardHeader
         title='Top Rated Doctors'
         titleTypographyProps={{ sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' } }}
+        action={<Button size='small' onClick={() => router.push("/doctor")}>View All</Button>}
 
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(2.25)} !important` }} >
+        {
+          loading ? (
+            <NextUILoadingComponent />
+          ) : (
+            <Carousel responsive={responsive}>
+              {slicedData.map((item: DataType, index: number) => {
 
-        <Carousel responsive={responsive}>
-          <Grid xs={12} sm={11}>
-            <Card>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                <Col>
+                return (
 
-                  <Text h4 color="white">
-                    Stream the Acme event
-                  </Text>
-                </Col>
-              </Card.Header>
-              <Card.Image
-                src="/images/avatars/1.png"
-                objectFit="cover"
-                width="100%"
-                height={280}
-                alt="Card image background"
-              />
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={11}>
-            <Card>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                <Col>
+                  <Grid xs={12} key={item.id} sm={11} onClick={() => router.push("/doctor/doctor-detail")}>
+                    <Card>
+                      <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+                        <Col>
 
-                  <Text h4 color="white">
-                    Stream the Acme event
-                  </Text>
-                </Col>
-              </Card.Header>
-              <Card.Image
-                src="https://nextui.org/images/card-example-4.jpeg"
-                objectFit="cover"
-                width="100%"
-                height={280}
-                alt="Card image background"
-              />
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={11}>
-            <Card>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                <Col>
+                          <Text h4 color="white">
+                            {item.doctorName}
+                          </Text>
+                        </Col>
+                      </Card.Header>
+                      <React.Fragment key={index}>
+                        {renderCell(item.encodedImage)}
+                      </React.Fragment>                       </Card>
+                  </Grid>
+                )
+              })}
 
-                  <Text h4 color="white">
-                    Stream the Acme event
-                  </Text>
-                </Col>
-              </Card.Header>
-              <Card.Image
-                src="/images/avatars/1.png"
-                objectFit="cover"
-                width="100%"
-                height={280}
-                alt="Card image background"
-              />
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={11}>
-            <Card>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                <Col>
-
-                  <Text h4 color="white">
-                    Stream the Acme event
-                  </Text>
-                </Col>
-              </Card.Header>
-              <Card.Image
-                src="https://nextui.org/images/card-example-4.jpeg"
-                objectFit="cover"
-                width="100%"
-                height={280}
-                alt="Card image background"
-              />
-            </Card>
-          </Grid>
-        </Carousel>
+            </Carousel>
+          )}
       </CardContent>
     </Card>
   )
 }
 
 export default TotalEarning
+
+function convertBase64ToString(base64) {
+  return atob(base64)
+}

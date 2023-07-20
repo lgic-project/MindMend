@@ -133,9 +133,14 @@ function CreateDoctor() {
     const { name, value } = event.target
     setDoctorData({ ...doctorData, [name]: value })
   }
+  const userData = JSON.parse(localStorage.getItem('userData'))
+
+  const headers = {
+    Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+  }
 
   const GetDoctorCategoryList = async () => {
-    await axios.get(DOCTORCATEGORY_ROUTE + "/active").then((res) => {
+    await axios.get(DOCTORCATEGORY_ROUTE + "/active", { headers }).then((res) => {
       // setLoading(true);
       setData(res.data)
 
@@ -155,19 +160,27 @@ function CreateDoctor() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()
+    const props = {}
+
     doctorData.image = base64
-    const doctor = JSON.stringify(doctorData)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
     }
-    console.log(doctorData)
 
-    const result = await axios.post(DOCTOR_ROUTE, doctor, customConfig)
-      .then((res) => setData(res.status))
+    const result = await axios.post(DOCTOR_ROUTE, doctorData, { headers })
+      .then((res) => {
+        setData(res.status)
+        props.success = true
+
+      })
       .catch((error) => setError(error.response))
-
+    router.push(
+      {
+        pathname: '/doctor/doctor',
+        query: props
+      })
     console.log(result)
   }
 
@@ -204,7 +217,6 @@ function CreateDoctor() {
   return (
     <div>
       {error || data !== 200 && <ErrorAlert message={error} />}
-      {data === 200 && <SuccessAlert message={"Doctor data created successfully"} />}
       <Modal
         closeButton
         blur

@@ -9,6 +9,7 @@ import { CREATE_DISCOVER_ROUTE } from 'src/configs/createRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
 import SuccessAlert from 'src/content/SuccessAlert'
+import { useRouter } from 'next/router'
 
 function Discover() {
 
@@ -16,13 +17,20 @@ function Discover() {
   const [columns, setColumns] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const router = useRouter()
 
 
 
   useEffect(() => {
 
     const GetDiscoverList = async () => {
-      await axios.get(DISCOVER_ROUTE).then((res) => {
+
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      await axios.get(DISCOVER_ROUTE, { headers }).then((res) => {
         // setLoading(true);
         setData(res.data)
         setLoading(false)
@@ -52,7 +60,11 @@ function Discover() {
   return (
     <>
       {error && <ErrorAlert message={error} />}
-      {data !== null && <InfoAlert message={"Discover data displayed"} />}
+      {router.query.success === "true" ? (
+        <SuccessAlert message={"Discover data created successfully"} />
+      ) : (
+        data !== null && <InfoAlert message={"Discover list displayed successfully"} />
+      )}
       <Head>
         <title>Discover - Applications</title>
       </Head>

@@ -47,53 +47,60 @@ const TabAccount = () => {
   // const [openAlert, setOpenAlert] = useState<boolean>(true)
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
 
-  const [base64, setBase64] = useState<string | null>(null);
+  const [base64, setBase64] = useState<string | null>(null)
 
-  const id =1;
+  const id = 1
 
-  useEffect(()=>{
 
-    const GetProfileDataList = async ()=>{
-       await axios.get(PROFILE_ROUTE+"/"+id).then((res)=>{
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+
+    const GetProfileDataList = async () => {
+      await axios.get(PROFILE_ROUTE + "/" + id, { headers }).then((res) => {
         // setLoading(true);
-        const base64String = res.data.encodedImage; // Base64 encoded string
-        const regularString = convertBase64ToString(base64String);
-        setImgSrc(regularString);
-      });
+        const base64String = res.data.encodedImage // Base64 encoded string
+        const regularString = convertBase64ToString(base64String)
+        setImgSrc(regularString)
+      })
 
     }
-    GetProfileDataList();
+    GetProfileDataList()
 
 
 
 
-  },[])
+  }, [])
 
   const onChange = async (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {
-      const base64 = await toBase64(files[0] as File);
+      const base64 = await toBase64(files[0] as File)
 
-  setBase64(base64 as string);
+      setBase64(base64 as string)
     }
   }
 
   const toBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
+      const fileReader = new FileReader()
 
-      fileReader.readAsDataURL(file);
+      fileReader.readAsDataURL(file)
 
       fileReader.onload = () => {
         setImgSrc(fileReader.result as string)
-        resolve(fileReader.result);
-      };
+        resolve(fileReader.result)
+      }
 
       fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
+        reject(error)
+      }
+    })
+  }
 
 
   return (
@@ -104,7 +111,7 @@ const TabAccount = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
               <img width={100}
-              src={imgSrc} alt="Angular" />
+                src={imgSrc} alt="Angular" />
               <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                   Upload New Photo
@@ -127,7 +134,7 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <FormLayoutsSeparator imageByte ={base64} />
+            <FormLayoutsSeparator imageByte={base64} />
           </Grid>
 
           {/* {openAlert ? (
@@ -166,6 +173,6 @@ const TabAccount = () => {
 export default TabAccount
 
 function convertBase64ToString(base64) {
-  return atob(base64);
+  return atob(base64)
 }
 

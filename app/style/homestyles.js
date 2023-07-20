@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   largecontainer: {
-    height: "85%",
+    position: "relative",
     backgroundColor: "white",
     paddingHorizontal: 5,
-    paddingBottom: 30,
+    paddingBottom: 100,
   },
   heading: {
     height: 120,
@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 5,
     marginTop: 10,
-    height: "15%",
+    height: 89,
     // backgroundColor:"red",
   },
   fitnesscontainer: {
     width: "100%",
-    height: "20%",
+    height: 110,
     display: "flex",
     flexDirection: "row",
     paddingHorizontal: moderateScale(20),
@@ -53,14 +53,13 @@ const styles = StyleSheet.create({
   },
   fitnesscard: {
     width: "50%",
-    height: "100%",
     borderRadius: 15,
     backgroundColor: "white",
     elevation: 3,
   },
   lookingfor: {
     width: "100%",
-    height: "22%",
+    height: 130,
     paddingHorizontal: moderateScale(20),
     display: "flex",
     gap: 10,
@@ -111,12 +110,12 @@ const styles = StyleSheet.create({
   },
   doccontainer: {
     width: "100%",
-    height: "35%",
+    height: 190,
     paddingHorizontal: 15,
     display: "flex",
     gap: 10,
     paddingBottom: 5,
-    marginTop: 5,
+    marginTop: 32,
   },
   doccard: {
     flex: 1,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     width: "65%",
     height: "55%",
     borderRadius: 50,
-    backgroundColor: "#FED9D9",
+    backgroundColor: "#FED9DD",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -195,6 +194,9 @@ const styles = StyleSheet.create({
   },
   selectedtext: {
     color: "red",
+  },
+  scrollView: {
+    flex: 1,
   },
 })
 export default styles

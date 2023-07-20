@@ -8,6 +8,8 @@ import { DOCTOR_ROUTE, EXERCISE_LEVEL_ROUTE, MOODCATEGORY_ROUTE } from 'src/conf
 import { CREATE_EXERCISE_LEVEL_ROUTE } from 'src/configs/createRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
+import { useRouter } from 'next/router'
+import SuccessAlert from 'src/content/SuccessAlert'
 
 function ExerciseLevel() {
   // const column = ['Name','Description','Phone','Working hour','working day','Experience','last_Created At','last_creaed By','Image', 'last_Updated At'];
@@ -16,12 +18,20 @@ function ExerciseLevel() {
   const [columns, setColumns] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const router = useRouter()
+
 
 
   useEffect(() => {
 
     const GetExerciseLevelList = async () => {
-      await axios.get(EXERCISE_LEVEL_ROUTE).then((res) => {
+
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      await axios.get(EXERCISE_LEVEL_ROUTE, { headers }).then((res) => {
         // setLoading(true);
         setData(res.data)
         if (data == null) {
@@ -54,7 +64,11 @@ function ExerciseLevel() {
   return (
     <>
       {error && <ErrorAlert message={error} />}
-      {data !== null && <InfoAlert message={"Exercise level displayed successfully"} />}
+      {router.query.success === "true" ? (
+        <SuccessAlert message={"Exercise data created successfully"} />
+      ) : (
+        data !== null && <InfoAlert message={"Exercise list displayed successfully"} />
+      )}
       <Head>
         <title>Exercise level - Applications</title>
       </Head>

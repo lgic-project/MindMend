@@ -9,6 +9,8 @@ import { SITECONFIG_ROUTE } from 'src/configs/appRoutes'
 import { CREATE_SITE_CONFIG_ROUTE } from 'src/configs/createRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
+import SuccessAlert from 'src/content/SuccessAlert'
+import { useRouter } from 'next/router'
 
 function SiteConfig() {
 
@@ -16,12 +18,18 @@ function SiteConfig() {
   const [columns, setColumns] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const router = useRouter()
 
 
   useEffect(() => {
 
     const GetSiteConfigList = async () => {
-      await axios.get(SITECONFIG_ROUTE).then((res) => {
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      await axios.get(SITECONFIG_ROUTE, { headers }).then((res) => {
         // setLoading(true);
         setData(res.data)
         setLoading(false)
@@ -49,7 +57,12 @@ function SiteConfig() {
   return (
     <>
       {error && <ErrorAlert message={error} />}
-      {data !== null && <InfoAlert message={"Site config displayed successfully"} />}
+      {router.query.success === "true" ? (
+        <SuccessAlert message={"Site config data created successfully"} />
+      ) : (
+        data !== null && <InfoAlert message={"site config list displayed successfully"} />
+      )}
+
       <Head>
         <title>SiteConfig - Applications</title>
       </Head>
