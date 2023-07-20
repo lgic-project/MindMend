@@ -30,27 +30,27 @@ const Home = () => {
     )
   }
 
+
   const handlePress = (id) => {
     setSelectedItem(id === selectedItem ? null : id);
   };
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState < Error | null > (null)
+  const [error, setError] = useState(null)
+
 
   useEffect(() => {
     const GetMoodData = async () => {
-      await axios.get(MOOD_CATEGORY).then((res) => {
-        setData = (res.data)
-        setLoading(false)
-      })
-        .catch((res) => {
-          setLoading(false)
-
-          setError(res.response)
-        })
-    }
-    GetMoodData()
-  }, [])
+      try {
+        const res = await axios.get(MOOD_CATEGORY);
+        setData(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    GetMoodData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -85,11 +85,13 @@ const Home = () => {
         {/* {showView &&
       ( */}
         <View style={styles.moodcontainer}>
-          {images.map(image => (
-            <View style={styles.emojibutton} key={image.id} >
-              <TouchableOpacity style={[styles.emojiview, image.id === selectedItem && styles.selected]} onPress={() => handlePress(image.id)}>
-                <Image source={image.src} resizeMode="contain" style={{ width: "85%", height: '85%' }} />
-                <Text style={[styles.notselected, image.id === selectedItem && styles.selectedtext]}>{image.title}</Text>
+          {data.map((meta, index) => (
+            <View style={styles.emojibutton} key={index} >
+              <TouchableOpacity style={[styles.emojiview,
+              meta.id === selectedItem && styles.selected
+              ]} onPress={() => handlePress(meta.id)}>
+                <Image source={{ uri: `data:image/png;base64,${meta.logo}` }} convertBase64ToString={true} resizeMode="contain" style={{ width: "85%", height: '85%' }} />
+                <Text style={[styles.notselected, data.id === selectedItem && styles.selectedtext]}>{meta.name}</Text>
               </TouchableOpacity>
             </View>
           ))}
