@@ -54,7 +54,7 @@ export default LookingFor = () => {
             <Text style={styles.lookingtext}>Doctor</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.lookingcard}>
+        {/* <TouchableOpacity style={styles.lookingcard}>
           <Image
             source={require("../../assets/Images/newspaper.png")}
             resizeMode="contain"
@@ -64,7 +64,7 @@ export default LookingFor = () => {
             <Text style={styles.lookingtext}>Health</Text>
             <Text style={styles.lookingtext}>News</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   )

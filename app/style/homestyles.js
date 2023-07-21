@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(15),
   },
   lookingcard: {
-    width: "25%",
+    width: "30%",
     height: "100%",
     backgroundColor: "white",
     elevation: 3,
