@@ -1,17 +1,95 @@
 import styles from "../../style/discoverstyles"
 import { Avatar, Card, Text } from "react-native-paper"
 import { View, ScrollView, Image, TouchableOpacity } from "react-native"
-import { AntDesign } from "@expo/vector-icons"
+import { MaterialIcons, AntDesign } from "@expo/vector-icons"
+import { VStack, Flex, Wrap, Spacer, Button } from "@react-native-material/core"
+
 import axios from "axios"
 import { Buffer } from "buffer"
 import React, { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useRouter } from "expo-router"
+import { EXERCISE_BY_ID } from "../../utils/appRoutes"
 
 const WorkoutDetail = () => {
+  const [exerciseData, setExerciseData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+
+  const router = useRouter()
+
   const handleback = () => {
     router.push(`../workout/WorkoutList`)
   }
+  const LeftContent = (props) => (
+    <MaterialIcons
+      className="bg-slate-700"
+      name="fitness-center"
+      size={18}
+      color="black"
+    />
+  )
+
+  const TimerContent = (props) => (
+    <AntDesign
+      className="bg-slate-700"
+      name="clockcircle"
+      size={18}
+      color="black"
+    />
+  )
+  const [title, setTitle] = useState("")
+  const [categoryTitle, setCategoryTitle] = useState("")
+  const [time, setTime] = useState("")
+  const [description, setDescription] = useState("")
+  const [image, setImage] = useState("")
+
+  useEffect(() => {
+    const GetExerciseData = async () => {
+      const id = await AsyncStorage.getItem("exerciseId")
+
+      const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+
+      const headers = {
+        Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+      }
+      try {
+        const res = await axios.get(EXERCISE_BY_ID + "/" + id + "/active", {
+          headers,
+        })
+        console.log(res.data)
+        setExerciseData(res.data)
+        setTitle(res.data.title)
+        setCategoryTitle(res.data.exerciseCategoryTitle)
+        setTime(res.data.timeDuration)
+        setDescription(res.data.description)
+        setImage(res.data.encodedImage)
+
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+    }
+    GetExerciseData()
+  }, [])
+
+  const renderWorkoutCard = (value) => {
+    if (value === "" || value === undefined) {
+      return (
+        <Card.Cover
+          className="h-36"
+          source={require("../../assets/Images/shutterstock-163579436-yoga-alexander-y-1485955962.jpg")}
+          resizeMode="contain"
+        />
+      )
+    } else {
+      const decodedString = convertBase64ToString(value)
+      return <Card.Cover className="h-28" source={{ uri: decodedString }} />
+    }
+    // Use the decoded string in your JSX code
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.smallcontainer}>
@@ -19,33 +97,44 @@ const WorkoutDetail = () => {
         <TouchableOpacity
           style={{ position: "absolute", top: 15, left: 15 }}
           onPress={handleback}
-        >
-          <AntDesign name="left" size={18} color="black" />
-        </TouchableOpacity>
+        ></TouchableOpacity>
         <View style={styles.titlecontainer}>
           <Text style={styles.titletext}>Exercise Detail</Text>
         </View>
       </View>
       <View style={styles.largecontainer}>
-        <View className="px-3 py-5">
-          <Card className="pb-3 ">
-            <Card.Cover
-              className="h-64"
-              source={{ uri: "https://picsum.photos/700" }}
-            />
-            {/* <Card.Content className="p-2 px-6">
-              <Text className="font-bold text-lg">Fat burn</Text>
-              <Text className=" text-sm">10 minute</Text>
-            </Card.Content>
-            <Card.Actions className="-mt-12">
-              <Text className="border text-sm font-bold border-slate-500 p-1 px-2 rounded-full text-white bg-slate-500">
-                100 Calcs
-              </Text>
-            </Card.Actions> */}
-            {/* <View>
+        <View className="px-3 py-5 ">
+          {exerciseData && (
+            <ScrollView className="gap-4" style={{ height: "90%" }}>
+              <Card className="pb-3 ">
+                {renderWorkoutCard(image)}
 
-            </View> */}
-          </Card>
+                <View>
+                  <Wrap>
+                    <Card.Title
+                      className="w-2/4 "
+                      title={title}
+                      subtitle={categoryTitle}
+                      left={LeftContent}
+                    />
+
+                    <Card.Title
+                      className="w-2/4"
+                      title={time}
+                      subtitle="Total time"
+                      left={TimerContent}
+                    />
+                  </Wrap>
+                </View>
+              </Card>
+              <Card className="pb-3 mb-5 ">
+                <Card.Content className="p-6 px-6 mb-5">
+                  <Text className="font-bold text-xl">Description</Text>
+                  <Text className=" text-base mt-4">{description}</Text>
+                </Card.Content>
+              </Card>
+            </ScrollView>
+          )}
         </View>
       </View>
     </View>
@@ -53,3 +142,9 @@ const WorkoutDetail = () => {
 }
 
 export default WorkoutDetail
+
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
+}

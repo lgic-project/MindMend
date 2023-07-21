@@ -1,0 +1,20 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAoC0EuUXWq0jzxxkmSpDmaEcvmX7c_bSs",
+  authDomain: "mindmend-58c20.firebaseapp.com",
+  projectId: "mindmend-58c20",
+  storageBucket: "mindmend-58c20.appspot.com",
+  messagingSenderId: "821823643087",
+  appId: "1:821823643087:web:48b3077c6133576d2506ba",
+  measurementId: "G-C6QY02F3D1",
+}
+
+// Initialize Firebase
+initializeApp(firebaseConfig)
+export const auth = getAuth()
+export const database = getFirestore()

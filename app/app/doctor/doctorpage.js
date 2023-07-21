@@ -61,17 +61,25 @@ const doctorpage = () => {
     GetDoctorDetail()
   }, [])
 
-  const renderDoctorCard = () => {
-    // const decodedString = convertBase64ToString(value)
-    // Use the decoded string in your JSX code
-    return (
-      //   <ImageBackground
-      //     source={{ uri: decodedString }}
-      //     resizeMode="cover"
-      //     style={{ width: "70%", height: "100%", marginLeft: 50 }}
-      //   />
-      <Text>hi</Text>
-    )
+  const renderDoctorCard = (value) => {
+    if (value === "" || value === undefined) {
+      return (
+        <ImageBackground
+          source={require("../../assets/Images/doc1.png")}
+          resizeMode="stretch"
+          style={{ width: "70%", height: "100%", marginLeft: 50 }}
+        />
+      )
+    } else {
+      const decodedString = convertBase64ToString(value)
+      return (
+        <ImageBackground
+          source={{ uri: decodedString }}
+          resizeMode="stretch"
+          style={{ width: "70%", height: "100%", marginLeft: 50 }}
+        />
+      )
+    }
   }
 
   const handleback = () => {
@@ -89,7 +97,7 @@ const doctorpage = () => {
           >
             <AntDesign name="left" size={18} color="black" />
           </TouchableOpacity>
-          {renderDoctorCard()}
+          {renderDoctorCard(doctorData.encodedImage)}
         </View>
         {/* large container */}
         <View style={styles.largecontainer}>
@@ -125,12 +133,17 @@ const doctorpage = () => {
                 {doctorData.workingDay}: {doctorData.workingHours} hours
               </Text>
             </View>
-            <View style={{ display: "flex", gap: 5 }}>
-              <Text style={{ fontSize: 15, fontWeight: "700" }}>Address</Text>
-              <Text>
-                {doctorData.city},{doctorData.country}
-              </Text>
-            </View>
+            {doctorData.city &&
+              doctorData.country(
+                <View style={{ display: "flex", gap: 5 }}>
+                  <Text style={{ fontSize: 15, fontWeight: "700" }}>
+                    Address
+                  </Text>
+                  <Text>
+                    {doctorData.city},{doctorData.country}
+                  </Text>
+                </View>
+              )}
             <View style={styles.boxcontainer}>
               <TouchableOpacity style={styles.box}>
                 <Text>{doctorData.experience}</Text>

@@ -110,7 +110,7 @@ const Chatbot = () => {
                   title="Send"
                   onPress={handleProblem}
                   color="#FACE51"
-                  trailing={(props) => <Icon name="arrowright" {...props} />}
+                  trailing={(props) => <Icon name="arrow-right" {...props} />}
                   loading={loading}
                   loadingIndicator="➡️"
                   loadingIndicatorPosition="trailing"
