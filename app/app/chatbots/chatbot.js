@@ -9,6 +9,8 @@ import {
   ScrollView,
 } from "react-native"
 import React, { useState } from "react"
+import { Buffer } from "buffer"
+
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import MessageCard from "../../components/Message/MessageCard"
 import { useRouter } from "expo-router"
@@ -46,9 +48,7 @@ const Chatbot = () => {
     const headers = {
       Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
     }
-    console.log(userData)
     try {
-      console.log(message)
       const res = await axios.post(
         SHARE_PROBLEM,
         {
@@ -56,12 +56,12 @@ const Chatbot = () => {
         },
         { headers }
       )
+      setSolution(res.data)
+
       setLoading(true)
       if (res.data) {
         setLoading(false)
         setVisible(true)
-        setSolution(res.data)
-        console.log(res.data)
       }
     } catch (error) {
       console.log("Error:", error)
@@ -134,3 +134,8 @@ const Chatbot = () => {
 }
 
 export default Chatbot
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
+}
