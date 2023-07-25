@@ -37,6 +37,7 @@ const Home = () => {
     )
   }
 
+
   const handlePress = (id) => {
     setSelectedItem(id === selectedItem ? null : id)
   }
