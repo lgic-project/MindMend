@@ -56,77 +56,81 @@ import {
   doc,
   onSnapshot,
   query,
+  getDocs,
+  FieldValue,
+  serverTimestamp,
 } from "firebase/firestore"
 import { signOut } from "firebase/auth"
 import { auth, database } from "../../utils/firebase"
-import { useNavigation } from "@react-navigation/native"
 import { AntDesign } from "@expo/vector-icons"
-import { useRouter } from "expo-router"
+import { useRoute } from "@react-navigation/native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export default Chat = ({ user, route }) => {
-  const router = useRouter()
-
-  // const { uid } = route.params
+export default Chat = ({ user }) => {
+  const route = useRoute() // Use useRoute() hook to get the route object
+  const [uid, setUid] = useState("")
+  const [name, setName] = useState("")
+  const [senderId, setSenderId] = useState("")
 
   const [messages, setMessages] = useState([])
-  const navigation = useNavigation()
+
+  const GetUID = async () => {
+    const senderId = JSON.parse(await AsyncStorage.getItem("firebaseUserId"))
+    const id = JSON.parse(await AsyncStorage.getItem("friendId"))
+    setSenderId(senderId)
+    setUid(id.id)
+    setName(id.name)
+    // await AsyncStorage.removeItem("friendId")
+  }
+  const fetchData = async () => {
+    const senderId = JSON.parse(await AsyncStorage.getItem("firebaseUserId"))
+    const id = JSON.parse(await AsyncStorage.getItem("friendId"))
+    const uuid =
+      id.id > senderId ? senderId + "-" + id.id : id.id + "-" + senderId
+    const collectionRef = collection(database, "chatrooms", uuid, "messages")
+    const q = query(collectionRef, orderBy("createdAt", "desc"))
+    const querySnapshot = await getDocs(q)
+
+    const messages = querySnapshot.docs.map((doc) => {
+      const data = doc.data()
+      data.createdAt = data.createdAt.toDate()
+      return data
+    })
+
+    setMessages(messages)
+  }
+
+  useEffect(() => {
+    GetUID()
+    fetchData()
+  }, [])
 
   const Signout = () => {
     signOut(auth).catch((error) => console.log(error))
   }
 
-  useEffect(() => {}, [])
-
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <TouchableOpacity
-  //         style={{
-  //           marginRight: 10,
-  //         }}
-  //         onPress={Signout}
-  //       >
-  //         <AntDesign name="logout" size={24} style={{ marginRight: 10 }} />
-  //       </TouchableOpacity>
-  //     ),
-  //   })
-  // }, [navigation])
-
-  // useLayoutEffect(() => {
-  //   const collectionRef = collection(database, "chats")
-  //   const q = query(collectionRef, orderBy("createdAt", "desc"))
-
-  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
-  //     setMessages(
-  //       querySnapshot.docs.map((doc) => ({
-  //         _id: doc.data()._id,
-  //         createdAt: doc.data().createdAt.toDate(),
-  //         text: doc.data().text,
-  //         user: doc.data().user,
-  //       }))
-  //     )
-  //   })
-  //   return unsubscribe
-  // }, [])
-
-  const onSend = useCallback((messageArray) => {
+  const onSend = (messageArray) => {
     const msg = messageArray[0]
     const myMsg = {
       ...msg,
-      sendBy: user.uid,
-      createdat: new Date(),
+      sendBy: senderId,
+      sendTo: uid,
+      createdAt: new Date(),
     }
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, myMsg)
     )
 
-    const uuid = uid > user.uid ? user.uid + "-" + uid : uid + "-" + user.uid
+    // Ensure that the uuid is constructed with two segments separated by a hyphen ("-")
+    const uuid = uid > senderId ? senderId + "-" + uid : uid + "-" + senderId
 
-    const paymentRef = doc(database, "chatrooms", uuid, "messages")
-    addDoc(paymentRef, {
+    const paymentRef = collection(database, "chatrooms")
+    addDoc(collection(paymentRef, uuid, "messages"), {
       ...myMsg,
+      createdAt: serverTimestamp(),
     })
-  }, [])
+  }
+
   return (
     <View style={styles.container}>
       <View className="h-28 fixed">
@@ -140,17 +144,16 @@ export default Chat = ({ user, route }) => {
         </TouchableOpacity>
         <View>
           <Text className="text-center text-xl -mt-5 font-bold text-white">
-            Simran
+            {name}
           </Text>
         </View>
       </View>
       <View className="bg-white h-40" style={{ flex: 1 }}>
         <GiftedChat
           messages={messages}
-          onSend={(text) => onSend(text)}
+          onSend={(messages) => onSend(messages)}
           user={{
-            _id: 1,
-            avatar: "https://placeimg.com/140/140/any",
+            _id: senderId,
           }}
         />
       </View>

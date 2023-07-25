@@ -3,6 +3,8 @@ import React from "react"
 import { moderateScale, verticalScale } from "react-native-size-matters"
 import styles from "../../style/inboxstyle"
 import { useRouter } from "expo-router"
+import { useNavigation } from "@react-navigation/native"
+
 import { auth, database } from "../../utils/firebase"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -17,27 +19,35 @@ import {
   query,
 } from "firebase/firestore"
 import { useEffect } from "react"
-import { useLayoutEffect } from "react"
 import { useState } from "react"
 const InboxCard = () => {
+  const navigation = useNavigation()
   const router = useRouter()
   const handlemessage = () => {}
 
   const [messages, setMessages] = useState([])
-
-  useLayoutEffect(async () => {
-    const fetchData = async () => {
-      const uid = JSON.parse(await AsyncStorage.getItem("firebaseUserId"))
-
-      const collectionRef = collection(database, "users")
-      const q = query(collectionRef, where("uid", "!=", uid), orderBy("uid"))
-
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        setMessages(querySnapshot.docs.map((doc) => doc.data()))
-      })
-      return unsubscribe
+  const handleNavigateToChat = async (uid) => {
+    const data = {
+      name: uid.name,
+      id: uid.uid,
     }
+    await AsyncStorage.setItem("friendId", JSON.stringify(data))
 
+    navigation.navigate("message")
+  }
+  const fetchData = async () => {
+    const uid = JSON.parse(await AsyncStorage.getItem("firebaseUserId"))
+
+    const collectionRef = collection(database, "users")
+    const q = query(collectionRef, where("uid", "!=", uid), orderBy("uid"))
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setMessages(querySnapshot.docs.map((doc) => doc.data()))
+    })
+    return unsubscribe
+  }
+
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -61,9 +71,7 @@ const InboxCard = () => {
 
           <TouchableOpacity
             style={styles.textconatiner}
-            onPress={() =>
-              router.push(`message`, { name: column.name, uid: column.uid })
-            }
+            onPress={() => handleNavigateToChat(column)}
           >
             <Text style={styles.ctext1}>{column.name}</Text>
             <Text style={styles.ctext2}>

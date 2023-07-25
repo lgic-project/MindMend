@@ -7,6 +7,8 @@ import {
   ScrollView,
   Text,
 } from "react-native"
+import { Buffer } from "buffer"
+
 import React, { useState } from "react"
 import {
   TextInput,

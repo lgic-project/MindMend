@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native"
-import React, { useLayoutEffect, useState } from "react"
+import React, { useState } from "react"
 import styles from "../../style/inboxstyle"
 import { AntDesign } from "@expo/vector-icons"
 import InboxCard from "../../components/Inbox/InboxCard"

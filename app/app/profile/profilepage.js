@@ -72,10 +72,10 @@ const profilepage = () => {
     const id = userData.id
     try {
       const res = await axios.get(PROFILE + "4", { headers })
-      setName(res.data.firstName)
+      setProfileData(res.data)
+      setName(res.data.firstName + " " + res.data.lastName)
       setAddress(res.data.city)
       setImage(res.data.encodedImage)
-
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -92,9 +92,8 @@ const profilepage = () => {
     GetProfile()
   }, [])
 
-  const renderBackGroundImage = () => {
-    console.log(image)
-    if (image === "" || image === undefined) {
+  const renderBackGroundImage = (imageurl) => {
+    if (imageurl === "" || imageurl === undefined) {
       return (
         <ImageBackground
           source={require("../../assets/Images/myprofile.png")}
@@ -116,10 +115,10 @@ const profilepage = () => {
         </ImageBackground>
       )
     } else {
-      const decodedString = convertBase64ToString(image)
+      const decodedString = convertBase64ToString(imageurl)
       return (
         <ImageBackground
-          source={{ uri: image }}
+          source={{ uri: decodedString }}
           style={{ width: "100%", height: "100%" }}
           resizeMode="cover"
           blurRadius={3}
@@ -137,8 +136,8 @@ const profilepage = () => {
     }
   }
 
-  const renderImage = () => {
-    if (image === "" || image === undefined) {
+  const renderImage = (imageurl) => {
+    if (imageurl === "" || imageurl === undefined) {
       return (
         <Image
           source={require("../../assets/Images/myprofile.png")}
@@ -147,10 +146,10 @@ const profilepage = () => {
         />
       )
     } else {
-      const decodedString = convertBase64ToString(image)
+      const decodedString = convertBase64ToString(imageurl)
       return (
         <Image
-          source={{ uri: image }}
+          source={{ uri: decodedString }}
           resizeMode="contain"
           style={{ width: 80, height: 80, borderRadius: 50 }}
         />
@@ -160,16 +159,20 @@ const profilepage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.smallcontainer}>{renderBackGroundImage()}</View>
+      <View style={styles.smallcontainer}>
+        {renderBackGroundImage(profileData.encodedImage)}
+      </View>
       {/* Profile info container section */}
       <View style={styles.largecontainer}>
         <View style={styles.profileinfo}>
-          {renderImage()}
+          {renderImage(profileData.encodedImage)}
           <View style={styles.profilecam}>
             <Entypo name="camera" size={15} color="white" />
           </View>
           <View style={styles.profiletext}>
-            <Text style={styles.name}>{firstName}</Text>
+            <Text style={styles.name}>
+              {profileData.firstName} {profileData.lastName}
+            </Text>
             <View style={styles.location}>
               <Entypo name="location-pin" size={20} color="#634BF9" />
               <Text>{address}, Nepal</Text>

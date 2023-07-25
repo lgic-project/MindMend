@@ -15,9 +15,22 @@ import {
   VStack,
   Wrap,
 } from "@react-native-material/core"
+import { Buffer } from "buffer"
 
 export default ExerciseList = ({ response }) => {
   const renderExerciseCard = (value) => {
+    if (value.encodedImage === "" || value.encodedImage === undefined) {
+      return (
+        <ImageBackground
+          style={{ flex: 1 }}
+          imageStyle={{ borderRadius: 10 }}
+          source={require("../../assets/Images/shutterstock-163579436-yoga-alexander-y-1485955962.jpg")}
+          resizeMode="cover"
+        >
+          <Text style={styles.doc1text}>{value.title}</Text>
+        </ImageBackground>
+      )
+    }
     const decodedString = convertBase64ToString(value.encodedImage)
     // Use the decoded string in your JSX code
     return (
@@ -49,4 +62,9 @@ export default ExerciseList = ({ response }) => {
       </View>
     </View>
   )
+}
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
 }
