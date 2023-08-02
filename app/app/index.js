@@ -2,6 +2,7 @@ import { View, Text } from "react-native"
 import Walkthrough from "./walkthrough"
 import * as Notifications from "expo-notifications"
 import { useCallback, useEffect, useRef, useState } from "react"
+import Toast from "react-native-toast-message"
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({}),
