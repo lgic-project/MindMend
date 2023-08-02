@@ -36,7 +36,7 @@ export default Profile = () => {
     }
     const id = userData.id
     try {
-      const res = await axios.get(PROFILE + "4", { headers })
+      const res = await axios.get(PROFILE + id, { headers })
       setName(res.data.firstName)
       setAddress(res.data.city)
       setImage(res.data.encodedImage)
