@@ -43,10 +43,6 @@ import { GiftedChat } from "react-native-gifted-chat"
 import { TouchableOpacity, Text, View } from "react-native"
 import styles from "../../style/messagestyle"
 
-const handleback = () => {
-  router.push(`../dashboard/Inbox`)
-}
-
 // import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 
 import {
@@ -65,6 +61,7 @@ import { auth, database } from "../../utils/firebase"
 import { AntDesign } from "@expo/vector-icons"
 import { useRoute } from "@react-navigation/native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useNavigation } from "expo-router"
 
 export default Chat = ({ user }) => {
   const route = useRoute() // Use useRoute() hook to get the route object
@@ -73,6 +70,11 @@ export default Chat = ({ user }) => {
   const [senderId, setSenderId] = useState("")
 
   const [messages, setMessages] = useState([])
+  const navigation = useNavigation()
+
+  const handleback = () => {
+    navigation.goBack()
+  }
 
   const GetUID = async () => {
     const senderId = JSON.parse(await AsyncStorage.getItem("firebaseUserId"))
@@ -135,17 +137,14 @@ export default Chat = ({ user }) => {
     <View style={styles.container}>
       <View className="h-28 fixed">
         {/* heading container */}
-        <TouchableOpacity
-          className="mt-5 w-5"
-          style={styles.buttoncontainer}
-          onPress={handleback}
-        >
-          <AntDesign name="left" size={20} color="white" />
-        </TouchableOpacity>
-        <View>
-          <Text className="text-center text-xl -mt-5 font-bold text-white">
+        <View className="w-full flex-row justify-between ml-5 mt-5 ">
+          <TouchableOpacity onPress={handleback}>
+            <AntDesign name="left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text className="text-center text-xl font-bold text-white">
             {name}
           </Text>
+          <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
       <View className="bg-white h-40" style={{ flex: 1 }}>

@@ -10,7 +10,7 @@ import * as React from "react"
 import styles from "../../style/communitystyles"
 import { TabView, SceneMap, TabBar } from "react-native-tab-view"
 import { Ionicons, AntDesign, FontAwesome } from "@expo/vector-icons"
-import { useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const FirstRoute = () => {
@@ -135,6 +135,11 @@ const renderScene = SceneMap({
 
 const Community = () => {
   const layout = useWindowDimensions()
+  const navigation = useNavigation()
+
+  const handleback = () => {
+    navigation.goBack()
+  }
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
     { key: "first", title: "Feed" },
