@@ -56,13 +56,12 @@ export default LookingFor = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.lookingcard}>
           <Image
-            source={require("../../assets/Images/newspaper.png")}
+            source={require("../../assets/Images/Graph-PNG-Transparent-Image.png")}
             resizeMode="contain"
             style={{ width: 40, height: 40 }}
           />
           <View style={styles.lTcontainer}>
-            <Text style={styles.lookingtext}>Health</Text>
-            <Text style={styles.lookingtext}>News</Text>
+            <Text style={styles.lookingtext}>Chart</Text>
           </View>
         </TouchableOpacity>
       </View>
