@@ -13,7 +13,7 @@ import { Buffer } from "buffer"
 
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import MessageCard from "../../components/Message/MessageCard"
-import { useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import styles from "../../style/chatbotstyles"
 
 import {
@@ -33,8 +33,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const Chatbot = () => {
   const router = useRouter()
+  const navigation = useNavigation()
   const handleback = () => {
-    router.push(`../dashboard/Inbox`)
+    navigation.goBack()
   }
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
@@ -77,11 +78,12 @@ const Chatbot = () => {
     <View style={styles.container}>
       <View style={styles.smallcontainer}>
         {/* heading container */}
-        <TouchableOpacity style={styles.buttoncontainer} onPress={handleback}>
-          <AntDesign name="left" size={18} color="black" />
-        </TouchableOpacity>
-        <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Share your Problem</Text>
+        <View className="w-full flex-row justify-between ml-5 ">
+          <TouchableOpacity onPress={handleback}>
+            <AntDesign name="left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text className="font-bold text-base">Share Your Problem</Text>
+          <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
 

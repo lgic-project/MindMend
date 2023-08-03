@@ -20,16 +20,20 @@ import { useRouter } from "expo-router"
 import { LineChart, PieChart } from "react-native-chart-kit"
 
 export default FitnessChart = () => {
+  router = useRouter()
+  const handleHistory = () => {
+    router.push(`chart`)
+  }
   return (
     <View>
-      <Wrap style={{ marginTop: 9, marginBottom: -9 }}>
+      <Wrap style={{ marginTop: 9, marginBottom: -9, marginLeft: 7 }}>
         <Text className=" font-semibold mt-5 ml-7 text-base">
           Progress Chart
         </Text>
         <Spacer />
         <Button
           style={{ marginRight: 13, marginBottom: 2 }}
-          onPress=""
+          onPress={handleHistory}
           variant="text"
           title="View All"
         />

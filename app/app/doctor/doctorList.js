@@ -7,7 +7,7 @@ import { Buffer } from "buffer"
 import React, { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { DOCTOR, DOCTOR_RATING } from "../../utils/appRoutes"
-import { useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 
 const DoctorList = () => {
   const [doctorData, setDoctorData] = useState([])
@@ -15,6 +15,7 @@ const DoctorList = () => {
   const [error, setError] = useState([])
 
   const router = useRouter()
+  const navigation = useNavigation()
 
   const handleDoctorDetail = async (id) => {
     await AsyncStorage.setItem("doctorId", JSON.stringify(id))
@@ -22,7 +23,7 @@ const DoctorList = () => {
   }
 
   const handleback = () => {
-    router.push(`../dashboard/Home`)
+    navigation.goBack()
   }
 
   useEffect(() => {
@@ -58,14 +59,12 @@ const DoctorList = () => {
     <View style={styles.container}>
       <View style={styles.smallcontainer}>
         {/* heading container */}
-        <TouchableOpacity
-          style={{ position: "absolute", top: 15, left: 15 }}
-          onPress={handleback}
-        >
-          <AntDesign name="left" size={18} color="black" />
-        </TouchableOpacity>
-        <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Doctor</Text>
+        <View className="w-full flex-row justify-between ml-5 ">
+          <TouchableOpacity onPress={handleback}>
+            <AntDesign name="left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text className="font-bold text-base">Doctor</Text>
+          <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
       <View style={styles.largecontainer}>

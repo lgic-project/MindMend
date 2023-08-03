@@ -28,6 +28,9 @@ export default LookingFor = () => {
   const handleDoctor = () => {
     router.push(`doctor/doctorList`)
   }
+  const handleHistory = () => {
+    router.push(`chart`)
+  }
   return (
     <View style={styles.lookingfor}>
       <Text style={{ fontSize: 16 }}>What are you looking for?</Text>
@@ -54,7 +57,7 @@ export default LookingFor = () => {
             <Text style={styles.lookingtext}>Doctor</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.lookingcard}>
+        <TouchableOpacity style={styles.lookingcard} onPress={handleHistory}>
           <Image
             source={require("../../assets/Images/Graph-PNG-Transparent-Image.png")}
             resizeMode="contain"
