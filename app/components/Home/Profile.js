@@ -28,7 +28,7 @@ export default Profile = () => {
     await AsyncStorage.setItem("profileName", JSON.stringify(name))
     await AsyncStorage.setItem("profileAddress", JSON.stringify(address))
 
-    router.push(`profile`)
+    router.push(`profile/profilepage`)
   }
 
   const GetProfileData = async () => {
@@ -39,7 +39,7 @@ export default Profile = () => {
     }
     const id = userData.id
     try {
-      const res = await axios.get(PROFILE + "4", { headers })
+      const res = await axios.get(PROFILE + id, { headers })
       setName(res.data.firstName)
       setAddress(res.data.city)
       setImage(res.data.encodedImage)
@@ -60,7 +60,7 @@ export default Profile = () => {
       return (
 
         <Image
-          source={require("../../assets/Images/myprofile.png")}
+          source={require("../../assets/Images/person.png")}
           resizeMode="contain"
           style={{ width: 45, height: 45, borderRadius: 50 }}
         />

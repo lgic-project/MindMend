@@ -1,8 +1,15 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native"
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native"
 import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
-import { MOOD_CATEGORY, PROFILE } from "../../utils/appRoutes"
+import { MOOD_CATEGORY, MOOD_TRACK, PROFILE } from "../../utils/appRoutes"
 import axios from "axios"
 import { Buffer } from "buffer"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -37,14 +44,33 @@ const Home = () => {
     )
   }
 
+  const handlePress = async (id) => {
+    console.log(id)
 
-  const handlePress = (id) => {
-    setSelectedItem(id === selectedItem ? null : id)
+    const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+    let moodDetail = {
+      userId: userData.id,
+      moodId: id,
+    }
+    const headers = {
+      Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+    }
+
+    try {
+      const res = await axios.post(MOOD_TRACK, { ...moodDetail }, { headers })
+      if (res.data) {
+        Alert.alert("Success", "You mood have been tracked")
+      }
+    } catch (error) {
+      setLoading(false)
+      setError(error)
+    }
   }
   const [data, setData] = useState([])
   const [moodData, setMoodData] = useState([])
 
   const [image, setImage] = useState("")
+  const [showAlert, setShowAlert] = useState(false)
 
   useEffect(() => {
     const GetMoodData = async () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { GiftedChat } from "react-native-gifted-chat"
 import { TouchableOpacity, Text } from "react-native"
 import {
@@ -17,31 +17,31 @@ export default Chat = () => {
   const [messages, setMessages] = useState([])
   const navigation = useNavigation()
 
-  const Signout = () => {
-    signOut(auth).catch((error) => console.log(error))
-  }
+  // const Signout = () => {
+  //   signOut(auth).catch((error) => console.log(error))
+  // }
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            marginRight: 10,
-          }}
-          onPress={onSignOut}
-        >
-          <AntDesign name="logout" size={24} style={{ marginRight: 10 }} />
-        </TouchableOpacity>
-      ),
-    })
-  }, [navigation])
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <TouchableOpacity
+  //         style={{
+  //           marginRight: 10,
+  //         }}
+  //         onPress={Signout}
+  //       >
+  //         <AntDesign name="logout" size={24} style={{ marginRight: 10 }} />
+  //       </TouchableOpacity>
+  //     ),
+  //   })
+  // }, [navigation])
 
-  useLayoutEffect(() => {
-    const collectionRef = collection(database, "chats")
-    const q = query(collectionRef, orderBy("createdAt", "desc"))
+  const fetchData = async () => {
+    try {
+      const collectionRef = collection(database, "chats")
+      const q = query(collectionRef, orderBy("createdAt", "desc"))
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log("querySnapshot unsusbscribe")
+      const querySnapshot = await getDocs(q)
       setMessages(
         querySnapshot.docs.map((doc) => ({
           _id: doc.data()._id,
@@ -50,8 +50,13 @@ export default Chat = () => {
           user: doc.data().user,
         }))
       )
-    })
-    return unsubscribe
+    } catch (error) {
+      console.error("Error fetching data:", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [])
 
   const onSend = useCallback((messages = []) => {

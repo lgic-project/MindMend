@@ -28,6 +28,9 @@ export default LookingFor = () => {
   const handleDoctor = () => {
     router.push(`doctor/doctorList`)
   }
+  const handleHistory = () => {
+    router.push(`chart`)
+  }
   return (
     <View style={styles.lookingfor}>
       <Text style={{ fontSize: 16 }}>What are you looking for?</Text>
@@ -54,17 +57,16 @@ export default LookingFor = () => {
             <Text style={styles.lookingtext}>Doctor</Text>
           </View>
         </TouchableOpacity>
-        {/* <TouchableOpacity style={styles.lookingcard}>
+        <TouchableOpacity style={styles.lookingcard} onPress={handleHistory}>
           <Image
-            source={require("../../assets/Images/newspaper.png")}
+            source={require("../../assets/Images/Graph-PNG-Transparent-Image.png")}
             resizeMode="contain"
             style={{ width: 40, height: 40 }}
           />
           <View style={styles.lTcontainer}>
-            <Text style={styles.lookingtext}>Health</Text>
-            <Text style={styles.lookingtext}>News</Text>
+            <Text style={styles.lookingtext}>Chart</Text>
           </View>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     </View>
   )

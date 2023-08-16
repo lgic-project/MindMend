@@ -8,7 +8,7 @@ import axios from "axios"
 import { Buffer } from "buffer"
 import React, { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useRouter } from "expo-router"
+import { useNavigation, useRouter } from "expo-router"
 import { EXERCISE_BY_ID } from "../../utils/appRoutes"
 
 const WorkoutDetail = () => {
@@ -17,9 +17,10 @@ const WorkoutDetail = () => {
   const [error, setError] = useState([])
 
   const router = useRouter()
+  const navigation = useNavigation()
 
   const handleback = () => {
-    router.push(`../workout/WorkoutList`)
+    navigation.goBack()
   }
   const LeftContent = (props) => (
     <MaterialIcons
@@ -94,12 +95,12 @@ const WorkoutDetail = () => {
     <View style={styles.container}>
       <View style={styles.smallcontainer}>
         {/* heading container */}
-        <TouchableOpacity
-          style={{ position: "absolute", top: 15, left: 15 }}
-          onPress={handleback}
-        ></TouchableOpacity>
-        <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Exercise Detail</Text>
+        <View className="w-full flex-row justify-between ml-5 ">
+          <TouchableOpacity onPress={handleback}>
+            <AntDesign name="left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text className="font-bold text-base">WorkoutDetail</Text>
+          <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
       <View style={styles.largecontainer}>

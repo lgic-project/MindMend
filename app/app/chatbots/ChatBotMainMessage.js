@@ -31,16 +31,20 @@ export default ChatBotMessage = ({ response }) => {
       </Text>
       <View style={styles.divider} />
       <VStack m={4} spacing={2}>
-        {response.map((column, index) => (
-          <Text style={styles.suggestionsText}>
-            <MaterialCommunityIcons
-              name="arrow-right-bold-circle"
-              size={18}
-              color="black"
-            />{" "}
-            {column}
-          </Text>
-        ))}
+        {response.map((column, index) =>
+          column === "" ? (
+            "null"
+          ) : (
+            <Text key={index} style={styles.suggestionsText}>
+              <MaterialCommunityIcons
+                name="arrow-right-bold-circle"
+                size={18}
+                color="black"
+              />
+              {column}
+            </Text>
+          )
+        )}
       </VStack>
     </View>
   )

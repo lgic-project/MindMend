@@ -16,18 +16,11 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons"
-import { useRouter } from "expo-router"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRouter } from "expo-router"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { Buffer } from "buffer"
 import { PROFILE } from "../../utils/appRoutes"
-
-const handleGroupRoute = async (navigation) => {
-  await AsyncStorage.setItem("groupScreen", JSON.stringify(2))
-
-  navigation.navigate("Community")
-}
 
 const profilepage = () => {
   const router = useRouter();
@@ -60,7 +53,7 @@ const profilepage = () => {
   ]
 
   const handleback = () => {
-    router.back()
+    navigation.goBack()
   }
 
   const GetProfile = async () => {
@@ -73,10 +66,9 @@ const profilepage = () => {
     try {
       const res = await axios.get(PROFILE + "4", { headers })
       setProfileData(res.data)
-      setName(res.data.firstName)
+      setName(res.data.firstName + " " + res.data.lastName)
       setAddress(res.data.city)
       setImage(res.data.encodedImage)
-
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -94,11 +86,10 @@ const profilepage = () => {
   }, [])
 
   const renderBackGroundImage = (imageurl) => {
-    // console.log(image)
     if (imageurl === "" || imageurl === undefined) {
       return (
         <ImageBackground
-          source={require("../../assets/Images/myprofile.png")}
+          source={require("../../assets/Images/person.png")}
           style={{ width: "100%", height: "100%" }}
           resizeMode="cover"
           blurRadius={3}
@@ -110,9 +101,6 @@ const profilepage = () => {
             >
               <AntDesign name="left" size={18} color="black" />
             </TouchableOpacity>
-            <View style={styles.camcontainer}>
-              <Entypo name="camera" size={24} color="white" />
-            </View>
           </View>
         </ImageBackground>
       )
@@ -121,7 +109,6 @@ const profilepage = () => {
       return (
         <ImageBackground
           source={{ uri: decodedString }}
-          // source={require("../../assets/Images/myprofile.png")}
           style={{ width: "100%", height: "100%" }}
           resizeMode="cover"
           blurRadius={3}
@@ -131,7 +118,7 @@ const profilepage = () => {
               style={styles.buttoncontainer}
               onPress={handleback}
             >
-              <AntDesign name="left" size={18} color="black" />
+              <AntDesign name="left" size={18} color="white" />
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -143,7 +130,7 @@ const profilepage = () => {
     if (imageurl === "" || imageurl === undefined) {
       return (
         <Image
-          source={require("../../assets/Images/myprofile.png")}
+          source={require("../../assets/Images/person.png")}
           resizeMode="contain"
           style={{ width: 80, height: 80, borderRadius: 50 }}
         />
@@ -157,6 +144,17 @@ const profilepage = () => {
           style={{ width: 80, height: 80, borderRadius: 50 }}
         />
       )
+    }
+  }
+
+  const handleRoute = async (item) => {
+    console.log(item)
+    if (item === "Groups") {
+      await AsyncStorage.setItem("groupScreen", JSON.stringify(2))
+      navigation.navigate("Community")
+    }
+    if (item === "Personal") {
+      navigation.navigate("editProfile")
     }
   }
 
@@ -169,11 +167,10 @@ const profilepage = () => {
       <View style={styles.largecontainer}>
         <View style={styles.profileinfo}>
           {renderImage(profileData.encodedImage)}
-          <View style={styles.profilecam}>
-            <Entypo name="camera" size={15} color="white" />
-          </View>
           <View style={styles.profiletext}>
-            <Text style={styles.name}>{firstName}</Text>
+            <Text style={styles.name}>
+              {profileData.firstName} {profileData.lastName}
+            </Text>
             <View style={styles.location}>
               <Entypo name="location-pin" size={20} color="#634BF9" />
               <Text>{address}, Nepal</Text>
@@ -182,7 +179,7 @@ const profilepage = () => {
         </View>
         {/* ScrollView */}
         <ScrollView style={styles.scrollview}>
-          <View style={styles.card}>
+          <View style={styles.card} className="px-3">
             {/* Content */}
 
             {/* flatlist */}
@@ -191,22 +188,20 @@ const profilepage = () => {
               // add it when there comes virtualized list error
               data={data}
               renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.row}
-                  onPress={
-                    item.title === "Groups"
-                      ? () => handleGroupRoute(navigation)
-                      : undefined
-                  }
-                >
-                  <View
-                    style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                <View key={item.title}>
+                  <TouchableOpacity
+                    style={styles.row}
+                    onPress={() => handleRoute(item.title)}
                   >
-                    {item.icon}
-                    <Text style={{ fontSize: 16 }}>{item.title}</Text>
-                  </View>
-                  <AntDesign name="right" size={20} color="black" />
-                </TouchableOpacity>
+                    <View
+                      style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                    >
+                      {item.icon}
+                      <Text style={{ fontSize: 16 }}>{item.title}</Text>
+                    </View>
+                    <AntDesign name="right" size={16} color="black" />
+                  </TouchableOpacity>
+                </View>
               )}
             />
             {/* end */}

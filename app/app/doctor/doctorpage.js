@@ -76,7 +76,7 @@ const doctorpage = () => {
         <ImageBackground
           source={{ uri: decodedString }}
           resizeMode="stretch"
-          style={{ width: "70%", height: "100%", marginLeft: 50 }}
+          style={{ width: "100%", height: "100%", marginLeft: 50 }}
         />
       )
     }
