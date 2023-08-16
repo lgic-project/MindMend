@@ -16,33 +16,34 @@ import { Avatar, Card, Text } from "react-native-paper"
 import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
+import { EXERCISE } from "../../utils/appRoutes"
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />
 
 export default Workout = () => {
   const router = useRouter()
-  const [doctorData, setDoctorData] = useState([])
+  const [exerciseData, setExerciseData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState([])
-  const slicedData = doctorData.slice(0, 2) // Extract the first 5 data items
+  const slicedExercise = exerciseData.slice(0, 2) // Extract the first 5 data items
 
   useEffect(() => {
-    const GetDoctorData = async () => {
+    const GetExerciseData = async () => {
       const userData = JSON.parse(await AsyncStorage.getItem("userData"))
 
       const headers = {
         Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
       }
       try {
-        const res = await axios.get(DOCTOR_RATING, { headers })
-        setDoctorData(res.data)
+        const res = await axios.get(EXERCISE, { headers })
+        setExerciseData(res.data)
         setLoading(false)
       } catch (error) {
         setLoading(false)
         setError(error)
       }
     }
-    GetDoctorData()
+    GetExerciseData()
   }, [])
 
   const handleDoctorDetail = async (id) => {
@@ -53,20 +54,24 @@ export default Workout = () => {
   const handleWorkout = () => {
     router.push(`workout/WorkoutList`)
   }
+  const handleWorkoutDetail = async (id) => {
+    await AsyncStorage.setItem("exerciseId", JSON.stringify(id))
+    router.push("/workout/WorkoutDetail")
+  }
 
-  const renderDoctorCard = (value) => {
-    const decodedString = convertBase64ToString(value.encodedImage)
+  const renderWorkoutCard = (value) => {
+    if (value === "") {
+      return (
+        <Card.Cover
+          className="h-28"
+          source={require("../../assets/Images/shutterstock-163579436-yoga-alexander-y-1485955962.jpg")}
+        />
+      )
+    } else {
+      const decodedString = convertBase64ToString(value)
+      return <Card.Cover className="h-28" source={{ uri: decodedString }} />
+    }
     // Use the decoded string in your JSX code
-    return (
-      <ImageBackground
-        style={{ flex: 1 }}
-        imageStyle={{ borderRadius: 10 }}
-        source={{ uri: decodedString }}
-        resizeMode="cover"
-      >
-        <Text style={styles.doc1text}>{value.doctorName}</Text>
-      </ImageBackground>
-    )
   }
   return (
     <View className="m-5">
@@ -81,36 +86,25 @@ export default Workout = () => {
         />
       </Wrap>
       <Wrap spacing={16}>
-        <Card className="pb-3 w-5/12 ">
-          <Card.Cover
-            className="h-28"
-            source={{ uri: "https://picsum.photos/700" }}
-          />
-          <Card.Content className="p-2">
-            <Text className="font-bold text-base">Fat burn</Text>
-            <Text className=" text-sm">10 minute</Text>
-          </Card.Content>
-          <Card.Actions className="-mt-12">
-            <Text className="border text-xs font-bold border-slate-500 p-1 px-1 rounded-full text-white bg-slate-500">
-              100 Calcs
-            </Text>
-          </Card.Actions>
-        </Card>
-        <Card className="w-5/12 pb-3 ">
-          <Card.Cover
-            className="h-28"
-            source={{ uri: "https://picsum.photos/700" }}
-          />
-          <Card.Content className="p-2">
-            <Text className="font-bold text-base">Fat burn</Text>
-            <Text className=" text-sm">10 minute</Text>
-          </Card.Content>
-          <Card.Actions className="-mt-12">
-            <Text className="border text-xs font-bold border-slate-500 p-1 px-1 rounded-full text-white bg-slate-500">
-              100 Calcs
-            </Text>
-          </Card.Actions>
-        </Card>
+        {slicedExercise.map((column, index) => (
+          <Card
+            key={column.id}
+            className="pb-3 w-5/12 "
+            onPress={() => handleWorkoutDetail(column.id)}
+          >
+            {renderWorkoutCard(column.encodedImage)}
+
+            <Card.Content className="p-2 pb-3">
+              <Text className="font-bold text-base">{column.title}</Text>
+              <Text className=" text-sm">{column.exerciseCategoryTitle}</Text>
+            </Card.Content>
+            <Card.Actions className="-mt-16">
+              <Text className="border text-xs font-bold border-slate-500 p-1 px-1 rounded-full text-white bg-slate-500">
+                {column.timeDuration}
+              </Text>
+            </Card.Actions>
+          </Card>
+        ))}
       </Wrap>
     </View>
   )

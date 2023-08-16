@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
     // padding:1
   },
   doc1text: {
-    paddingLeft: moderateScale(10),
-    paddingTop: verticalScale(10),
-    width: "60%",
+    // paddingLeft: moderateScale(5),
+    // paddingTop: verticalScale(10),
+    // width: "60%",
     fontSize: 15,
     color: "white",
     fontWeight: "700",

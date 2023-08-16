@@ -51,7 +51,7 @@ export default Doctor = () => {
     router.push(`doctor/doctorList`)
   }
 
-  const renderDoctorCard = (value) => {
+  const renderDoctorCard = (value, backgroundColor) => {
     const decodedString = convertBase64ToString(value.encodedImage)
     // Use the decoded string in your JSX code
     return (
@@ -61,7 +61,9 @@ export default Doctor = () => {
         source={{ uri: decodedString }}
         resizeMode="cover"
       >
-        <Text style={styles.doc1text}>{value.doctorName}</Text>
+        <View style={{ position: "absolute", bottom: 5, left: 5, backgroundColor: backgroundColor, paddingHorizontal: 10, paddingVertical: 2, borderRadius: 15 }} >
+          <Text style={styles.doc1text}>{value.doctorName}</Text>
+        </View>
       </ImageBackground>
     )
   }
@@ -77,7 +79,7 @@ export default Doctor = () => {
             style={styles.doc1view}
             onPress={() => handleDoctorDetail(column.id)}
           >
-            {renderDoctorCard(column)}
+            {renderDoctorCard(column, index % 2 === 0 ? "#12A622" : "red")}
           </TouchableOpacity>
         ))}
       </View>
