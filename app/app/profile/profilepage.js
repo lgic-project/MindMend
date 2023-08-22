@@ -64,7 +64,7 @@ const profilepage = () => {
     }
     const id = userData.id
     try {
-      const res = await axios.get(PROFILE + "4", { headers })
+      const res = await axios.get(PROFILE + userData.id, { headers })
       setProfileData(res.data)
       setName(res.data.firstName + " " + res.data.lastName)
       setAddress(res.data.city)
@@ -148,13 +148,12 @@ const profilepage = () => {
   }
 
   const handleRoute = async (item) => {
-    console.log(item)
     if (item === "Groups") {
       await AsyncStorage.setItem("groupScreen", JSON.stringify(2))
       navigation.navigate("Community")
     }
     if (item === "Personal") {
-      navigation.navigate("editProfile")
+      navigation.navigate("editprofile")
     }
   }
 
