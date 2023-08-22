@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(15),
   },
   lookingcard: {
-    width: "25%",
+    width: "30%",
     height: "100%",
     backgroundColor: "white",
     elevation: 3,
@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
     // padding:1
   },
   doc1text: {
-    paddingLeft: moderateScale(10),
-    paddingTop: verticalScale(10),
-    width: "60%",
+    // paddingLeft: moderateScale(5),
+    // paddingTop: verticalScale(10),
+    // width: "60%",
     fontSize: 15,
     color: "white",
     fontWeight: "700",

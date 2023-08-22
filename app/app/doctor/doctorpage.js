@@ -83,7 +83,7 @@ const doctorpage = () => {
   }
 
   const handleback = () => {
-    router.push(`../doctor/doctorpage`)
+    router.back();
   }
 
   return (

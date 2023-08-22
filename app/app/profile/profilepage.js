@@ -23,7 +23,7 @@ import { Buffer } from "buffer"
 import { PROFILE } from "../../utils/appRoutes"
 
 const profilepage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const navigation = useNavigation()
   const [profileData, setProfileData] = useState([])
   const [image, setImage] = useState([])
@@ -166,7 +166,6 @@ const profilepage = () => {
       <View style={styles.largecontainer}>
         <View style={styles.profileinfo}>
           {renderImage(profileData.encodedImage)}
-
           <View style={styles.profiletext}>
             <Text style={styles.name}>
               {profileData.firstName} {profileData.lastName}
