@@ -39,7 +39,7 @@ const profilepage = () => {
       icon: <Ionicons name="person" size={20} color="#98E8B1" />,
     },
     {
-      title: "Badges and Trophies",
+      title: "Friends",
       icon: <MaterialCommunityIcons name="trophy" size={20} color="#E89898" />,
     },
     {
@@ -153,7 +153,7 @@ const profilepage = () => {
       navigation.navigate("Community")
     }
     if (item === "Personal") {
-      navigation.navigate("editprofile")
+      navigation.navigate("editProfile")
     }
   }
 

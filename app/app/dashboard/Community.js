@@ -6,12 +6,16 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native"
-import * as React from "react"
+import React,{useEffect, useMemo, useState} from "react"
 import styles from "../../style/communitystyles"
 import { TabView, SceneMap, TabBar } from "react-native-tab-view"
 import { Ionicons, AntDesign, FontAwesome } from "@expo/vector-icons"
 import { useNavigation, useRouter } from "expo-router"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
+import { FRIEND, PROFILE } from "../../utils/appRoutes"
+import { Buffer } from "buffer"
+
 
 const FirstRoute = () => {
   const router = useRouter()
@@ -65,24 +69,64 @@ const FirstRoute = () => {
 
 const SecondRoute = () => {
   const router = useRouter()
+  const [friends, setFriends] = useState([]);
   const handleprofile = () => {
     router.push(`userprofile`)
   }
-  return (
-    <ScrollView style={styles.scrollfriend}>
-      <View>
-        <TouchableOpacity style={styles.friend} onPress={handleprofile}>
-          <View style={styles.imgtext}>
-            <TouchableOpacity>
-              <Image
+
+  const renderImage = (imageurl) => {
+    if (imageurl === "" || imageurl === undefined || imageurl ===null) {
+      return (
+        <Image
                 source={require("../../assets/Images/person.png")}
                 style={styles.frndimg}
               />
+      )
+    } else {
+      const decodedString = convertBase64ToString(imageurl)
+      return (
+        <Image
+                source={{uri: decodedString}}
+                style={styles.frndimg}
+              />
+      )
+    }
+  }
+
+  const getFriendList =async ()=>{
+    const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+    const headers = {
+      Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+    }
+    try {
+
+
+      const res = await axios.get(FRIEND+userData.id+"/user", { headers })
+      setFriends(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+useEffect(()=>{
+  getFriendList();
+})
+
+  return (
+    <ScrollView style={styles.scrollfriend}>
+      <View>
+      {friends.map((column, index) => (
+
+        <TouchableOpacity key={index} style={styles.friend} onPress={handleprofile}>
+          <View style={styles.imgtext}>
+            <TouchableOpacity>
+           { renderImage(column.friendImage)}
+
             </TouchableOpacity>
-            <Text style={{ alignSelf: "center" }}>Simran Baniya</Text>
+            <Text style={{ alignSelf: "center" }}>{column.friendName}</Text>
           </View>
           <AntDesign name="right" size={20} color="#FACE51" />
         </TouchableOpacity>
+      ))}
       </View>
     </ScrollView>
   )
@@ -133,6 +177,12 @@ const renderScene = SceneMap({
   third: ThirdRoute,
 })
 
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
+}
+
 const Community = () => {
   const layout = useWindowDimensions()
   const navigation = useNavigation()
@@ -157,6 +207,10 @@ const Community = () => {
     GetScreenId()
   })
 
+  const handleprofile = () => {
+    router.push(`userprofile`)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.firstmain}>
@@ -180,7 +234,7 @@ const Community = () => {
                 indicatorStyle={{ height: 0 }}
                 activeColor="#FACE51"
               />
-              <TouchableOpacity style={styles.add}>
+              <TouchableOpacity style={styles.add} onPress={handleprofile}>
                 <Ionicons name="person-add" size={25} color="#FACE51" />
               </TouchableOpacity>
             </View>

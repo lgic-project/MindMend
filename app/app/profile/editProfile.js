@@ -1,15 +1,16 @@
 import { Avatar, ListItem, Wrap } from "@react-native-material/core"
 import React,{useEffect, useMemo, useState} from "react"
-
-import { Text, View, Image, ScrollView, FlatList, StyleSheet, TouchableOpacity } from "react-native"
-
+import * as ImagePicker from 'expo-image-picker';
+import { Text, View, Image, ScrollView, FlatList, StyleSheet, TouchableOpacity, Platform, Alert } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
-
+import { Buffer } from "buffer"
 import { Button } from "react-native-paper"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TextInput, RadioButton } from "react-native-paper"
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { PROFILE } from "../../utils/appRoutes"
 
 
 const editProfile = () => {
@@ -20,7 +21,11 @@ const editProfile = () => {
   const [country, setCountry] = useState([]);
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
+  const [profile, setProfile]= useState([]);
   const [isFocus, setIsFocus] = useState(false);
+  const [image, setImage]= useState(null);
+  const [imageConfirmed, setImageConfirmed] = useState(false);
+
 
   const GetCountryData = async () => {
 
@@ -50,6 +55,19 @@ await axios(config)
   console.log(error);
 });
   } 
+
+  const GetProfileData = async ()=>{
+    const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+    const headers = {
+      Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+    }
+    try {
+      const res = await axios.get(PROFILE+userData.id, { headers })
+      setProfile(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleState=async (countryCode)=>{
     var config = {
@@ -108,9 +126,140 @@ await axios(config)
     });
   }
 
+  const handleChange = (event) => {
+    setProfile({ ...profile, [event.target.name]: event.target.value });
+
+
+  }
+
+  const handleDescription = (text) => {
+    setProfile({ ...profile, description: text });
+  };
+
+  const handleFirstName = (text) => {
+    setProfile({ ...profile, firstName: text });
+  };
+
+  const handleUsername = (text) => {
+    setProfile({ ...profile, username: text });
+  };
+
+  const handleLastName = (text) => {
+    setProfile({ ...profile, lastName: text });
+  };
+
+  const handleEmail = (text) => {
+    setProfile({ ...profile, email: text });
+  };
+
+  const handleGender = (value) => {
+    setProfile({ ...profile, gender: value });
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const selectedImageUri = result.assets[0].uri;
+      const selectedImageBase64 = await convertImageToBase64(selectedImageUri);
+  
+      setImage(selectedImageUri);
+      setImageConfirmed(selectedImageBase64); // Reset image confirmation when a new image is selected
+
+    }
+  };
+
+  
+  const convertImageToBase64 = async (imageUri) => {
+    try {
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+      });
+      return base64;
+    } catch (error) {
+      console.error('Error converting image to base64:', error);
+      return null;
+    }
+  };
+
+
+  const permission=async ()=>{
+    if (Platform.OS !== 'web') {
+      const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission Denied');
+      }
+    }
+  }
+
 useEffect(() => {
+  permission();
+  GetProfileData();
     GetCountryData();
   }, []);
+
+  const renderImage = (imageurl) => {
+    if (imageurl === "" || imageurl === undefined) {
+      return (
+        <Image
+        source={require("../../assets/Images/person.png")}
+        resizeMode="cover"
+        style={{
+          width: 110,
+          height: 110,
+          borderRadius: 80,
+        }}
+      />
+      )
+    } else {
+      const decodedString = convertBase64ToString(imageurl)
+      return (
+        <Image
+        source={{uri: decodedString}}
+        resizeMode="cover"
+        style={{
+          width: 110,
+          height: 110,
+          borderRadius: 80,
+        }}
+      />
+      )
+    }
+  }
+
+  const handleSubmit =async ()=>{
+    const userData = JSON.parse(await AsyncStorage.getItem("userData"))
+    const headers = {
+      Authorization: `Bearer ${userData.token}`, // Include the token in the Authorization header
+    }
+
+    profile.image = imageConfirmed;
+    try {
+      const res = await axios.patch(PROFILE+profile.profileId +"/profile",{
+        ...profile,
+      }, { headers })
+      if (res.data) {
+        Alert.alert("Success", "Your Profile has been updated")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <View className="w-full h-full bg-white">
@@ -118,7 +267,7 @@ useEffect(() => {
         <Wrap justify="between">
           <AntDesign name="back" size={24} color="black" />
           <Text className="center pl-9 font-bold text-lg">Edit Profile</Text>
-          <Button className="text-lg text-white">Save</Button>
+          <Button className="text-lg text-white" onPress={handleSubmit}>Save</Button>
         </Wrap>
         <View
           style={{
@@ -128,15 +277,23 @@ useEffect(() => {
             marginTop: 15,
           }}
         >
-          <Image
-            source={require("../../assets/Images/person.png")}
-            resizeMode="contain"
-            style={{
-              width: 110,
-              height: 110,
-              borderRadius: 80,
-            }}
-          />
+           {image ? (
+             <Image
+             source={{uri: image}}
+             resizeMode="cover"
+             style={{
+               width: 110,
+               height: 110,
+               borderRadius: 80,
+             }}
+             />
+        ) : (
+          renderImage(profile.image)
+        )}
+          {/* {image && <Image source={{uri: image}} />} */}
+          {/* <TouchableOpacity onPress={pickImage}>
+         
+          <TouchableOpacity onPress={pickImage}>
           <Avatar
             icon={
               <MaterialCommunityIcons
@@ -153,7 +310,11 @@ useEffect(() => {
               left: 25,
               bottom: 22,
             }}
-          />
+         />
+            </TouchableOpacity>
+        
+            </TouchableOpacity> */}
+           
         </View>
       </View>
       <View className="grid-rows-3  ">
@@ -162,100 +323,56 @@ useEffect(() => {
         <TextInput
           className="bg-white "
           label="Username"
-          value="Sapna"
+          name="username"
+          value={profile.username}
           underlineColor="#dcdcdc"
+          onChangeText={handleUsername}
         />
         </View>
         <View>
         <TextInput
           className="bg-white"
           label="Email"
-          value="sapna@gmail.com"
+          name="email"
+          value={profile.email}
           underlineColor="#dcdcdc"
+          onChangeText={handleEmail}
         />
         </View>
         <View>
         <TextInput
           className="bg-white"
           label="First Name"
-          value="Sapna"
+          name="firstName"
+          value={profile.firstName}
           underlineColor="#dcdcdc"
+          onChangeText={handleFirstName}
         />
         </View>
         <View>
         <TextInput
           className="bg-white"
           label="Last Name"
-          value="Baniya"
+          name="lastName"
+          value={profile.lastName}
           underlineColor="#dcdcdc"
+          onChangeText={handleLastName}
         />
         </View>
         <View>
         <Wrap justify="start" style={{borderBottomColor:"#dcdcdc", borderBottomWidth:1}} >
         <Text className="pt-3">Gender:</Text>
-        <RadioButton.Group  value="first">
+        <RadioButton.Group  value={profile.gender} onValueChange={(value) => handleGender(value)} name="gender">
           <Wrap justify="start">
-      <RadioButton.Item label="Male" value="first" />
-      <RadioButton.Item label="Female" value="second" />
+      <RadioButton.Item label="Male" value="male" />
+      <RadioButton.Item label="Female" value="female" />
       </Wrap>
     </RadioButton.Group>
         </Wrap>
         </View>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap:14 }}>
 
-        {/* <SelectDropdown dropdownStyle={{height:300, width:'80%'}} buttonStyle={{width:'90%'}} 
-  data={allData}
-  onSelect={(selectedItem, index) => {
-    handleSelect(selectedItem,index+1);
-  }}
- defaultButtonText="Select a Country .."
-  buttonTextAfterSelection={(selectedItem, index) => {
-    // text represented after item is selected
-    // if data array is an array of objects then return selectedItem.property to render after item is selected
-    return selectedItem
-  }}
-  rowTextForSelection={(item, index) => {
-    // text represented for each item in dropdown
-    // if data array is an array of objects then return item.property to represent item in dropdown
-    return item
-  }}
-/>
-
-<SelectDropdown dropdownStyle={{height:300, width:'80%'}} disabled buttonStyle={{width:'90%'}} 
-  data={allData}
-  onSelect={(selectedItem, index) => {
-    console.log(selectedItem, index+1)
-  }}
- defaultButtonText="Select a State .."
-  buttonTextAfterSelection={(selectedItem, index) => {
-    // text represented after item is selected
-    // if data array is an array of objects then return selectedItem.property to render after item is selected
-    return selectedItem
-  }}
-  rowTextForSelection={(item, index) => {
-    // text represented for each item in dropdown
-    // if data array is an array of objects then return item.property to represent item in dropdown
-    return item
-  }}
-/>
-
-<SelectDropdown dropdownStyle={{height:300, width:'80%'}} buttonStyle={{width:'90%'}} disabled
-  data={allData}
-  onSelect={(selectedItem, index) => {
-    console.log(selectedItem, index+1)
-  }}
- defaultButtonText="Select a City .."
-  buttonTextAfterSelection={(selectedItem, index) => {
-    // text represented after item is selected
-    // if data array is an array of objects then return selectedItem.property to render after item is selected
-    return selectedItem
-  }}
-  rowTextForSelection={(item, index) => {
-    // text represented for each item in dropdown
-    // if data array is an array of objects then return item.property to represent item in dropdown
-    return item
-  }}
-/> */}
+   
 <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: 'blue' }, {width:'100%'}]}
           placeholderStyle={styles.placeholderStyle}
@@ -269,7 +386,7 @@ useEffect(() => {
           valueField="value"
           placeholder={!isFocus ? 'Select Country' : '...'}
           searchPlaceholder="Search..."
-          value={country}
+          value={profile.country}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
@@ -300,12 +417,12 @@ useEffect(() => {
           valueField="value"
           placeholder={!isFocus ? 'Select State' : '...'}
           searchPlaceholder="Search..."
-          value={state}
+          value={profile.state}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
             setState(item.value);
-            handleCity(country,item.value);
+            handleCity(profile.country,item.value);
             setIsFocus(false);
           }}
           renderLeftIcon={() => (
@@ -331,7 +448,7 @@ useEffect(() => {
           valueField="value"
           placeholder={!isFocus ? 'Select City' : '...'}
           searchPlaceholder="Search..."
-          value={city}
+          value={profile.city}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
@@ -357,8 +474,8 @@ useEffect(() => {
         numberOfLines={3}
         placeholder="Write about yourself ..."
         maxLength={40}
-        onChangeText={text => onChangeText(text)}
-        value=''
+        onChangeText={ handleDescription}
+        value={profile.description}
         style={{padding: 10}}
       />
       </View>
@@ -369,6 +486,11 @@ useEffect(() => {
 }
 export default editProfile
 
+function convertBase64ToString(base64) {
+  const bytes = Buffer.from(base64, "base64")
+  const decodedString = bytes.toString("utf8")
+  return decodedString
+}
 
 const styles = StyleSheet.create({
   container: {
