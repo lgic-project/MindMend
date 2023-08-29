@@ -12,6 +12,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#FAFAFA",
 
     },
+    heading: {
+        width: "100%",
+        height: verticalScale(60),
+        paddingHorizontal: moderateScale(10),
+        backgroundColor: "#FACE51",
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center"
+    },
     groups: {
         fontSize: 20,
         fontWeight: "400",
