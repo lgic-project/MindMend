@@ -70,8 +70,10 @@ const FirstRoute = () => {
 const SecondRoute = () => {
   const router = useRouter()
   const [friends, setFriends] = useState([]);
-  const handleprofile = () => {
-    router.push(`userprofile`)
+  const handleprofile = async (id) => {
+    await AsyncStorage.setItem("friendId", JSON.stringify(id))
+
+    router.push(`addfriend`)
   }
 
   const renderImage = (imageurl) => {
@@ -116,7 +118,7 @@ useEffect(()=>{
       <View>
       {friends.map((column, index) => (
 
-        <TouchableOpacity key={index} style={styles.friend} onPress={handleprofile}>
+        <TouchableOpacity key={index} style={styles.friend} onPress={()=>handleprofile(column.friendId)}>
           <View style={styles.imgtext}>
             <TouchableOpacity>
            { renderImage(column.friendImage)}
