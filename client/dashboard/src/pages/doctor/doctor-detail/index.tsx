@@ -3,10 +3,87 @@ import { Box, CardContent, CardHeader, Rating, Typography } from "@mui/material"
 import { Avatar, Button, Card, Grid, Row, Text } from "@nextui-org/react"
 import ApexChartWrapper from "src/@core/styles/libs/react-apexcharts"
 import EastIcon from "@mui/icons-material/East"
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { useRouter } from 'next/router'
+import axios from "axios"
+import { DOCTOR_ROUTE } from "src/configs/appRoutes"
 
 const DoctorDetail = () => {
+  const router = useRouter()
+
   const [value, setValue] = React.useState<number | null>(2)
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+  const [rating, setRating] = useState()
+
+  const renderCell = (value) => {
+    if (value == "") {
+
+      return (
+
+        <Card.Image
+          src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"}
+          objectFit="cover"
+          width="100%"
+          height={380}
+          alt="doctor"
+        />
+
+      )
+    }
+
+    else {
+      const base64String = value // Base64 encoded string
+      const regularString = convertBase64ToString(base64String)
+
+      return (
+
+        <Card.Image
+          src={regularString}
+          objectFit="cover"
+          width="100%"
+          height={380}
+          alt="doctor"
+        />
+
+      )
+    }
+
+  }
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const id = JSON.parse(localStorage.getItem('doctorId'))
+
+        const res = await axios.get(DOCTOR_ROUTE + "/" + id, { headers })
+
+        // setLoading(true);
+        setData(res.data)
+        setRating(res.data.rating)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
 
   return (
     <ApexChartWrapper>
@@ -14,13 +91,7 @@ const DoctorDetail = () => {
         <Grid item xs={12} md={4} style={{ height: 450 }}>
           <Card isPressable>
             <Card.Body css={{ p: 0 }}>
-              <Card.Image
-                src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"}
-                objectFit="cover"
-                width="100%"
-                height={380}
-                alt="doctor"
-              />
+              {renderCell(data.encodedImage)}
             </Card.Body>
             <Card.Footer css={{ justifyItems: "flex-start" }}>
               <Row wrap="wrap" justify="center" style={{ gap: 9 }} align="center">
@@ -31,17 +102,16 @@ const DoctorDetail = () => {
             </Card.Footer>
           </Card>
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid key={data.id} item xs={12} md={7}>
           <Card css={{ padding: 30, paddingLeft: 40, paddingRight: 40 }}>
             <Card.Header style={{ display: 'grid', gap: 5 }} >
 
-              <Text b size='$3xl'>Dr. Ram Charan</Text>
-              <Text b size='$xl' color="primary">Neurologist</Text>
+              <Text b size='$3xl'>{data.doctorName}</Text>
+              <Text b size='$xl' color="primary">{data.doctorCategoryName}</Text>
             </Card.Header>
             <Card.Body css={{ marginTop: -20, gap: 5 }}>
               <Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
+                {data.description}
               </Text>
               <Grid.Container spacing={4} style={{ gap: 25 }} >
                 <Grid item xs={12} md={12}>
@@ -55,35 +125,14 @@ const DoctorDetail = () => {
                           <Box width='100%'>
                             <Row justify="flex">
                               <EastIcon fontSize='small' sx={{ marginTop: 4 }} />
-                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>4 years</Text>
+                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>{data.experience}</Text>
 
                             </Row>
                             <Card.Divider />
 
                           </Box>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Box width='100%'>
-                            <Row justify="flex">
-                              <EastIcon fontSize='small' sx={{ marginTop: 4 }} />
-                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>4 years</Text>
 
-                            </Row>
-                            <Card.Divider />
-
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box width='100%'>
-                            <Row justify="flex">
-                              <EastIcon fontSize='small' sx={{ marginTop: 4 }} />
-                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>4 years</Text>
-
-                            </Row>
-                            <Card.Divider />
-
-                          </Box>
-                        </Grid>
                       </Grid.Container>
 
                     </Grid>
@@ -103,7 +152,7 @@ const DoctorDetail = () => {
                           <Box width='100%'>
                             <Row justify="flex">
                               <EastIcon fontSize='small' sx={{ marginTop: 4 }} />
-                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>4 years</Text>
+                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>{data.street}, {data.city}, {data.state}, {data.country}</Text>
 
                             </Row>
                             <Card.Divider />
@@ -129,7 +178,7 @@ const DoctorDetail = () => {
                           <Box width='100%'>
                             <Row justify="flex">
                               <EastIcon fontSize='small' sx={{ marginTop: 4 }} />
-                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>9832847236</Text>
+                              <Text weight='normal' size='$sm' style={{ marginLeft: 8, width: '100%' }}>{data.phone}</Text>
 
                             </Row>
                             <Card.Divider />
@@ -204,7 +253,7 @@ const DoctorDetail = () => {
                 >
                   <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ display: 'flex' }}>
-                      <Typography sx={{ mr: 0.5, fontWeight: 400, letterSpacing: '0.25px' }}>Sunday-Thursday</Typography>
+                      <Typography sx={{ mr: 0.5, fontWeight: 400, letterSpacing: '0.25px' }}>{data.workingDay}</Typography>
 
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
@@ -218,7 +267,7 @@ const DoctorDetail = () => {
                   </Box>
                   <Box sx={{ display: 'flex', textAlign: 'end', flexDirection: 'column' }}>
                     <Typography color='teal' sx={{ fontWeight: 600, fontSize: '0.875rem', lineHeight: 1.72, letterSpacing: '0.22px' }}>
-                      10 am - 16 am
+                      {data.workingHours} hours
                     </Typography>
 
                   </Box>
@@ -261,10 +310,8 @@ const DoctorDetail = () => {
                   <Box sx={{ display: 'flex', textAlign: 'end', flexDirection: 'column' }}>
                     <Rating
                       name="simple-controlled"
-                      value={value}
-                      onChange={(event, newValue) => {
-                        setValue(newValue)
-                      }}
+                      value={parseInt(data.rating)}
+
                     />
 
 
@@ -282,3 +329,14 @@ const DoctorDetail = () => {
 }
 
 export default DoctorDetail
+function convertBase64ToString(base64) {
+  try {
+    const decoded = atob(base64)
+
+    return decoded
+  } catch (error) {
+    console.error('Error decoding Base64:', error)
+
+  }
+
+}

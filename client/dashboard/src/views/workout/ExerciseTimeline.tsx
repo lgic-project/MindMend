@@ -1,6 +1,6 @@
 // ** React Imports
 import { ReactNode } from 'react'
-import * as React from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 
 // ** MUI Imports
@@ -31,6 +31,10 @@ import BoltIcon from '@mui/icons-material/Bolt'
 
 // ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import { WORKOUT_ROUTE } from 'src/configs/appRoutes'
+
 
 interface DataType {
   title: string
@@ -97,6 +101,45 @@ const data: DataType[] = [
 ]
 
 const ExerciseList = () => {
+  const router = useRouter()
+
+
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+
+        const id = JSON.parse(localStorage.getItem('exerciseId'))
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const res = await axios.get(WORKOUT_ROUTE + "/" + id, { headers })
+
+        // setLoading(true);
+        setData(res.data)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
+
   return (
     <Card sx={{ borderRadius: '40px' }}>
       <CardHeader
@@ -115,7 +158,7 @@ const ExerciseList = () => {
         >
           <TimelineItem>
             <TimelineOppositeContent color="textSecondary">
-              09:30 am
+
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot />
@@ -123,20 +166,12 @@ const ExerciseList = () => {
             </TimelineSeparator>
             <TimelineContent sx={{ py: '12px', px: 2 }}>
               <Typography variant="h6" component="span">
-                Eat
+                Features
               </Typography>
-              <Typography>Because you need strength</Typography>
+              <Typography>{data.description}</Typography>
             </TimelineContent>
           </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent color="textSecondary">
-              10:00 am
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-            </TimelineSeparator>
-            <TimelineContent>Code</TimelineContent>
-          </TimelineItem>
+
         </Timeline>
 
       </CardContent>
