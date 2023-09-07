@@ -83,7 +83,7 @@ const ExerciseVideo = () => {
       return (
 
         <Image
-          src="/images/avatars/download.jpeg"
+          src="/images/download.jpeg"
           alt="Default Image"
           style={{ borderRadius: '50px' }}
 

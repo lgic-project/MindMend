@@ -43,7 +43,7 @@ export default DoctorList = ({ response }) => {
       <View style={[styles.doccard, { width: "100%" }]}>
         <ScrollView horizontal contentContainerStyle={{ alignItems: "center" }}>
           {response.map((column, index) => (
-            <TouchableOpacity style={[styles.doc1view, { width: 200 }]}>
+            <TouchableOpacity key={index} style={[styles.doc1view, { width: 200 }]}>
               {renderDoctorCard(column)}
             </TouchableOpacity>
           ))}

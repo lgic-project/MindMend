@@ -24,9 +24,14 @@ console.log(userInfo)
 
   return [
     {
-      title: 'Dashboard',
+      title: 'Login',
       icon: HomeOutline,
       path: '/'
+    },
+    {
+      title: 'Dashboard',
+      icon: HomeOutline,
+      path: '/dashboard'
     },
 
     isAdmin && { sectionTitle: 'Admin' } ,

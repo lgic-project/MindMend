@@ -124,7 +124,7 @@ const StatisticsCard = () => {
 
       return (
 
-        <img src="/images/avatars/download.jpeg" alt='workout' width='50' height='50' style={{ borderRadius: '15px' }} />
+        <img src="/images/download.jpeg" alt='workout' width='50' height='50' style={{ borderRadius: '15px' }} />
 
 
       )

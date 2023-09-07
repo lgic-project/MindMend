@@ -91,7 +91,7 @@ const ExerciseList = () => {
         <Avatar
           squared
           size="xl"
-          src="/images/avatars/download.jpeg" />
+          src="/images/download.jpeg" />
 
       )
     }

@@ -47,7 +47,7 @@ const UserDropdown = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'))
     setData(userData)
-  })
+  }, [])
 
   const handleLogout = async (event: React.FormEvent) => {
     localStorage.clear()

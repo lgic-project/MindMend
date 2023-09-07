@@ -57,7 +57,7 @@ const TabInfo = () => {
 
   })
 
-  const id = 1
+
 
 
 
@@ -72,10 +72,9 @@ const TabInfo = () => {
     const GetProfileDataList = async () => {
       console.log(PROFILE_ROUTE)
       try {
-        const res = await axios.get(PROFILE_ROUTE + "/" + id, { headers })
+        const res = await axios.get(PROFILE_ROUTE + "/" + userData.id, { headers })
 
         // setLoading(true);
-        console.log(res)
         setInfoData(res)
 
 
@@ -100,9 +99,9 @@ const TabInfo = () => {
     }
 
     event.preventDefault()
+    console.log(userData)
 
-
-    const result = await axios.patch(PROFILE_ROUTE + '/' + id + "/profile", infoData, { headers })
+    const result = await axios.patch(PROFILE_ROUTE + '/' + userData.id + "/profile", infoData, { headers })
       .then((res) => console.log(res))
       .catch((error) => console.log(error))
 
