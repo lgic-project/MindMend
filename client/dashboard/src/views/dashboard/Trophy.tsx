@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { MOODCATEGORY_ROUTE, MOOD_ROUTE } from 'src/configs/appRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
+
 import NextUILoadingComponent from 'src/layouts/components/loading'
 import React from 'react'
 
@@ -128,6 +129,7 @@ const Trophy = ({ sendDataToMain }) => {
 
                     >  {item.name}
                     </Typography>
+
                   </Grid>
                 </Grid.Container>
 

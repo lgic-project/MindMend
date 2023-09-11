@@ -24,9 +24,14 @@ console.log(userInfo)
 
   return [
     {
-      title: 'Dashboard',
+      title: 'Login',
       icon: HomeOutline,
       path: '/'
+    },
+    {
+      title: 'Dashboard',
+      icon: HomeOutline,
+      path: '/dashboard'
     },
 
     isAdmin && { sectionTitle: 'Admin' } ,
@@ -80,6 +85,12 @@ console.log(userInfo)
       openInNewTab: true
     },
     isAdmin && {
+      title: 'Workout',
+      icon: FitnessCenterIcon,
+      path: '/workout/workout',
+      openInNewTab: true
+    },
+    isAdmin && {
       title: 'Role Permission',
       icon: MoodIcon,
       path: '/role-permission',
@@ -115,11 +126,11 @@ console.log(userInfo)
     isUser || isAdmin &&{
       sectionTitle: 'Messenger'
     },
-    isUser || isAdmin && {
-      title: 'Chat',
-      icon: NewspaperIcon,
-      path: '/chat'
-    },
+    // isUser || isAdmin && {
+    //   title: 'Chat',
+    //   icon: NewspaperIcon,
+    //   path: '/chat'
+    // },
 
     // {
     //   title: 'Typography',

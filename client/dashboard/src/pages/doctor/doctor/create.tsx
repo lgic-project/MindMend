@@ -139,24 +139,7 @@ function CreateDoctor() {
     Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
   }
 
-  const GetDoctorCategoryList = async () => {
-    await axios.get(DOCTORCATEGORY_ROUTE + "/active", { headers }).then((res) => {
-      // setLoading(true);
-      setData(res.data)
 
-
-
-
-    })
-      .catch((res) => {
-
-        console.log(res.response)
-      })
-
-
-
-  }
-  GetDoctorCategoryList()
 
   const handleSubmit = async (event: React.FormEvent) => {
     // event.preventDefault()

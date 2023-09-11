@@ -99,6 +99,7 @@ const StatisticsCard = () => {
         }
         const res = await axios.get(WORKOUT_ROUTE + "/active", { headers })
         // setLoading(true);
+        console.log(res.data)
         setData(res.data)
         setLoading(false)
 
@@ -118,15 +119,28 @@ const StatisticsCard = () => {
   }, [])
 
   const renderCell = (value) => {
-    const base64String = value // Base64 encoded string
-    const regularString = convertBase64ToString(base64String)
+    if (value == "") {
+      console.log(value)
 
-    return (
+      return (
 
-      <img src={regularString} alt='workout' width='33' height='22' />
+        <img src="/images/download.jpeg" alt='workout' width='50' height='50' style={{ borderRadius: '15px' }} />
 
 
-    )
+      )
+    }
+    else {
+      const base64String = value // Base64 encoded string
+      const regularString = convertBase64ToString(base64String)
+
+      return (
+
+        <img src={regularString} alt='workout' width='33' height='22' />
+
+
+      )
+    }
+
   }
 
   return (
@@ -148,7 +162,7 @@ const StatisticsCard = () => {
               }}
             />
             <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-              {slicedData.map((item: DataType, index: number) => {
+              {slicedData.map((item, index: number) => {
                 return (
                   <Box
                     key={item.id}
@@ -157,7 +171,11 @@ const StatisticsCard = () => {
                         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                       }, mb: index !== slicedData.length - 1 ? 6 : 0
                     }}
-                    onClick={() => router.push("/workout/workout-detail")}
+                    onClick={() => {
+                      const userDataJSON = JSON.stringify(item.id)
+                      localStorage.setItem('exerciseId', userDataJSON)
+                      router.push(`/workout/workout-detail`)
+                    }}
                   >
                     <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
                       <React.Fragment key={index}>
@@ -193,7 +211,6 @@ const StatisticsCard = () => {
   )
 }
 export default StatisticsCard
-
 
 function convertBase64ToString(base64) {
   return atob(base64)

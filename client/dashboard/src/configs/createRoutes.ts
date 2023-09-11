@@ -6,6 +6,8 @@ export const CREATE_DOCTOR_CATEGORY_ROUTE = `/doctor/doctor-category/create`;
 export const CREATE_MOOD_ROUTE = `/mood/mood/create`;
 export const CREATE_MOOD_CATEGORY_ROUTE = `/mood/mood-category/create`;
 export const CREATE_ROLE_PERMISSION_ROUTE = `/role-permission/create`;
+export const CREATE_WORKOUT_ROUTE = `/workout/workout/create`;
+
 
 
 

@@ -54,7 +54,7 @@ export default ExerciseList = ({ response }) => {
       <View style={[styles.excard, { width: "100%" }]}>
         <ScrollView horizontal contentContainerStyle={{ alignItems: "center" }}>
           {response.map((column, index) => (
-            <TouchableOpacity style={[styles.doc1view, { width: 200 }]}>
+            <TouchableOpacity key={index} style={[styles.doc1view, { width: 200 }]}>
               {renderExerciseCard(column)}
             </TouchableOpacity>
           ))}
