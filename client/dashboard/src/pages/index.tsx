@@ -21,6 +21,12 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth"
+import { auth, database } from "../configs/firebase"
+import { collection, addDoc, setDoc, doc } from "firebase/firestore"
 
 // ** Icons Imports
 import Google from 'mdi-material-ui/Google'
@@ -98,7 +104,15 @@ const LoginPage = () => {
 
 
     await authService.login(loginReq).then(res => {
-      console.log(res)
+
+      signInWithEmailAndPassword(auth, res.email, initialValues.password)
+        .then(async (user) => {
+          await localStorage.setItem(
+            "firebaseUserId",
+            JSON.stringify(user.user.uid)
+          )
+        })
+        .catch((err) => console.log(err))
 
       localStorage.setItem('userData', JSON.stringify(res))
     })
