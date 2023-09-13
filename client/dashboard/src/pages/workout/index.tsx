@@ -39,6 +39,7 @@ const WorkoutList = () => {
         const res = await axios.get(WORKOUT_ROUTE + "/active", { headers })
         // setLoading(true);
         setData(res.data)
+        console.log(res.data)
         setLoading(false)
 
 
@@ -60,7 +61,7 @@ const WorkoutList = () => {
     const base64String = value // Base64 encoded string
     const regularString = convertBase64ToString(base64String)
 
-    if (value == null) {
+    if (value == null || value == "") {
       return (
 
         <Card.Image
@@ -81,7 +82,7 @@ const WorkoutList = () => {
           width="100%"
           height="100%"
           objectFit="cover"
-          alt="Workout"
+          alt="exercise"
         />
 
       )
@@ -134,14 +135,18 @@ const WorkoutList = () => {
           loading ? (
             <NextUILoadingComponent />
           ) : (
-            <Grid item xs={12} md={12} style={{ marginTop: 26 }} onClick={handleGridClick}>
+            <Grid item xs={12} md={12} style={{ marginTop: 26 }} >
               <Grid.Container spacing={3} gap={1}>
 
                 {data.map((item: DataType, index: number) => {
 
                   return (
-                    <Grid item key={item.id} xs={6} md={3}>
-                      <Card css={{ w: "100%", h: "350px" }}>
+                    <Grid item key={item.id} xs={6} md={3} onClick={() => {
+                      const userDataJSON = JSON.stringify(item.id)
+                      localStorage.setItem('exerciseId', userDataJSON)
+                      router.push(`/workout/workout-detail`)
+                    }}>
+                      <Card css={{ w: "100%", h: "350px" }} >
                         <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
                           <Col>
                             <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">

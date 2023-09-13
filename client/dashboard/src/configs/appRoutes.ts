@@ -10,7 +10,7 @@ export const DISCOVER_ROUTE = `${API_BASE_URL}/discover`;
 export const ROLE_PERMISSION_ROUTE = `${API_BASE_URL}/v1/role_permission`;
 export const ROLE_ROUTE = `${API_BASE_URL}/v1/role_permission/roles`;
 export const API_ROUTE = `${API_BASE_URL}/apiList`;
-export const WORKOUT_ROUTE = `${API_BASE_URL}/workout`;
+export const WORKOUT_ROUTE = `${API_BASE_URL}/exercise`;
 
 
 

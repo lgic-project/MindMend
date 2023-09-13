@@ -6,6 +6,7 @@ export default {
     web: {
       bundler: "metro",
     },
+    
     android: {
       softwareKeyboardLayoutMode: "pan",
       adaptiveIcon: {

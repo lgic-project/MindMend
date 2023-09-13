@@ -15,6 +15,11 @@ import {
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import StarIcon from '@mui/icons-material/Star'
 import TimerIcon from '@mui/icons-material/Timer'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { WORKOUT_ROUTE } from 'src/configs/appRoutes'
+import { useRouter } from 'next/router'
+
 
 // Styled component for the triangle shaped background image
 const TriangleImg = styled('img')({
@@ -34,20 +39,84 @@ const TrophyImg = styled('img')({
 
 const ExerciseVideo = () => {
   // ** Hook
+  const router = useRouter()
+
   const theme = useTheme()
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+        const id = JSON.parse(localStorage.getItem('exerciseId'))
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const res = await axios.get(WORKOUT_ROUTE + "/" + id, { headers })
+
+        // setLoading(true);
+        setData(res.data)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
+
+  const renderCell = (value) => {
+    if (value == "") {
+
+      return (
+
+        <Image
+          src="/images/download.jpeg"
+          alt="Default Image"
+          style={{ borderRadius: '50px' }}
+
+        />
+
+      )
+    }
+
+    // else {
+    //   const base64String = value // Base64 encoded string
+    //   const regularString = convertBase64ToString(base64String)
+
+    //   return (
+
+    //     <Image
+    //       src={regularString}
+    //       alt="Default Image"
+    //       width="100%"
+    //       style={{ borderRadius: '50px' }}
+
+    //     />
+
+    //   )
+    // }
+
+  }
 
   const imageSrc = theme.palette.mode === 'light' ? 'triangle-light.png' : 'triangle-dark.png'
 
   return (
     <Card sx={{ position: 'relative', borderRadius: '50px' }}>
+      {renderCell(data.encodedImage)}
 
-      <Image
-        src="https://github.com/nextui-org/nextui/blob/next/apps/docs/public/nextui-banner.jpeg?raw=true"
-        alt="Default Image"
-        width="100%"
-        style={{ borderRadius: '50px' }}
-
-      />
       <CardContent sx={{ paddingX: 25, paddingY: 10, marginBottom: 5 }}>
         <Box
           display={{ xs: 'block', md: 'flex' }}
@@ -78,7 +147,7 @@ const ExerciseVideo = () => {
             >
               <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>Stretching</Typography>
+                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>{data.exerciseCategoryTitle}</Typography>
                 </Box>
                 <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
                   Exercise
@@ -110,7 +179,7 @@ const ExerciseVideo = () => {
             >
               <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>Hard</Typography>
+                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>{data.difficultyLevel}</Typography>
                 </Box>
                 <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
                   Difficulty
@@ -143,7 +212,7 @@ const ExerciseVideo = () => {
             >
               <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>45sec</Typography>
+                  <Typography sx={{ mr: 0.5, fontWeight: 700, letterSpacing: '0.25px' }}>{data.timeDuration}</Typography>
                 </Box>
                 <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
                   Total time
@@ -159,3 +228,6 @@ const ExerciseVideo = () => {
 }
 
 export default ExerciseVideo
+function convertBase64ToString(base64) {
+  return atob(base64)
+}

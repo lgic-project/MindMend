@@ -39,7 +39,7 @@ const profilepage = () => {
       icon: <Ionicons name="person" size={20} color="#98E8B1" />,
     },
     {
-      title: "Badges and Trophies",
+      title: "Friends",
       icon: <MaterialCommunityIcons name="trophy" size={20} color="#E89898" />,
     },
     {
@@ -64,7 +64,7 @@ const profilepage = () => {
     }
     const id = userData.id
     try {
-      const res = await axios.get(PROFILE + "4", { headers })
+      const res = await axios.get(PROFILE + userData.id, { headers })
       setProfileData(res.data)
       setName(res.data.firstName + " " + res.data.lastName)
       setAddress(res.data.city)
@@ -148,7 +148,6 @@ const profilepage = () => {
   }
 
   const handleRoute = async (item) => {
-    console.log(item)
     if (item === "Groups") {
       await AsyncStorage.setItem("groupScreen", JSON.stringify(2))
       navigation.navigate("Community")

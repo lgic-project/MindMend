@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -16,10 +16,13 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import TimerIcon from '@mui/icons-material/Timer'
 import BoltIcon from '@mui/icons-material/Bolt'
+import { useRouter } from 'next/router'
 
 
 // ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
+import axios from 'axios'
+import { WORKOUT_ROUTE } from 'src/configs/appRoutes'
 
 interface DataType {
   title: string
@@ -32,60 +35,87 @@ interface DataType {
   avatarColor: ThemeColor
 }
 
-const data: DataType[] = [
-  {
-    sales: '894k',
-    trendDir: 'up',
-    subtitle: 'USA',
-    title: '$8,656k',
-    avatarText: 'US',
-    trendNumber: '25.8%',
-    avatarColor: 'success',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '645k',
-    subtitle: 'UK',
-    trendDir: 'down',
-    title: '$2,415k',
-    avatarText: 'UK',
-    trendNumber: '6.2%',
-    avatarColor: 'error',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '148k',
-    title: '$865k',
-    trendDir: 'up',
-    avatarText: 'IN',
-    subtitle: 'India',
-    trendNumber: '12.4%',
-    avatarColor: 'warning',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '86k',
-    title: '$745k',
-    trendDir: 'down',
-    avatarText: 'JA',
-    subtitle: 'Japan',
-    trendNumber: '11.9%',
-    avatarColor: 'secondary',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '42k',
-    title: '$45k',
-    trendDir: 'up',
-    avatarText: 'KO',
-    subtitle: 'Korea',
-    trendNumber: '16.2%',
-    avatarColor: 'error',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  }
-]
+
 
 const ExerciseList = () => {
+
+  const router = useRouter()
+
+
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState([])
+
+  useEffect(() => {
+
+
+    const GetWorkoutList = async () => {
+      try {
+
+        const userData = JSON.parse(localStorage.getItem('userData'))
+        const headers = {
+          Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+        }
+        const res = await axios.get(WORKOUT_ROUTE, { headers })
+
+        // setLoading(true);
+        setData(res.data)
+        setLoading(false)
+
+
+      } catch (error) {
+        setLoading(false)
+        setError(error)
+      }
+
+
+
+    }
+    GetWorkoutList()
+
+
+
+  }, [])
+
+  const renderCell = (value) => {
+    if (value == "") {
+
+      return (
+
+        // <Image
+        //   src="/images/avatars/download.jpeg"
+        //   alt="Default Image"
+        //   style={{ borderRadius: '50px' }}
+
+        // />
+        <Avatar
+          squared
+          size="xl"
+          src="/images/download.jpeg" />
+
+      )
+    }
+
+    // else {
+    //   const base64String = value // Base64 encoded string
+    //   const regularString = convertBase64ToString(base64String)
+
+    //   return (
+
+    //     <Image
+    //       src={regularString}
+    //       alt="Default Image"
+    //       width="100%"
+    //       style={{ borderRadius: '50px' }}
+
+    //     />
+
+    //   )
+    // }
+
+  }
+
+
   return (
     <Card sx={{ borderRadius: '40px' }}>
       <CardHeader
@@ -94,21 +124,27 @@ const ExerciseList = () => {
 
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-        {data.map((item: DataType, index: number) => {
+        {data.map((item, index: number) => {
           return (
             <Box
-              key={item.title}
+              key={index}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
                 ...(index !== data.length - 1 ? { mb: 5.875 } : {})
               }}
+              onClick={() => {
+                window.location.reload()
+                const userDataJSON = JSON.stringify(item.id)
+                localStorage.setItem('exerciseId', userDataJSON)
+                router.push(`/workout/workout-detail`)
+
+
+
+              }}
             >
-              <Avatar
-                squared
-                size="xl"
-                src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
+              {renderCell(item.encodedImage)}
 
               <Box
                 sx={{
@@ -121,7 +157,7 @@ const ExerciseList = () => {
               >
                 <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                   <Box sx={{ display: 'flex' }}>
-                    <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}>Abdominal muscles</Typography>
+                    <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}>{item.title}</Typography>
 
                   </Box>
                   <Box sx={{ display: 'flex', gap: 1 }}>
@@ -132,11 +168,11 @@ const ExerciseList = () => {
 
                     <TimerIcon sx={{ width: 18 }} />
                     <Typography variant='caption' sx={{ lineHeight: 2 }}>
-                      10 min
+                      {item.timeDuration}
                     </Typography>
                     <BoltIcon />
                     <Typography variant='caption' sx={{ lineHeight: 2 }}>
-                      {item.subtitle}
+                      {item.exerciseCategoryTitle}
                     </Typography>
                   </Box>
 
