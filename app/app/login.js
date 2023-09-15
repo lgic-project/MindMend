@@ -1,28 +1,17 @@
-import {
-  View,
-  Text,
-  useWindowDimensions,
-  TextInput,
-  TouchableOpacity,
-  ToastAndroid,
-  Alert,
-} from "react-native"
+import { View, Text, useWindowDimensions, TextInput, TouchableOpacity, ToastAndroid } from "react-native"
 import { TabView, SceneMap, TabBar } from "react-native-tab-view"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import styles from "../style/loginstyle"
 import { AntDesign } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { LOGIN, REGISTER } from "../utils/appRoutes"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth"
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"
 import { auth, database } from "../utils/firebase"
-import { collection, addDoc, setDoc, doc } from "firebase/firestore"
+import { collection, setDoc, doc } from "firebase/firestore"
 import * as Yup from "yup"
-import { Formik, Form, Field, ErrorMessage } from "formik"
+import { Formik } from "formik"
 
 // State interface
 const State = {
@@ -239,7 +228,7 @@ const SecondRoute = () => {
         // const { errors, touched, isValid, dirty } = values
         return (
           <View style={styles.secondroute}>
-            <View style={styles.ipcontainer}>
+            <View style={styles.signupcontainer}>
               <TextInput
                 style={styles.input}
                 placeholder="First Name"

@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 20,
   },
+  signupcontainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 15,
+  },
   arrowmain: {
     width: 100,
     height: 100,
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   secondroute: {
-    height: verticalScale(390),
+    height: verticalScale(420),
     backgroundColor: "#FFFFFF",
     padding: 20,
     borderBottomStartRadius: 25,
