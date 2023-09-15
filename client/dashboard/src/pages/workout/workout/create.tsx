@@ -4,10 +4,11 @@ import { Modal, Button, Text, Radio, Textarea, Input, Dropdown } from '@nextui-o
 import { useRouter } from 'next/router'
 import { PhotoCamera } from '@mui/icons-material'
 import axios from 'axios'
-import { WORKOUT_ROUTE } from 'src/configs/appRoutes'
+import { EXERCISE_LEVEL_ROUTE, WORKOUT_ROUTE } from 'src/configs/appRoutes'
 import ErrorAlert from 'src/content/ErrorAlert'
 import InfoAlert from 'src/content/InfoAlert'
 import SuccessAlert from 'src/content/SuccessAlert'
+import { ConsoleNetwork } from 'mdi-material-ui'
 
 function CreateDiscover() {
   const [visible, setVisible] = React.useState(false)
@@ -18,14 +19,18 @@ function CreateDiscover() {
   const { visible: queryVisible } = router.query
   const [error, setError] = useState<Error | null>(null)
   const [data, setData] = useState<Number | null>(null)
-  const [selectedValue, setSelectedValue] = useState("Workout Category")
+  const [selectedValue, setSelectedValue] = useState("Exercise Category")
+  const [selectedLevelValue, setSelectedLevelValue] = useState("Difficulty Level")
+
   const [workoutData, setWorkoutData] = useState([])
+  const [difficultyData, setDifficultyData] = useState([])
+
 
 
 
   const [discoverData, setDiscoverData] = useState<any>({
     exerciseTitle: '',
-    difficultyLevelId: '',
+    difficultyLevelId: null,
     description: '',
     photo: '',
     lastCreatedBy: '',
@@ -51,6 +56,19 @@ function CreateDiscover() {
     await axios.get(WORKOUT_ROUTE + "/category", { headers }).then((res) => {
       // setLoading(true);
       setWorkoutData(res.data)
+
+
+
+
+    })
+      .catch((res) => {
+
+        console.log(res.response)
+      })
+
+    await axios.get(EXERCISE_LEVEL_ROUTE, { headers }).then((res) => {
+      // setLoading(true);
+      setDifficultyData(res.data)
 
 
 
@@ -121,6 +139,7 @@ function CreateDiscover() {
 
     // event.preventDefault()
     discoverData.photo = base64
+    discoverData.lastCreatedBy = userData.username
 
 
 
@@ -154,8 +173,21 @@ function CreateDiscover() {
 
     if (selectedItem) {
       console.log(selectedItem.title)
-      setDiscoverData({ ...discoverData, workoutCatId: selectedItem.id })
+      setDiscoverData({ ...discoverData, exerciseCatId: selectedItem.id })
       setSelectedValue(selectedItem.title)
+    }
+  }
+
+  const handleSelectionLevelChange = (keys) => {
+    console.log(keys)
+    setSelectedLevelValue(keys.currentKey)
+    const selectedKey: number = parseInt(keys.currentKey) // Assuming single selection mode
+    const selectedItem = difficultyData.find((item) => item.id === selectedKey)
+
+
+    if (selectedItem) {
+      setDiscoverData({ ...discoverData, difficultyLevelId: selectedItem.id })
+      setSelectedLevelValue(selectedItem.title)
     }
   }
 
@@ -180,7 +212,7 @@ function CreateDiscover() {
         </Modal.Header>
         <Modal.Body>
           <form >
-            <Grid container spacing={5}>
+            <Grid container spacing={8}>
               <Grid item xs={12}></Grid>
               <Grid item xs={12}>
                 <Input
@@ -193,9 +225,9 @@ function CreateDiscover() {
                   name="exerciseTitle"
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6} >
+              <Grid item xs={12} sm={6} >
                 <Dropdown>
-                  <Dropdown.Button flat color="secondary" name={discoverData.workoutCatId} css={{ tt: "capitalize", width: "100%" }}>
+                  <Dropdown.Button flat color="secondary" name={discoverData.exerciseCatId} css={{ tt: "capitalize", width: "100%" }}>
                     {selectedValue}
                   </Dropdown.Button>
                   <Dropdown.Menu
@@ -211,23 +243,24 @@ function CreateDiscover() {
                     ))}
                   </Dropdown.Menu>
                 </Dropdown>
-              </Grid> */}
+              </Grid>
+              <Grid item xs={6} sm={6} >
+                <Input
+                  bordered
+                  labelPlaceholder="Timer"
+                  width='100%'
+                  value={discoverData.timeDuration}
+                  color="primary"
+                  onChange={handleChange}
+                  name="timeDuration"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6} marginTop={4}>
-              <Input
-                bordered
-                labelPlaceholder="Timer"
-                width='100%'
-                value={discoverData.timeDuration}
-                color="primary"
-                onChange={handleChange}
-                name="timeDuration"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} >
+
+            <Grid item xs={12} sm={6} marginTop={4}>
               <Dropdown>
-                <Dropdown.Button flat color="secondary" name={discoverData.workoutCatId} css={{ tt: "capitalize", width: "100%" }}>
-                  {selectedValue}
+                <Dropdown.Button flat color="secondary" name={discoverData.difficultyLevelId} css={{ tt: "capitalize", width: "100%" }}>
+                  {selectedLevelValue}
                 </Dropdown.Button>
                 <Dropdown.Menu
                   aria-label="Single selection actions"
@@ -235,9 +268,9 @@ function CreateDiscover() {
                   disallowEmptySelection
                   selectionMode="single"
 
-                  onSelectionChange={handleSelectionChange}
+                  onSelectionChange={handleSelectionLevelChange}
                 >
-                  {workoutData.map((item) => (
+                  {difficultyData.map((item) => (
                     <Dropdown.Item key={item.id} textValue={item.id}>{item.title}</Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
@@ -254,7 +287,7 @@ function CreateDiscover() {
                 name="description"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} marginTop={4}>
               <Radio.Group label="Status" defaultValue={discoverData.status} onChange={(value) => handleStatus(value)} name="status" orientation="horizontal">
                 <Radio value="1" size="sm" isSquared>
                   Active
@@ -264,7 +297,7 @@ function CreateDiscover() {
                 </Radio>
               </Radio.Group>
             </Grid>
-            <Grid marginTop={5} marginX={10}>
+            <Grid sm={6} marginX={5}>
               <div style={{ position: 'relative', display: 'inline-block' }}>
                 <img width={100} src={imgSrc} alt="Angular" onClick={handleImageClick} style={{ borderRadius: '5%' }} />
                 <IconButton
@@ -282,9 +315,9 @@ function CreateDiscover() {
                 style={{ display: 'none' }}
               />
             </Grid>
-          </Grid>
-          <Divider sx={{ margin: 0 }} />
-          {/* <Button.Group style={{ justifyContent: 'flex-end' }}>
+
+            <Divider sx={{ margin: 0 }} />
+            {/* <Button.Group style={{ justifyContent: 'flex-end' }}>
               <Button auto flat color="error" onSubmit={handleSubmit}>
                 Cancel
               </Button>
@@ -294,17 +327,17 @@ function CreateDiscover() {
 
             </Button.Group> */}
 
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button auto flat color="error" onPress={closeHandler}>
-          Cancel
-        </Button>
-        <Button auto onPress={handleSubmit}>
-          Create
-        </Button>
-      </Modal.Footer>
-    </Modal>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onPress={closeHandler}>
+            Cancel
+          </Button>
+          <Button auto onPress={handleSubmit}>
+            Create
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div >
   )
 }

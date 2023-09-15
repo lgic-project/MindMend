@@ -3,6 +3,8 @@ import { AntDesign } from "@expo/vector-icons"
 import styles from "../../style/discoverstyles"
 import { VStack, Flex, Wrap } from "@react-native-material/core"
 import axios from "axios"
+import StarRating from "react-native-star-rating-widget"
+
 import { Buffer } from "buffer"
 import React, { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -11,6 +13,8 @@ import { useNavigation, useRouter } from "expo-router"
 
 const DoctorList = () => {
   const [doctorData, setDoctorData] = useState([])
+  const [rating, setRating] = useState(null)
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState([])
 
@@ -35,6 +39,7 @@ const DoctorList = () => {
       try {
         const res = await axios.get(DOCTOR, { headers })
         setDoctorData(res.data)
+        setRating(res.data.rating)
         setLoading(false)
       } catch (error) {
         setLoading(false)
@@ -61,9 +66,9 @@ const DoctorList = () => {
         {/* heading container */}
         <View className="w-full flex-row justify-between ml-5 ">
           <TouchableOpacity onPress={handleback}>
-            <AntDesign name="left" size={20} color="black" />
+            <AntDesign name="left" size={20} color="white" />
           </TouchableOpacity>
-          <Text className="font-bold text-base">Doctor</Text>
+          <Text className="font-bold text-lg text-white">Doctor</Text>
           <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
@@ -90,11 +95,8 @@ const DoctorList = () => {
                         </Text>
                       </Flex>
                       <Wrap m={4} spacing={2}>
-                        <AntDesign name="staro" size={18} color="black" />
-                        <AntDesign name="staro" size={18} color="black" />
-                        <AntDesign name="staro" size={18} color="black" />
-                        <AntDesign name="staro" size={18} color="black" />
-                        <AntDesign name="staro" size={18} color="black" />
+                      <StarRating rating={column.rating} onChange={setRating} starSize={20} />
+
                         <Text
                           variant="caption"
                           font="bold"

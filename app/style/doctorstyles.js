@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
         },
         boxcontainer:{ 
             display: "flex", 
-            justifyContent: "space-between", 
+            justifyContent: "space-around", 
             flexDirection: "row", 
             width: "100%", 
             height: "15%" 
         },
         box:{ 
-            width: "30%", 
+            width: "40%", 
             height: "100%", 
             borderWidth: 0.5, 
             borderRadius: 5, 

@@ -23,11 +23,7 @@ console.log(userInfo)
 
 
   return [
-    {
-      title: 'Login',
-      icon: HomeOutline,
-      path: '/'
-    },
+
     {
       title: 'Dashboard',
       icon: HomeOutline,
@@ -84,6 +80,12 @@ console.log(userInfo)
       path: '/additional/exercise-level',
       openInNewTab: true
     },
+
+    isUser || isAdmin &&{
+      title: 'User',
+      icon: PersonIcon,
+      path: '/user'
+    },
     isAdmin && {
       title: 'Workout',
       icon: FitnessCenterIcon,
@@ -103,11 +105,6 @@ console.log(userInfo)
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-    isUser || isAdmin &&{
-      title: 'User',
-      icon: PersonIcon,
-      path: '/user'
-    },
     isUser || isAdmin && {
       title: 'Group',
       icon: GroupWorkIcon,
@@ -122,9 +119,6 @@ console.log(userInfo)
       title: 'Doctor',
       icon: GroupWorkIcon,
       path: '/doctor'
-    },
-    isUser || isAdmin &&{
-      sectionTitle: 'Messenger'
     },
     // isUser || isAdmin && {
     //   title: 'Chat',

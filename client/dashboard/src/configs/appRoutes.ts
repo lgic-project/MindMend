@@ -11,6 +11,8 @@ export const ROLE_PERMISSION_ROUTE = `${API_BASE_URL}/v1/role_permission`;
 export const ROLE_ROUTE = `${API_BASE_URL}/v1/role_permission/roles`;
 export const API_ROUTE = `${API_BASE_URL}/apiList`;
 export const WORKOUT_ROUTE = `${API_BASE_URL}/exercise`;
+export const USER_ROUTE = `${API_BASE_URL}/profile/user`;
+
 
 
 

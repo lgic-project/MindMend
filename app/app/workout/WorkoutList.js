@@ -68,9 +68,9 @@ const WorkoutList = () => {
         {/* heading container */}
         <View className="w-full flex-row justify-between ml-5 ">
           <TouchableOpacity onPress={handleback}>
-            <AntDesign name="left" size={20} color="black" />
+            <AntDesign name="left" size={20} color="white" />
           </TouchableOpacity>
-          <Text className="font-bold text-base">Exercise</Text>
+          <Text className="font-bold text-lg text-white">Exercise</Text>
           <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
