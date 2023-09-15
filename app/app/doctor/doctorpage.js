@@ -35,7 +35,7 @@ const SeeMoreText = ({ initialNumberOfLines, content }) => {
 }
 
 const doctorpage = () => {
-  const [rating, setRating] = useState(5)
+  const [rating, setRating] = useState(null)
   const router = useRouter()
   const [doctorData, setDoctorData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -52,6 +52,7 @@ const doctorpage = () => {
       try {
         const res = await axios.get(DOCTOR_BY_ID + "/" + id, { headers })
         setDoctorData(res.data)
+        setRating(res.data.rating)
         setLoading(false)
       } catch (error) {
         setLoading(false)
@@ -134,14 +135,20 @@ const doctorpage = () => {
               </Text>
             </View>
             {doctorData.city &&
-              doctorData.country(
+              doctorData.country ? (
                 <View style={{ display: "flex", gap: 5 }}>
                   <Text style={{ fontSize: 15, fontWeight: "700" }}>
                     Address
                   </Text>
                   <Text>
-                    {doctorData.city},{doctorData.country}
+                  {doctorData.street}, {doctorData.city}, {doctorData.state}, {doctorData.country}
                   </Text>
+                </View>
+              ): (
+                <View style={{ display: "flex", gap: 5 }}>
+                <Text style={{ fontSize: 15, fontWeight: "700" }}>
+                  Address
+                </Text>
                 </View>
               )}
             <View style={styles.boxcontainer}>
@@ -154,7 +161,7 @@ const doctorpage = () => {
                 <Text>Avg Rating</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.absolutebutton}>
+            {/* <View style={styles.absolutebutton}>
               <View style={styles.centerbtn}>
                 <TouchableOpacity style={styles.btn}>
                   <Text
@@ -168,7 +175,7 @@ const doctorpage = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>

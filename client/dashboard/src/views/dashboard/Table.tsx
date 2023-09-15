@@ -74,7 +74,7 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
 
 
   const renderColumn = (item) => {
-    if (item === 'image' || item === 'logo') {
+    if (item === 'image' || item === 'logo' || item === 'video' || item === 'photo' || item === 'resource' || item === 'animation') {
       return <p></p>
 
     }
@@ -128,18 +128,32 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
       )
     }
     if (column === 'encodedImage') {
-      const base64String = value // Base64 encoded string
-      const regularString = convertBase64ToString(base64String)
+      if (value === null || value === '') {
+        return (
+          <TableCell key="image">
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
+              <img width={100}
+                src='' alt="image" />
+            </Box>
+          </TableCell>
+        )
+      }
+      else {
+        const base64String = value // Base64 encoded string
+        const regularString = convertBase64ToString(base64String)
 
-      return (
-        <TableCell key="image">
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
-            <img width={100}
-              src={regularString} alt="image" />
-          </Box>
-        </TableCell>
-      )
+        return (
+          <TableCell key="image">
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {/* <ImgStyled src='data:image/png;base64,${imgSrc}' alt='Profile Pic' /> */}
+              <img width={100}
+                src={regularString} alt="image" />
+            </Box>
+          </TableCell>
+        )
+      }
+
     }
     if (column === 'id') {
       return (
@@ -168,9 +182,17 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
 
       )
     }
-    if (column === 'image' || column === 'logo') {
+    if (column === 'image' || column === 'logo' || column === 'photo' || column === 'video' || column === 'resource' || column === 'animation') {
       return (
         <p></p>
+      )
+    }
+    if (column === 'description') {
+      return (
+
+        <TableCell className="truncate" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 200 }}>{value}</TableCell>
+
+
       )
     }
 

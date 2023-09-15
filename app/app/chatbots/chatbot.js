@@ -41,9 +41,10 @@ const Chatbot = () => {
   const [message, setMessage] = useState("")
   const [solution, setSolution] = useState([])
 
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState('')
 
   const handleProblem = async () => {
+    setVisible('false')
     const userData = JSON.parse(await AsyncStorage.getItem("userData"))
 
     const headers = {
@@ -62,7 +63,7 @@ const Chatbot = () => {
       setLoading(true)
       if (res.data) {
         setLoading(false)
-        setVisible(true)
+        setVisible('true')
       }
     } catch (error) {
       console.log("Error:", error)
@@ -80,9 +81,9 @@ const Chatbot = () => {
         {/* heading container */}
         <View className="w-full flex-row justify-between ml-5 ">
           <TouchableOpacity onPress={handleback}>
-            <AntDesign name="left" size={20} color="black" />
+            <AntDesign name="left" size={20} color="white" />
           </TouchableOpacity>
-          <Text className="font-bold text-base">Share Your Problem</Text>
+          <Text className="font-bold text-lg text-white">Share Your Problem</Text>
           <TouchableOpacity></TouchableOpacity>
         </View>
       </View>
@@ -121,14 +122,17 @@ const Chatbot = () => {
               </View>
             </View>
           </View>
-          {loading && <ActivityIndicator size="small" color="#0000ff" />}
-          {visible && (
-            <ScrollView>
-              <ChatBotMainMessage response={solution.aiResponse} />
-              <DoctorList response={solution.doctorResps} />
-              <ExerciseList response={solution.exerciseResps} />
-            </ScrollView>
-          )}
+          {visible=='true' ? (
+  <ScrollView>
+    <ChatBotMainMessage response={solution.aiResponse} />
+    <DoctorList response={solution.doctorResps} />
+    <ExerciseList response={solution.exerciseResps} />
+  </ScrollView>
+)  : visible === 'false' ? (
+  <ActivityIndicator size="small" color="#0000ff" style={{ marginTop:5, marginLeft:170 }} />
+): ( 
+  <Text></Text>
+)}
         </View>
       </View>
     </View>

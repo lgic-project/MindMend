@@ -152,6 +152,10 @@ const profilepage = () => {
       await AsyncStorage.setItem("groupScreen", JSON.stringify(2))
       navigation.navigate("Community")
     }
+    if (item === "Friends") {
+      await AsyncStorage.setItem("groupScreen", JSON.stringify(3))
+      navigation.navigate("Community")
+    }
     if (item === "Personal") {
       navigation.navigate("editProfile")
     }

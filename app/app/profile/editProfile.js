@@ -11,10 +11,13 @@ import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { PROFILE } from "../../utils/appRoutes"
+import { useNavigation, useRouter } from "expo-router"
 
 
 const editProfile = () => {
   const [value, setValue] = useState(null);
+  const navigation = useNavigation()
+
   const [countryValue, setCountryValue] = useState([]);
   const [stateValue, setStateValue] = useState([]);
   const [cityValue, setCityValue] = useState([]);
@@ -26,6 +29,10 @@ const editProfile = () => {
   const [image, setImage]= useState(null);
   const [imageConfirmed, setImageConfirmed] = useState(false);
 
+
+  const handleback = () => {
+    navigation.goBack()
+  }
 
   const GetCountryData = async () => {
 
@@ -265,8 +272,8 @@ useEffect(() => {
     <View className="w-full h-full bg-white">
       <View className=" bg-yellow-300 h-2/6 p-5 pt-14">
         <Wrap justify="between">
-          <AntDesign name="back" size={24} color="black" />
-          <Text className="center pl-9 font-bold text-lg">Edit Profile</Text>
+          <AntDesign name="back" size={24} color="white" onPress={handleback} />
+          <Text className="center pl-9 font-bold text-lg text-white">Edit Profile</Text>
           <Button className="text-lg text-white" onPress={handleSubmit}>Save</Button>
         </Wrap>
         <View
