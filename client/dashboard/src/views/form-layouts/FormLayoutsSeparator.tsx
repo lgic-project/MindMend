@@ -88,6 +88,7 @@ const FormLayoutsSeparator = ({ imageByte }) => {
 
   const [state, setState] = useState("")
   const [selectedCountry, setSelectedCountry] = useState<string[]>("")
+  const [profileId, setProfileId] = useState(null)
 
 
   const selectCountryHandler = (event: SelectChangeEvent<string[]>) => {
@@ -95,8 +96,6 @@ const FormLayoutsSeparator = ({ imageByte }) => {
   }
 
 
-
-  const id = 1
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'))
@@ -106,7 +105,7 @@ const FormLayoutsSeparator = ({ imageByte }) => {
     }
 
     const GetProfileDataList = async () => {
-      await axios.get(PROFILE_ROUTE + "/" + id, { headers }).then((res) => {
+      await axios.get(PROFILE_ROUTE + "/" + userData.id, { headers }).then((res) => {
         // setLoading(true);
         setProfileData(res.data)
 
@@ -140,17 +139,21 @@ const FormLayoutsSeparator = ({ imageByte }) => {
     profileData.image = imageByte
 
     const profileReq = JSON.stringify(profileData)
-    const customConfig = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}`,
+      'Content-Type': 'application/json',  // Include the token in the Authorization header
     }
+    await axios.get(PROFILE_ROUTE + "/" + userData.id + "/user", { headers })
+      .then((res) => {
+        const result = axios.patch(PROFILE_ROUTE + '/' + res.data + "/profile", profileReq, { headers })
+          .then((res) => setProfileData(res.data))
+          .catch((error) => console.log(error))
+      })
 
-    const result = await axios.patch(PROFILE_ROUTE + '/' + id + "/profile", profileReq, customConfig)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error))
 
-    console.log(result)
+
 
 
   }

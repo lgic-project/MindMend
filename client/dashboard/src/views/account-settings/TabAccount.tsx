@@ -49,7 +49,6 @@ const TabAccount = () => {
 
   const [base64, setBase64] = useState<string | null>(null)
 
-  const id = 1
 
 
 
@@ -59,9 +58,10 @@ const TabAccount = () => {
     const headers = {
       Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
     }
+    console.log(userData)
 
     const GetProfileDataList = async () => {
-      await axios.get(PROFILE_ROUTE + "/" + id, { headers }).then((res) => {
+      await axios.get(PROFILE_ROUTE + "/" + userData.id, { headers }).then((res) => {
         // setLoading(true);
         const base64String = res.data.encodedImage // Base64 encoded string
         const regularString = convertBase64ToString(base64String)

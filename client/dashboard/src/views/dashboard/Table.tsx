@@ -248,6 +248,7 @@ const DashboardTable = ({ title, columnList, data, loading, create }) => {
                     ))}
                     <TableCell >
                       <Grid.Container gap={1}  >
+
                         <Grid  >
                           <Tooltip content="Edit" color="primary" style={{ width: 40 }}>
                             <Button flat auto size={'xs'}>

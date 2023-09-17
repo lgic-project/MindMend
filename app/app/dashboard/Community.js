@@ -236,9 +236,7 @@ const Community = () => {
                 indicatorStyle={{ height: 0 }}
                 activeColor="#FACE51"
               />
-              <TouchableOpacity style={styles.add} onPress={handleprofile}>
-                <Ionicons name="person-add" size={25} color="#FACE51" />
-              </TouchableOpacity>
+             
             </View>
           )}
         />

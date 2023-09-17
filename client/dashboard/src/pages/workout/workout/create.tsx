@@ -172,7 +172,6 @@ function CreateDiscover() {
 
 
     if (selectedItem) {
-      console.log(selectedItem.title)
       setDiscoverData({ ...discoverData, exerciseCatId: selectedItem.id })
       setSelectedValue(selectedItem.title)
     }

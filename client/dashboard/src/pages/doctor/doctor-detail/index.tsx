@@ -57,18 +57,22 @@ const DoctorDetail = () => {
 
     const GetWorkoutList = async () => {
       try {
+        localStorage.removeItem("doctorId")
+
         const userData = JSON.parse(localStorage.getItem('userData'))
         const headers = {
           Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
         }
         const id = JSON.parse(localStorage.getItem('doctorId'))
-
+        console.log(id)
         const res = await axios.get(DOCTOR_ROUTE + "/" + id, { headers })
 
         // setLoading(true);
         setData(res.data)
         setRating(res.data.rating)
         setLoading(false)
+        localStorage.removeItem("doctorId")
+
 
 
       } catch (error) {

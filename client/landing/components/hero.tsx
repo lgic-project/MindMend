@@ -12,23 +12,23 @@ import NextUILoadingComponent from './loading'
 
 export default function Hero() {
 
-  const [appName, setAppName] = useState([]);
+  const [appName, setAppName] = useState([])
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
 
-   
 
-    const GetAppData = async ()=>{
-      const response: any = await axios.get(SITECONFIG_ROUTE+"/App/active/name").then((res)=>{
-        setLoading(true);
-        setAppName(res.data);
-      });
-     
+
+    const GetAppData = async () => {
+      const response: any = await axios.get(SITECONFIG_ROUTE + "/App/active/name").then((res) => {
+        setLoading(true)
+        setAppName(res.data)
+      })
+
     }
-    GetAppData();
-  },[])
+    GetAppData()
+  }, [])
 
   const [videoModalOpen, setVideoModalOpen] = useState<boolean>(false)
 
@@ -36,13 +36,13 @@ export default function Hero() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
-        
+
 
         {/* Illustration behind hero content */}
         <div className="absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none" aria-hidden="true" data-aos="fade-up" data-aos-delay="400">
           <svg className="max-w-full" width="564" height="552" viewBox="0 0 564 552" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              
+
               <linearGradient id="illustration-02" x1="-3.766" y1="300.204" x2="284.352" y2="577.921" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#5D5DFF" stopOpacity=".01" />
                 <stop offset="1" stopColor="#5D5DFF" stopOpacity=".32" />
@@ -56,23 +56,23 @@ export default function Hero() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
 
           {/* Section header */}
-          {loading? appName.map((data) => (
-             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+          {loading ? appName.map((data) => (
+            <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
 
-            <h1 className="h1 mb-4" data-aos="fade-up">{data.siteKey}</h1>
-            <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">{data.siteValue}</p>
-            <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-              <div data-aos="fade-up" data-aos-delay="400">
-                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="http://localhost:3001/pages/login">Start your journey </a>
+              <h1 className="h1 mb-4" data-aos="fade-up">{data.siteKey}</h1>
+              <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">{data.siteValue}</p>
+              <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
+                <div data-aos="fade-up" data-aos-delay="400">
+                  <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="http://localhost:3001/">Start your journey </a>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="600">
+                  <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">Learn more</a>
+                </div>
               </div>
-              <div data-aos="fade-up" data-aos-delay="600">
-                <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">Learn more</a>
-              </div>
-            </div> 
             </div>
-    
-             )): <NextUILoadingComponent />}
-            
+
+          )) : <NextUILoadingComponent />}
+
 
           {/* Hero image */}
           <div>
@@ -83,7 +83,7 @@ export default function Hero() {
                 alt="Hero"
                 priority
               />
-              <a className="absolute group" href="#0" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
+              <a className="absolute group" href="#0" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true) }} aria-controls="modal">
                 <svg className="w-16 h-16 sm:w-20 sm:h-20 hover:opacity-75 transition duration-150 ease-in-out" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient x1="78.169%" y1="9.507%" x2="24.434%" y2="90.469%" id="a">
@@ -96,14 +96,14 @@ export default function Hero() {
                 </svg>
               </a>
             </div>
-            
+
             {/* Modal */}
             <Modal id="modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => setVideoModalOpen(false)}>
               <div className="relative pb-9/16">
                 <video className="absolute w-full h-full" width="1920" height="1080" loop controls>
                   <source src="/videos/video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
-                </video> 
+                </video>
               </div>
             </Modal>
 
@@ -115,5 +115,5 @@ export default function Hero() {
     </section>
   )
 
- 
+
 }

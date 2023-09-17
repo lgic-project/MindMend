@@ -15,7 +15,7 @@ function CreateDoctorCategory() {
 
   const router = useRouter()
   const { visible: queryVisible } = router.query
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState(null)
   const [data, setData] = useState<Number | null>(null)
 
   const [doctorCategoryData, setDoctorCategoryData] = useState<any>({
@@ -76,7 +76,7 @@ function CreateDoctorCategory() {
 
   return (
     <div>
-      {error || data !== 200 && <ErrorAlert message={error} />}
+
       <Modal
         closeButton
         blur

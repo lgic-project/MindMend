@@ -72,6 +72,8 @@ function CreateDoctor() {
 
   const fileInputRef = useRef(null)
   const [data, setData] = useState([])
+  const [categoryData, setCategoryData] = useState([])
+
 
   const handleUpload = () => {
     if (selectedImage) {
@@ -87,7 +89,7 @@ function CreateDoctor() {
     doctorName: '',
     experience: '',
     image: '',
-    lastUpdatedBy: 1,
+    lastUpdatedBy: "",
     phone: '',
     status: '',
     workingDay: '',
@@ -131,7 +133,16 @@ function CreateDoctor() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setDoctorData({ ...doctorData, [name]: value })
+
+    if (name === 'workingHours') {
+      const selectedKey: number = parseInt(value) // Assuming single selection mode
+
+      setDoctorData({ ...doctorData, [name]: selectedKey })
+
+    } else {
+      setDoctorData({ ...doctorData, [name]: value })
+
+    }
   }
   const userData = JSON.parse(localStorage.getItem('userData'))
 
@@ -164,12 +175,16 @@ function CreateDoctor() {
         pathname: '/doctor/doctor',
         query: props
       })
-    console.log(result)
   }
+
+
+
 
   const handleStatus = (value: string) => {
     setDoctorData({ ...doctorData, status: value })
   }
+
+
 
   const [selected, setSelected] = React.useState(new Set(["Doctor category"]))
 
@@ -178,10 +193,38 @@ function CreateDoctor() {
 
 
 
+
+
+  const GetDoctorCategoryList = async () => {
+
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    const headers = {
+      Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+    }
+    await axios.get(DOCTORCATEGORY_ROUTE, { headers }).then((res) => {
+      // setLoading(true);
+      setCategoryData(res.data)
+
+
+
+
+    })
+      .catch((res) => {
+
+        console.log(res.response)
+      })
+
+
+
+  }
+  GetDoctorCategoryList()
+
+
   const handleSelectionChange = (keys) => {
     setSelected(keys.currentKey)
     const selectedKey: number = parseInt(keys.currentKey) // Assuming single selection mode
-    const selectedItem = data.find((item) => item.id === selectedKey)
+    const selectedItem = categoryData.find((item) => item.id === selectedKey)
 
 
     if (selectedItem) {
@@ -190,9 +233,12 @@ function CreateDoctor() {
     }
   }
 
+
+
   const handleCountryChange = (keys) => {
-    setSelectedCountryValue(keys.currentKey)
-    const selectedItem = countryArr.find((item) => item.label === selectedCountryValue)
+
+    const selectedItem = countryArr.find((item) => item.label === keys.currentKey)
+    console.log(selectedItem)
     setDoctorData({ ...doctorData, country: selectedItem.label })
     setSelectedCountryValue(selectedItem.label)
   }
@@ -323,7 +369,7 @@ function CreateDoctor() {
 
                       onSelectionChange={handleSelectionChange}
                     >
-                      {data.map((item) => (
+                      {categoryData.map((item) => (
                         <Dropdown.Item key={item.id} textValue={item.id}>{item.categoryTitle}</Dropdown.Item>
                       ))}
                     </Dropdown.Menu>
