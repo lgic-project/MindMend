@@ -17,12 +17,16 @@ const DoctorList = () => {
   const [filterText, setFilterText] = React.useState('')
   const router = useRouter()
 
-  const handleGridClick = () => {
+  const handleGridClick = async (id) => {
     // Perform any necessary logic or data manipulation before navigating
     // For example, you can pass additional data to the next page using query parameters or state
 
     // Navigate to the desired link
-    router.push('/doctor/doctor-detail')
+    // await localStorage.setItem(
+    //   "doctorId",
+    //   JSON.stringify(id)
+    // )
+    // router.push('/doctor/doctor-detail')
   }
 
   const [data, setData] = useState([])
@@ -138,14 +142,14 @@ const DoctorList = () => {
           loading ? (
             <NextUILoadingComponent />
           ) : (
-            <Grid item xs={12} md={12} style={{ marginTop: 26 }} onClick={handleGridClick}>
+            <Grid item xs={12} md={12} style={{ marginTop: 26 }} >
               <Grid.Container spacing={6} gap={1} marginTop={4}>
                 {data.map((item: DataType, index: number) => {
 
                   return (
                     // eslint-disable-next-line react/jsx-key
-                    <Grid item xs={6} key={item.id} md={3}>
-                      <Card css={{ p: "$6", mw: "400px" }}>
+                    <Grid item xs={6} key={item.id} md={3} >
+                      <Card css={{ p: "$6", mw: "400px" }} onClick={handleGridClick(item.id)} >
                         <Card.Header style={{ marginLeft: -31 }} >
                           <BookmarkIcon sx={{
                             transform: 'rotate(270deg)', fontSize: 70, color: '#FDEFD8', marginTop: -30

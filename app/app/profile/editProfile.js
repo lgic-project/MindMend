@@ -273,7 +273,7 @@ useEffect(() => {
       <View className=" bg-yellow-300 h-2/6 p-5 pt-14">
         <Wrap justify="between">
           <AntDesign name="back" size={24} color="white" onPress={handleback} />
-          <Text className="center pl-9 font-bold text-lg text-white">Edit Profile</Text>
+          <Text className="center pl-9 font-bold text-lg text-white ">Edit Profile</Text>
           <Button className="text-lg text-white" onPress={handleSubmit}>Save</Button>
         </Wrap>
         <View

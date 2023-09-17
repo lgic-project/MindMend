@@ -46,10 +46,6 @@ const profilepage = () => {
       title: "Groups",
       icon: <MaterialIcons name="group" size={20} color="#8793E8" />,
     },
-    {
-      title: "Guided Programs",
-      icon: <MaterialIcons name="group" size={20} color="yellow" />,
-    },
   ]
 
   const handleback = () => {
@@ -153,7 +149,7 @@ const profilepage = () => {
       navigation.navigate("Community")
     }
     if (item === "Friends") {
-      await AsyncStorage.setItem("groupScreen", JSON.stringify(3))
+      await AsyncStorage.setItem("friendScreen", JSON.stringify(3))
       navigation.navigate("Community")
     }
     if (item === "Personal") {
@@ -211,7 +207,7 @@ const profilepage = () => {
 
             {/* </TouchableOpacity> */}
           </View>
-          <View style={styles.card}></View>
+          
         </ScrollView>
         {/* </ScrollView> */}
       </View>

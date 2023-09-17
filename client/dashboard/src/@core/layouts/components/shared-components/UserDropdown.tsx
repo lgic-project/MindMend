@@ -52,7 +52,7 @@ const UserDropdown = () => {
   const handleLogout = async (event: React.FormEvent) => {
     localStorage.clear()
 
-    router.push("/pages/login")
+    router.push("/")
 
     // window.location.reload()
 
@@ -132,12 +132,7 @@ const UserDropdown = () => {
             Profile
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <MessageOutline sx={{ marginRight: 2 }} />
-            Chat
-          </Box>
-        </MenuItem>
+
 
         <Divider />
         <MenuItem sx={{ py: 2 }} onClick={handleLogout} >

@@ -5,45 +5,45 @@ import { useEffect, useState } from "react"
 
 export default function Blocks() {
 
-  const [aim, setAim] = useState([]);
+  const [aim, setAim] = useState([])
 
 
-  useEffect(()=>{
+  useEffect(() => {
 
-   
 
-    const GetMotoData = async ()=>{
-      const response: any = await axios.get(SITECONFIG_ROUTE+"/App Moto/active/key");
-     const name =response.data;
-     setAim(name);
+
+    const GetMotoData = async () => {
+      const response: any = await axios.get(SITECONFIG_ROUTE + "/App Moto/active/key")
+      const name = response.data
+      setAim(name)
     }
-    GetMotoData();
-
-    
-
-  
-
-   
-  },[])
+    GetMotoData()
 
 
-  
+
+
+
+
+  }, [])
+
+
+
 
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="py-12 md:py-20 border-t border-gray-800">
 
-        {aim.map((data) => (
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">"{aim.siteValue}"</h2>
-          </div>
-        ))}
+          {aim.map((data) => (
+            <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+              <h2 className="h2 mb-4">"{aim.siteValue}"</h2>
+            </div>
+          ))}
 
           {/* Items */}
           <div className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-16 items-start md:max-w-2xl lg:max-w-none" data-aos-id-blocks>
 
-        
+
             <div className="relative flex flex-col items-center" data-aos="fade-up" data-aos-anchor="[data-aos-id-blocks]">
               <svg className="w-16 h-16 mb-4" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <rect className="fill-current text-purple-600" width="64" height="64" rx="32" />
@@ -53,7 +53,7 @@ export default function Blocks() {
               <h4 className="h4 mb-2"></h4>
               <p className="text-lg text-gray-400 text-center">{data.siteValue}</p>
             </div>
-     
+
 
             {/* 2nd item */}
             <div className="relative flex flex-col items-center" data-aos="fade-up" data-aos-delay="100" data-aos-anchor="[data-aos-id-blocks]">
@@ -77,7 +77,7 @@ export default function Blocks() {
                 </g>
               </svg>
               <h4 className="h4 mb-2">Cognitive Assement</h4>
-              <p className="text-lg text-gray-400 text-center">The app could offer cognitive assement to help users eveluate their issues, problems.</p>
+              <p className="text-lg text-gray-400 text-center">The app could offer cognitive assement to help users evaluate their issues, problems.</p>
             </div>
 
             {/* 4th item */}

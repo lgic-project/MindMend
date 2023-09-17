@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://192.168.11.64:9091/api"
+export const API_BASE_URL = "http://172.16.5.192:9091/api"
 
 export const DOCTOR = `${API_BASE_URL}/doctor/active`
 export const DOCTOR_BY_ID = `${API_BASE_URL}/doctor`
@@ -26,4 +26,4 @@ export const FRIEND = `${API_BASE_URL}/friend/`
 
 
 
-export const SHARE_PROBLEM = "http://192.168.11.64:9091/chat"
+export const SHARE_PROBLEM = "http://172.16.5.192:9091/chat"

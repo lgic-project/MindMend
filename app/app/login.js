@@ -27,8 +27,8 @@ const FirstRoute = () => {
     username: "",
     password: "",
   }
-  const [username, setUsername] = useState("sapnaBaniya")
-  const [password, setPassword] = useState("Admin@123")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleLogin = async (event) => {
     initialValues.username = username

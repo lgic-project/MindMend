@@ -18,12 +18,50 @@ import React, { useState, useEffect } from "react"
 import styles from "../../style/homestyles"
 import { useRouter } from "expo-router"
 import { LineChart, PieChart } from "react-native-chart-kit"
+import { MOOD_TRACK } from "../../utils/appRoutes"
 
 export default FitnessChart = () => {
   router = useRouter()
+  const [data, setData] = useState([])
+
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState()
+
   const handleHistory = () => {
     router.push(`chart`)
   }
+  useEffect(() => {
+
+    const GetDiscoverList = async () => {
+
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      await axios.get(MOOD_TRACK, { headers }).then((res) => {
+        // setLoading(true);
+        console.log(res.data)
+        setData(res.data)
+        setLoading(false)
+
+
+
+      })
+        .catch((res) => {
+          setLoading(false)
+          setError(res)
+
+        })
+
+
+
+    }
+    GetDiscoverList()
+
+
+
+  }, [])
   return (
     <View>
       <Wrap style={{ marginTop: 9, marginBottom: -9, marginLeft: 7 }}>

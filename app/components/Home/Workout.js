@@ -95,7 +95,7 @@ export default Workout = () => {
             {renderWorkoutCard(column.encodedImage)}
 
             <Card.Content className="p-2 pb-3">
-              <Text className="font-bold text-base">{column.title}</Text>
+              <Text className="font-bold text-base truncate">{column.title}</Text>
               <Text className=" text-sm">{column.exerciseCategoryTitle}</Text>
             </Card.Content>
             <Card.Actions className="-mt-16">
