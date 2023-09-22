@@ -29,12 +29,27 @@ console.log(userInfo)
       icon: HomeOutline,
       path: '/dashboard'
     },
+    {
+      sectionTitle: 'User Interface'
+    },
+    {
+      title: 'Profile',
+      icon: AccountCogOutline,
+      path: '/account-settings'
+    },
+    {
+      title: 'Workout',
+      icon: GroupWorkIcon,
+      path: '/workout'
+    },
+    {
+      title: 'Doctor',
+      icon: GroupWorkIcon,
+      path: '/doctor'
+    },
 
     isAdmin && { sectionTitle: 'Admin' } ,
 
-   {
-      sectionTitle: 'Mood'
-    },
     isAdmin &&{
       title: 'Mood category',
       icon: AddReactionIcon,
@@ -97,29 +112,7 @@ console.log(userInfo)
       icon: MoodIcon,
       path: '/role-permission',
       openInNewTab: true    },
-    isUser || isAdmin && {
-      sectionTitle: 'User Interface'
-    },
-    isUser || isAdmin &&{
-      title: 'Profile',
-      icon: AccountCogOutline,
-      path: '/account-settings'
-    },
-    isUser || isAdmin && {
-      title: 'Group',
-      icon: GroupWorkIcon,
-      path: '/group'
-    },
-    isUser || isAdmin &&{
-      title: 'Workout',
-      icon: GroupWorkIcon,
-      path: '/workout'
-    },
-    isUser || isAdmin &&{
-      title: 'Doctor',
-      icon: GroupWorkIcon,
-      path: '/doctor'
-    },
+
     // isUser || isAdmin && {
     //   title: 'Chat',
     //   icon: NewspaperIcon,

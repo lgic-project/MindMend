@@ -165,7 +165,8 @@ const TotalEarning = () => {
 
                   <Grid xs={12} key={item.id} sm={11} onClick={() => {
                     const userDataJSON = JSON.stringify(item.id)
-                    localStorage.setItem('exerciseId', userDataJSON)
+                    console.log(userDataJSON)
+                    localStorage.setItem('doctorId', userDataJSON)
                     router.push(`/doctor/doctor-detail?id=${item.id}`)
                   }}>
                     <Card>
