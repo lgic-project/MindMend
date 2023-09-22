@@ -41,6 +41,30 @@ const Dashboard = () => {
     avatar: '/static/images/avatars/1.jpg'
   }
 
+  const [uid, setUid] = useState([])
+
+  useEffect(() => {
+
+
+    const GetMoodCategoryList = async () => {
+
+      const userData = JSON.parse(localStorage.getItem('userData'))
+
+      const headers = {
+        Authorization: `Bearer ${userData.accessToken}` // Include the token in the Authorization header
+      }
+      setUid(userData)
+
+
+
+    }
+
+    GetMoodCategoryList()
+
+
+
+  }, [])
+
 
   const handleDataFromTrophy = (data) => {
     setReceivedData(data)
@@ -68,7 +92,7 @@ const Dashboard = () => {
 
             <Box>
               <Typography variant="h4" component="h4" gutterBottom>
-                Welcome, {user.name}!
+                Welcome, {uid.username}!
               </Typography>
               <Typography variant="subtitle2">
                 Manage your Problems with us
